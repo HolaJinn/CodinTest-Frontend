@@ -1,0 +1,42 @@
+/*
+    Global styles for Candidate and Owner/Recruiter auth pages 
+    I was doing these styles in each file on its own but I found out that those pages share the same styles
+    Therefor I made a global style for it
+*/
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.tab-container {
+  border-radius: 5px;
+  box-shadow: 1px 1px 7px #888888;
+  padding: 1rem 3rem;
+  width: 50%;
+  // min-height: 360px;
+}
+
+ul.nav.nav-tabs {
+  border-bottom: 0px;
+}
+
+input.form-control {
+  width: 75%;
+}
+
+.link-container {
+  display: flex;
+  justify-content: center;
+}
+
+.link-container a {
+  text-decoration: none;
+}
+
+.toggle-show {
+  cursor: pointer;
+}

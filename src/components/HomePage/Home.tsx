@@ -23,7 +23,12 @@ const HomeScreen = () => {
                 Use our platform to interview, identify and hire developers
                 wherever they are.
               </p>
-              <button className="btn">Start hiring</button>
+              <button
+                className="btn"
+                onClick={(e) => navigate("/owner/signup")}
+              >
+                Start hiring
+              </button>
             </div>
             <div className="info-item">
               <h2 className="text-2xl font-bold">For Developers</h2>

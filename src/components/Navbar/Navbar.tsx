@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import ReactLogo from "../../assets/image/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <div>
       <nav className="bg-gray-800">
@@ -30,6 +32,7 @@ function Navbar() {
                   <a
                     href="/signup"
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    onClick={(e) => navigate("/signup")}
                   >
                     Signup
                   </a>
@@ -37,6 +40,7 @@ function Navbar() {
                   <a
                     href="/login"
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    onClick={(e) => navigate("/login")}
                   >
                     Login
                   </a>

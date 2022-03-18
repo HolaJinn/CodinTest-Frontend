@@ -2,8 +2,8 @@ import React from "react";
 import "./CandidateAuth.scss";
 import { useNavigate } from "react-router-dom";
 import { Tabs } from "antd";
-import RegistrationForm from "../../../../components/RegistrationForm/RegistrationForm";
 import LoginLayout from "../../layouts/CandidateLayouts/LoginLayout";
+import RegistrationLayout from "../../layouts/CandidateLayouts/RegistrationLayout";
 
 const { TabPane } = Tabs;
 interface Props {
@@ -29,7 +29,7 @@ const CandidateAuth = ({ path }: Props) => {
             onChange={(e) => navigate(`/candidate/${e}`)}
           >
             <TabPane tab="Signup" key="signup">
-              <RegistrationForm />
+              <RegistrationLayout />
             </TabPane>
             <TabPane tab="Login" key="login">
               <LoginLayout />

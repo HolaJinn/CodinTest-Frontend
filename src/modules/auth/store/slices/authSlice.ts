@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, Slice } from "@reduxjs/toolkit";
-import { LoginPayload } from "../../model";
+import { ILoginPayload } from "../../model";
 import { loginService } from "../../services/authService";
 
 
@@ -21,7 +21,7 @@ import { loginService } from "../../services/authService";
 
   export const login = createAsyncThunk(
       "auth/login", 
-      async(loginPayload: LoginPayload, thunkAPI) => {
+      async(loginPayload: ILoginPayload, thunkAPI) => {
         try {
             const response = await loginService(loginPayload)
             return response;
@@ -60,5 +60,4 @@ const authSlice: Slice = createSlice({
 
 
 export const authActions = authSlice.actions
-export const authSelector = (state: IAuthState) => state
 export default authSlice.reducer

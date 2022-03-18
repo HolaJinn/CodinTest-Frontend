@@ -4,7 +4,7 @@ import React, { SyntheticEvent, useState } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import LoginForm from "../../../../components/LoginForm/LoginForm";
 import { login } from "../../store/slices/authSlice";
-import { LoginPayload } from "../../model";
+import { ILoginPayload } from "../../model";
 
 const LoginLayout = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ const LoginLayout = () => {
 
   const dispatch = useDispatch();
   const auth = useSelector((state: RootStateOrAny) => state.auth);
-  const data: LoginPayload = {
+  const data: ILoginPayload = {
     email,
     password,
   };

@@ -1,10 +1,21 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
+import { IRegistrationPayload } from "../../modules/auth/model";
 
-const RegistrationForm = () => {
+interface Props {
+  registrationForm: IRegistrationPayload;
+  submitHandler: any;
+}
+
+const RegistrationForm = ({ registrationForm, submitHandler }: Props) => {
   const onFinish = (values: any) => {
     console.log(values);
+    registrationForm.firstName = values.firstName;
+    registrationForm.lastName = values.lastName;
+    registrationForm.email = values.email;
+    registrationForm.password = values.password;
+    submitHandler();
   };
   const onFinishFailed = (errorInfo: any) => {
     console.log(errorInfo);
@@ -17,7 +28,7 @@ const RegistrationForm = () => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      autoComplete="off"
+      autoComplete="on"
     >
       <Form.Item
         name="firstName"

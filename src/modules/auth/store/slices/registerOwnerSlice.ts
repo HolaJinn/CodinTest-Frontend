@@ -1,6 +1,6 @@
-import { registerService } from './../../services/authService';
+import { IOwnerRegistrationPayload } from './../../model/index';
+import { registerOwnerService } from './../../services/authService';
 import { createSlice, createAsyncThunk, Slice } from "@reduxjs/toolkit";
-import { IRegistrationPayload } from "../../model";
 
 
 interface IRegistrationState {
@@ -17,11 +17,11 @@ interface IRegistrationState {
     message: "",
   };
 
-  export const register = createAsyncThunk(
-      "auth/register", 
-      async(registrationPayload: IRegistrationPayload, thunkAPI) => {
+  export const registerOwner = createAsyncThunk(
+      "auth/owner/register", 
+      async(registrationPayload: IOwnerRegistrationPayload, thunkAPI) => {
         try {
-            const response = await registerService(registrationPayload)
+            const response = await registerOwnerService(registrationPayload)
             return response;
         } catch (error: any) {
             console.log(error)
@@ -30,24 +30,24 @@ interface IRegistrationState {
       }
   )
 
-const registerSlice: Slice = createSlice({
-    name: "register",
+const registerOwnerSlice: Slice = createSlice({
+    name: "registerOwner",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(register.pending, (state) => {
+        builder.addCase(registerOwner.pending, (state) => {
             state.registering = true
             state.success = false
             state.error = false
             state.message = ""
         })
-        builder.addCase(register.fulfilled, (state, {payload}) => {
+        builder.addCase(registerOwner.fulfilled, (state, {payload}) => {
             state.registering = false
             state.success = true
             state.error = false
             state.message = "You successfully registered. You will recieve a verification email."
         })
-        builder.addCase(register.rejected, (state, action:any) => {
+        builder.addCase(registerOwner.rejected, (state, action:any) => {
             state.registering = false
             state.success = false
             state.error = true
@@ -57,5 +57,5 @@ const registerSlice: Slice = createSlice({
 })
 
 
-export const registerActions = registerSlice.actions
-export default registerSlice.reducer
+export const registerOwnerActions = registerOwnerSlice.actions
+export default registerOwnerSlice.reducer

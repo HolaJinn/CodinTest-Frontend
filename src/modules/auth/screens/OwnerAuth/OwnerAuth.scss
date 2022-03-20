@@ -11,7 +11,6 @@
   box-shadow: 1px 1px 7px #888888;
   padding: 1rem 3rem;
   width: 50%;
-  // min-height: 360px;
 }
 
 ul.nav.nav-tabs {
@@ -33,4 +32,8 @@ input.form-control {
 
 .toggle-show {
   cursor: pointer;
+}
+
+.countries-select ul {
+  position: relative;
 }

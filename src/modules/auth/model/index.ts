@@ -10,3 +10,14 @@ export interface ILoginPayload {
     password: string;
     role: string;
   }
+
+  export interface IOwnerRegistrationPayload {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    role: string;
+    companyName: string,
+    roleInCompany: string,
+    country: string
+  }

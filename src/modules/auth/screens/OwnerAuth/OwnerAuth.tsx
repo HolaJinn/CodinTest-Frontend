@@ -3,7 +3,7 @@ import "./OwnerAuth.scss";
 import { useNavigate } from "react-router-dom";
 import { Tabs } from "antd";
 import LoginLayout from "../../layouts/CandidateLayouts/LoginLayout";
-import RegistrationLayout from "../../layouts/CandidateLayouts/RegistrationLayout";
+import OwnerRegistrationLayout from "../../layouts/OwnerLayouts/OwnerRegistrationLayout";
 
 const { TabPane } = Tabs;
 interface Props {
@@ -30,7 +30,7 @@ const OwnerAuth = ({ path }: Props) => {
             onChange={(e) => navigate(`/owner/${e}`)}
           >
             <TabPane tab="Signup" key="signup">
-              <RegistrationLayout />
+              <OwnerRegistrationLayout />
             </TabPane>
             <TabPane tab="Login" key="login">
               <LoginLayout />

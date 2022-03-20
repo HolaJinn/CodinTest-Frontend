@@ -5,6 +5,7 @@ import PrivateRoute from "./PrivateRoute";
 import CandidateDashboard from "../modules/Dashboard/screens/CandidateDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import SignupPage from "../pages/SignupPage/SignupPage";
+import EmailVerificationPage from "../pages/EmailVerificationPage/EmailVerificationPage";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -19,6 +20,10 @@ const AppRoutes = () => {
     {
       path: "/signup",
       element: <SignupPage />,
+    },
+    {
+      path: "/auth/verify",
+      element: <EmailVerificationPage />,
     },
     {
       element: <PrivateRoute />,

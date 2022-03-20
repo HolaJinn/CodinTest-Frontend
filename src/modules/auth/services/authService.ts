@@ -19,3 +19,8 @@ export const registerOwnerService = async (request: IOwnerRegistrationPayload) =
     const response = await axiosClient.post(url, request)
     return response
 }
+
+export const verifyEmailService = async (code:string | null) => {
+    const url = apiUrl.VERIFY_EMAIL_ENDPOINT
+    return await axiosClient.get(url, {params: {code:code}})
+  }

@@ -1,10 +1,10 @@
 import React from "react";
 import { useRoutes } from "react-router-dom";
-import Home from "../components/HomePage/Home";
+import Home from "../pages/HomePage/Home";
 import PrivateRoute from "./PrivateRoute";
 import CandidateDashboard from "../modules/Dashboard/screens/CandidateDashboard";
-import LoginPage from "../components/LoginPage/LoginPage";
-import SignupPage from "../components/SignupPage/SignupPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
+import SignupPage from "../pages/SignupPage/SignupPage";
 
 const AppRoutes = () => {
   return useRoutes([

@@ -1,9 +1,10 @@
-import { Col, Row } from "antd";
 import React from "react";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
+import "./LoginPage.scss";
 import { useNavigate } from "react-router-dom";
+import { Row, Col } from "antd";
 
-const SignupPage = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
   return (
     <>
@@ -23,9 +24,9 @@ const SignupPage = () => {
                 </p>
                 <button
                   className="btn"
-                  onClick={(e) => navigate("/owner/signup")}
+                  onClick={(e) => navigate("/owner/login")}
                 >
-                  Signup
+                  Login
                 </button>
               </div>
               <div className="info-item">
@@ -36,9 +37,9 @@ const SignupPage = () => {
                 </p>
                 <button
                   className="btn"
-                  onClick={(e) => navigate("/candidate/signup")}
+                  onClick={(e) => navigate("/candidate/login")}
                 >
-                  Signup
+                  Login
                 </button>
               </div>
             </div>
@@ -50,4 +51,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default LoginPage;

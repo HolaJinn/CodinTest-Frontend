@@ -1,0 +1,39 @@
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.tab-container {
+  border-radius: 5px;
+  box-shadow: 1px 1px 7px #888888;
+  padding: 1rem 3rem;
+  width: 50%;
+}
+
+ul.nav.nav-tabs {
+  border-bottom: 0px;
+}
+
+input.form-control {
+  width: 75%;
+}
+
+.link-container {
+  display: flex;
+  justify-content: center;
+}
+
+.link-container a {
+  text-decoration: none;
+}
+
+.toggle-show {
+  cursor: pointer;
+}
+
+.countries-select ul {
+  position: relative;
+}

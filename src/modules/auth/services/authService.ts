@@ -23,4 +23,16 @@ export const registerOwnerService = async (request: IOwnerRegistrationPayload) =
 export const verifyEmailService = async (code:string | null) => {
     const url = apiUrl.VERIFY_EMAIL_ENDPOINT
     return await axiosClient.get(url, {params: {code:code}})
-  }
+}
+
+export const sendResetPasswordToken = async(request: any) => {
+    const url = apiUrl.SEND_RESET_PASSWORD_TOKEN_ENDPOINT
+    return await axiosClient.post(url, request)
+}
+
+export const resetPasswordService = async(request: any, token: string) => {
+    console.log("REQUEST",request)
+    console.log("TOKEN",token)
+    const url = apiUrl.RESET_PASSWORD_ENDPOINT
+    return await axiosClient.post(url, request, {params: {token}})
+}

@@ -1,4 +1,4 @@
-import { sendResetPasswordToken } from './../../services/authService';
+import { verifyEmailService } from './../../services/authService';
 import { createAsyncThunk, createSlice, Slice } from "@reduxjs/toolkit";
 
 interface IVerificationState {
@@ -17,9 +17,9 @@ interface IVerificationState {
 
   export const verify = createAsyncThunk(
     "auth/verify", 
-    async(email: string , thunkAPI) => {
+    async(code: string | null, thunkAPI) => {
       try {
-          const response = await sendResetPasswordToken(email)
+          const response = await verifyEmailService(code)
           return response;
       } catch (error: any) {
           console.log(error)
@@ -28,8 +28,8 @@ interface IVerificationState {
     }
 )
 
-  export const emailVerificationSlice: Slice = createSlice({
-      name:"emailVerification",
+  export const accountVerificationSlice: Slice = createSlice({
+      name:"accountVerification",
       initialState,
       reducers: {},
       extraReducers: (builder) => {
@@ -43,17 +43,17 @@ interface IVerificationState {
             state.verifiying = false
             state.success = true;
             state.error = false;
-            state.message = "A verification token has been sent to your email"
+            state.message = "Your account is verified"
         }) 
         builder.addCase(verify.rejected, (state, action:any) => {
             state.verifiying = false
             state.success = false;
             state.error = true;
-            state.message = action.payload.message
+            state.message = action.payload
         }) 
       }
       
   })
 
-  export const emailVerificationActions = emailVerificationSlice.actions
-  export default emailVerificationSlice.reducer
+  export const accountVerificationActions = accountVerificationSlice.actions
+  export default accountVerificationSlice.reducer

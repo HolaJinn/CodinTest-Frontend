@@ -2,6 +2,8 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import CandidateAuth from "../screens/CandidateAuth/CandidateAuth";
 import OwnerAuth from "../screens/OwnerAuth/OwnerAuth";
+import ForgotPassword from "../screens/ResetPassword/ForgotPassword";
+import ResetPassword from "../screens/ResetPassword/ResetPassword";
 
 const AuthRoutes = () => {
   return useRoutes([
@@ -20,6 +22,14 @@ const AuthRoutes = () => {
     {
       path: "/owner/login",
       element: <OwnerAuth path={"login"} />,
+    },
+    {
+      path: "/forgot-password",
+      element: <ForgotPassword />,
+    },
+    {
+      path: "/reset-password",
+      element: <ResetPassword />,
     },
   ]);
 };

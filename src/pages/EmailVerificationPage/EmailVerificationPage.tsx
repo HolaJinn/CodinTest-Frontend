@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import { Alert, Spin, Row, Col } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useSearchParams } from "react-router-dom";
-import { verify } from "../../modules/auth/store/slices/emailVerificationSlice";
+import { verify } from "../../modules/auth/store/slices/accountVerificationSlice";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 
 const EmailVerificationPage = () => {

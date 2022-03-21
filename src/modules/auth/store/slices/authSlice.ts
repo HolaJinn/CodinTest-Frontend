@@ -40,6 +40,7 @@ const authSlice: Slice = createSlice({
         builder.addCase(login.pending, (state) => {
             state.logging = true
             state.error = false
+            localStorage.removeItem("token")
         })
         builder.addCase(login.fulfilled, (state, {payload}) => {
             state.isLoggedIn = true
@@ -47,6 +48,7 @@ const authSlice: Slice = createSlice({
             state.token = payload.data.jwtToken
             state.error = false
             state.message = "You successfully logged in"
+            localStorage.setItem("token", payload.data.jwtToken)
         })
         builder.addCase(login.rejected, (state, action:any) => {
             state.isLoggedIn = false
@@ -54,6 +56,7 @@ const authSlice: Slice = createSlice({
             state.token = ''
             state.error = true
             state.message = action.payload.message
+            localStorage.removeItem("token")
         })
     }
 })

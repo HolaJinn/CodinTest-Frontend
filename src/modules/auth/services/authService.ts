@@ -59,3 +59,14 @@ export const resetPasswordService = async (request: any, token: string) => {
     const url = apiUrl.RESET_PASSWORD_ENDPOINT
     return await axiosClient.post(url, request, {params: {token}})
 }
+
+export const getAuthenticatedUser = async() => {
+    const token = localStorage.getItem("token");
+    const url = apiUrl.GET_AUTHENTICATED_USER_ENDPOINT;
+    return await axiosClient.get(url, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+}

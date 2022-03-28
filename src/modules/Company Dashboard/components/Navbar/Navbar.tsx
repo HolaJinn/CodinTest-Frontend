@@ -1,11 +1,10 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import ReactLogo from "../../../../assets/image/logo.svg";
 
 const navigation = [
-  { name: "Candidates", href: "/candidates", current: true },
+  { name: "Candidates", href: "/candidates", current: false },
   { name: "Invitations", href: "/invitations", current: false },
   { name: "Exercises", href: "/exercises", current: false },
   { name: "Tests", href: "/tests", current: false },
@@ -54,9 +53,9 @@ export default function Navbar() {
                     />
                     <a
                       href="/dashboard"
-                      className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                      className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-lg font-semibold"
                     >
-                      CodinTest
+                      CodinTest Companies
                     </a>
                   </div>
                 </div>

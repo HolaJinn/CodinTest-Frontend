@@ -33,7 +33,7 @@ const OwnerAuth = ({ path }: Props) => {
               <OwnerRegistrationLayout />
             </TabPane>
             <TabPane tab="Login" key="login">
-              <LoginLayout />
+              <LoginLayout path={"company"} />
             </TabPane>
           </Tabs>
         </div>

@@ -32,7 +32,7 @@ const CandidateAuth = ({ path }: Props) => {
               <RegistrationLayout />
             </TabPane>
             <TabPane tab="Login" key="login">
-              <LoginLayout />
+              <LoginLayout path={"candidate"} />
             </TabPane>
           </Tabs>
         </div>

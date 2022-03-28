@@ -1,4 +1,4 @@
-export const BASE_URL_ENDPOINT = "http://localhost:8080";
+export const BASE_URL_ENDPOINT = "http://localhost:8080/api/v1";
 export const LOGIN_USER_ENDPOINT = BASE_URL_ENDPOINT + "/auth/login"
 export const REGISTER_USER_ENDPOINT = BASE_URL_ENDPOINT + "/auth/register"
 export const REGISTER_OWNER_ENDPOINT = BASE_URL_ENDPOINT + "/auth/owner/register"

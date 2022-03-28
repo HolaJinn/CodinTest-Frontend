@@ -2,10 +2,11 @@ import React from "react";
 import { useRoutes } from "react-router-dom";
 import Home from "../pages/HomePage/Home";
 import PrivateRoute from "./PrivateRoute";
-import CandidateDashboard from "../modules/Dashboard/screens/CandidateDashboard";
+import CandidateDashboard from "../modules/CandidateDashboard/screens/CandidateDashboard";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import SignupPage from "../pages/SignupPage/SignupPage";
 import EmailVerificationPage from "../pages/EmailVerificationPage/EmailVerificationPage";
+import CompanyDashboard from "../modules/Company Dashboard/screens/CompanyDashboard";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -31,6 +32,10 @@ const AppRoutes = () => {
         {
           path: "/dashboard",
           element: <CandidateDashboard />,
+        },
+        {
+          path: "/company/dashboard",
+          element: <CompanyDashboard />,
         },
       ],
     },

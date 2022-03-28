@@ -1,7 +1,8 @@
 import React from "react";
+import Navbar from "../components/Navbar";
 
 const CandidateDashboard = () => {
-  return <div>CandidateDashboard</div>;
+  return <Navbar />;
 };
 
 export default CandidateDashboard;

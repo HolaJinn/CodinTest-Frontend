@@ -1,4 +1,4 @@
-import { IExerciseRequest } from './../models/index';
+import { IExerciseRequest, ITestCaseRequest } from './../models/index';
 import * as apiUrl from "../../../utils/constants"
 import axiosClient from '../../../api/axiosClient';
 
@@ -12,4 +12,14 @@ export const createExerciseService = async (requset: IExerciseRequest) => {
         }
     })
     return response;
+}
+
+export const createTestCaseService = async(request: ITestCaseRequest) => {
+    const url = apiUrl.CREATE_TEST_CASE_ENDPOINT
+    const response = await axiosClient.post(url, request, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    return response
 }

@@ -9,3 +9,12 @@ export interface IExerciseRequest {
     programmingLanguage: string,
     initialCode: string
 }
+
+export interface ITestCaseRequest {
+    exerciseId: number,
+    name: string,
+    score: number,
+    isSample: boolean,
+    input: string,
+    expectedOutput: string
+}

@@ -10,6 +10,7 @@ import CompanyDashboard from "../modules/CompanyDashboard/screens/CompanyDashboa
 import ExercisesScreen from "../modules/CompanyDashboard/screens/ExercisesScreen";
 import CompanyLayout from "../modules/CompanyDashboard/layouts/CompanyLayout";
 import CreateExercise from "../modules/CompanyDashboard/screens/CreateExercise";
+import CreateTestCase from "../modules/CompanyDashboard/screens/CreateTestCase";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -51,6 +52,10 @@ const AppRoutes = () => {
             {
               path: "/company/create-exercise",
               element: <CreateExercise />,
+            },
+            {
+              path: "/company/create-exercise/add-test-cases",
+              element: <CreateTestCase />,
             },
           ],
         },

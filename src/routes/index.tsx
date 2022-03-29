@@ -7,6 +7,9 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import SignupPage from "../pages/SignupPage/SignupPage";
 import EmailVerificationPage from "../pages/EmailVerificationPage/EmailVerificationPage";
 import CompanyDashboard from "../modules/Company Dashboard/screens/CompanyDashboard";
+import ExercisesScreen from "../modules/Company Dashboard/screens/ExercisesScreen";
+import CompanyLayout from "../modules/Company Dashboard/layouts/CompanyLayout";
+import CreateExercise from "../modules/Company Dashboard/screens/CreateExercise";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -34,8 +37,22 @@ const AppRoutes = () => {
           element: <CandidateDashboard />,
         },
         {
-          path: "/company/dashboard",
-          element: <CompanyDashboard />,
+          path: "/company",
+          element: <CompanyLayout />,
+          children: [
+            {
+              path: "/company/dashboard",
+              element: <CompanyDashboard />,
+            },
+            {
+              path: "/company/exercises",
+              element: <ExercisesScreen />,
+            },
+            {
+              path: "/company/create-exercise",
+              element: <CreateExercise />,
+            },
+          ],
         },
       ],
     },

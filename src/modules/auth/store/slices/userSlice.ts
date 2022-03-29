@@ -38,9 +38,9 @@ const userSlice: Slice = createSlice({
         builder.addCase(getCurrentUser.pending, (state) => {
         }) 
         builder.addCase(getCurrentUser.fulfilled, (state, action: any) => {
-            console.log("Action>>", action)
-            console.log("Payload>>", action.payload)
           state.user = action.payload.data
+          console.log(action.payload.data)
+          localStorage.setItem("user", JSON.stringify(action.payload.data))
         })
     }
 })

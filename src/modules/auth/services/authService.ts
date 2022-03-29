@@ -60,6 +60,10 @@ export const resetPasswordService = async (request: any, token: string) => {
     return await axiosClient.post(url, request, {params: {token}})
 }
 
+/**
+ * It gets the authenticated user.
+ * @returns The response is an object with the user's information.
+ */
 export const getAuthenticatedUser = async() => {
     const token = localStorage.getItem("token");
     const url = apiUrl.GET_AUTHENTICATED_USER_ENDPOINT;

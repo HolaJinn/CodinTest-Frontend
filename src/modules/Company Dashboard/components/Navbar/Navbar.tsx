@@ -6,7 +6,7 @@ import ReactLogo from "../../../../assets/image/logo.svg";
 const navigation = [
   { name: "Candidates", href: "/candidates", current: false },
   { name: "Invitations", href: "/invitations", current: false },
-  { name: "Exercises", href: "/exercises", current: false },
+  { name: "Exercises", href: "/company/exercises", current: false },
   { name: "Tests", href: "/tests", current: false },
 ];
 
@@ -16,6 +16,7 @@ function classNames(...classes: any) {
 
 const handleLogout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };
 
 export default function Navbar() {
@@ -52,7 +53,7 @@ export default function Navbar() {
                       className="color-white"
                     />
                     <a
-                      href="/dashboard"
+                      href="/company/dashboard"
                       className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-lg font-semibold"
                     >
                       CodinTest Companies
@@ -139,7 +140,7 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="/candidate/login"
+                            href="/owner/login"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"

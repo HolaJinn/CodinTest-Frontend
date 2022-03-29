@@ -6,7 +6,7 @@ import accountVerificationReducer from "../modules/auth/store/slices/accountVeri
 import emailVerificationReducer from "../modules/auth/store/slices/emailVerificationSlice"
 import resetPasswordReducer from "../modules/auth/store/slices/resetPasswordSlice"
 import userSliceReducer from "../modules/auth/store/slices/userSlice"
-
+import createExerciseReducer from "../modules/Company Dashboard/store/slices/createExerciseSlice";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -15,6 +15,7 @@ export const store = configureStore({
         verifyAccount: accountVerificationReducer,
         verifyEmail: emailVerificationReducer,
         resetPassword: resetPasswordReducer,
-        user: userSliceReducer
+        user: userSliceReducer,
+        createExercise: createExerciseReducer
     }
 })

@@ -6,10 +6,10 @@ import CandidateDashboard from "../modules/CandidateDashboard/screens/CandidateD
 import LoginPage from "../pages/LoginPage/LoginPage";
 import SignupPage from "../pages/SignupPage/SignupPage";
 import EmailVerificationPage from "../pages/EmailVerificationPage/EmailVerificationPage";
-import CompanyDashboard from "../modules/Company Dashboard/screens/CompanyDashboard";
-import ExercisesScreen from "../modules/Company Dashboard/screens/ExercisesScreen";
-import CompanyLayout from "../modules/Company Dashboard/layouts/CompanyLayout";
-import CreateExercise from "../modules/Company Dashboard/screens/CreateExercise";
+import CompanyDashboard from "../modules/CompanyDashboard/screens/CompanyDashboard";
+import ExercisesScreen from "../modules/CompanyDashboard/screens/ExercisesScreen";
+import CompanyLayout from "../modules/CompanyDashboard/layouts/CompanyLayout";
+import CreateExercise from "../modules/CompanyDashboard/screens/CreateExercise";
 
 const AppRoutes = () => {
   return useRoutes([

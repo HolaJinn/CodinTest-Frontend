@@ -6,7 +6,7 @@ import accountVerificationReducer from "../modules/auth/store/slices/accountVeri
 import emailVerificationReducer from "../modules/auth/store/slices/emailVerificationSlice"
 import resetPasswordReducer from "../modules/auth/store/slices/resetPasswordSlice"
 import userSliceReducer from "../modules/auth/store/slices/userSlice"
-import createExerciseReducer from "../modules/Company Dashboard/store/slices/createExerciseSlice";
+import createExerciseReducer from "../modules/CompanyDashboard/store/slices/createExerciseSlice";
 export const store = configureStore({
     reducer: {
         auth: authReducer,

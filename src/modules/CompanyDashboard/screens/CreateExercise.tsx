@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { Row, Col, Breadcrumb, Spin, Alert } from "antd";
+import { Col, Breadcrumb, Spin, Alert, Steps } from "antd";
 import { IExerciseRequest } from "../models";
 import { ExerciseDifficulty } from "../../../models/ExerciceDifficulty";
 import { ExerciseStatus } from "../../../models/ExerciseStatus";
@@ -7,6 +7,8 @@ import { createExercise } from "../store/slices/createExerciseSlice";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import CreateExerciseForm from "../../../components/CreateExerciseForm/CreateExerciseForm";
 import { useNavigate } from "react-router-dom";
+
+const { Step } = Steps;
 
 const CreateExercise = () => {
   const navigate = useNavigate();
@@ -32,43 +34,41 @@ const CreateExercise = () => {
 
   return (
     <>
-      <Row>
-        <Col span={18} offset={3}>
-          <div className="flex flex-col">
-            <div className="my-5">
-              <Breadcrumb separator=">">
-                <Breadcrumb.Item href="/company/exercises">
-                  Exercises
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>Create Exercise</Breadcrumb.Item>
-              </Breadcrumb>
-            </div>
-            <div className="flex justify-center">
-              <h1 className="text-3xl text-bold">Create New Exercise</h1>
-            </div>
-            <Col offset={3} span={18}>
-              <div className="border border-current rounded shadow-xl px-12 py-4">
-                <CreateExerciseForm
-                  exerciseRequest={exerciseRequest}
-                  submitHandler={submitHandler}
-                />
-                {creationState.isCreating && (
-                  <Spin
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 24 }} spin />
-                    }
-                  />
-                )}
-                {creationState.error && (
-                  <Alert type="error" message={creationState.message} />
-                )}
-                {creationState.success &&
-                  navigate("/company/create-exercise/add-test-cases")}
-              </div>
-            </Col>
+      <div className="flex flex-col">
+        <div className="p-5 bg-gray-100">
+          <Breadcrumb separator=">">
+            <Breadcrumb.Item href="/company/exercises">
+              Exercises
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>Create Exercise</Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
+        <div className="px-5 py-2 bg-gray-150">
+          <Steps current={0} percent={60}>
+            <Step title="In Progress" description="Provide details" />
+            <Step title="Waiting" description="Provide test cases" />
+            <Step title="Waiting" description="Provide Tags" />
+          </Steps>
+        </div>
+        <Col offset={3} span={18}>
+          <div className="border border-current rounded shadow-xl my-5 px-12 py-4">
+            <CreateExerciseForm
+              exerciseRequest={exerciseRequest}
+              submitHandler={submitHandler}
+            />
+            {creationState.isCreating && (
+              <Spin
+                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+              />
+            )}
+            {creationState.error && (
+              <Alert type="error" message={creationState.message} />
+            )}
+            {creationState.success &&
+              navigate("/company/create-exercise/add-test-cases")}
           </div>
         </Col>
-      </Row>
+      </div>
     </>
   );
 };

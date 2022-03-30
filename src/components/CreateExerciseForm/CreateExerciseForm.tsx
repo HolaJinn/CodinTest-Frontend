@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { CheckCircleOutlined, StarOutlined } from "@ant-design/icons";
-import { Form, Input, Button, Menu, Switch } from "antd";
+import { Form, Input, Button, Switch, Select } from "antd";
 import { IExerciseRequest } from "../../modules/CompanyDashboard/models";
 import { ExerciseDifficulty } from "../../models/ExerciceDifficulty";
 import { ExerciseStatus } from "../../models/ExerciseStatus";
 
-const { SubMenu } = Menu;
 const { TextArea } = Input;
+const { Option } = Select;
 
 interface Props {
   exerciseRequest: IExerciseRequest;
@@ -42,8 +42,8 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
     console.log(error);
   };
 
-  const handleLanguageMenu = (e: any) => {
-    setLanguage(e.key);
+  const handleLanguageMenu = (value: string) => {
+    setLanguage(value);
   };
 
   const changeTimerValue = (e: any) => {
@@ -62,8 +62,6 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
     <>
       <Form
         name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -100,91 +98,72 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
             },
           ]}
         >
-          <TextArea showCount placeholder="Exercise Description" />
+          <TextArea showCount placeholder="Exercise Description" rows={8} />
         </Form.Item>
 
-        <div className="w-10/12 flex justify-center items-center">
-          <Form.Item name="timerInMinute" className="justify-center">
-            <Switch
-              checkedChildren="Timer"
-              unCheckedChildren="No Timer"
-              onChange={onSwitchChange}
-              className="m-2"
-            />
-            <Input
-              type="number"
-              placeholder="Timer in minute"
-              disabled={!timer}
-              className="m-5"
-              onChange={(e) => changeTimerValue(e)}
-            />
-          </Form.Item>
-          <Form.Item name="status" className="justify-center">
-            <Switch checkedChildren="public" unCheckedChildren="private" />
-          </Form.Item>
+        <div className="flex justify-around items-center">
+          <div className="mx-5">
+            <Form.Item name="timerInMinute">
+              <div className="my-1">
+                <Switch
+                  checkedChildren="Timer"
+                  unCheckedChildren="No Timer"
+                  onChange={onSwitchChange}
+                />
+              </div>
+              <Input
+                style={{ width: 200 }}
+                type="number"
+                placeholder="Timer in minute"
+                disabled={!timer}
+                onChange={(e) => changeTimerValue(e)}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item name="status">
+              <Switch checkedChildren="public" unCheckedChildren="private" />
+            </Form.Item>
+          </div>
         </div>
-        <div className="w-full flex justify-between items-center">
-          <div className="w-full">
+        <div className="flex justify-around items-center">
+          <div>
             <Form.Item name="programmingLanguage" className="justify-center">
-              <Menu
-                onClick={handleLanguageMenu}
-                defaultSelectedKeys={["Java"]}
-                mode="vertical"
+              <Select
+                defaultValue="Java"
+                style={{ width: 200 }}
+                onChange={handleLanguageMenu}
               >
-                <SubMenu title={language} key="sub1">
-                  <Menu.Item key="Java">Java</Menu.Item>
-                  <Menu.Item key="C++">C++</Menu.Item>
-                </SubMenu>
-              </Menu>
+                <Option value="Java">Java</Option>
+                <Option value="C++">C++</Option>
+                <Option value="Python">Python</Option>
+              </Select>
             </Form.Item>
           </div>
 
-          <div className="w-full">
+          <div>
             <Form.Item name="difficulty" className="justify-center">
-              <Menu
-                onClick={handleDifficultyMenu}
-                defaultSelectedKeys={[difficulty]}
-                mode="vertical"
+              <Select
+                defaultValue="EASY"
+                style={{ width: 200 }}
+                onChange={handleDifficultyMenu}
               >
-                <SubMenu title={difficulty} key="sub2">
-                  <Menu.Item
-                    key="EASY"
-                    icon={
-                      <>
-                        <StarOutlined />
-                      </>
-                    }
-                  >
-                    Easy
-                  </Menu.Item>
-                  <Menu.Item
-                    key="MEDIUM"
-                    icon={
-                      <>
-                        <StarOutlined /> <StarOutlined />
-                      </>
-                    }
-                  >
-                    Medium
-                  </Menu.Item>
-                  <Menu.Item
-                    key="HARD"
-                    icon={
-                      <>
-                        <StarOutlined /> <StarOutlined /> <StarOutlined />
-                      </>
-                    }
-                  >
-                    Hard
-                  </Menu.Item>
-                </SubMenu>
-              </Menu>
+                <Option value="EASY">
+                  <StarOutlined /> Easy
+                </Option>
+                <Option value="MEDIUM">
+                  <StarOutlined /> <StarOutlined /> Medium
+                </Option>
+                <Option value="HARD">
+                  <StarOutlined /> <StarOutlined /> <StarOutlined /> Hard
+                </Option>
+              </Select>
             </Form.Item>
           </div>
         </div>
 
         <Form.Item name="initialCode" className="justify-center">
-          <TextArea showCount placeholder="Initial Code" />
+          <TextArea showCount placeholder="Initial Code" rows={5} />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 4, span: 16 }}>

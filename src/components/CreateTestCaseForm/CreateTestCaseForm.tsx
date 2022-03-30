@@ -4,22 +4,24 @@ import { Form, Input, Button, Switch } from "antd";
 import { ITestCaseRequest } from "../../modules/CompanyDashboard/models";
 
 const { TextArea } = Input;
-
 interface Props {
   testCaseRequest: ITestCaseRequest;
-  submitHandler: any;
+  addTestCase: any;
 }
 
-const CreateTestCaseForm = ({ testCaseRequest, submitHandler }: Props) => {
+const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
+  const [form] = Form.useForm();
   const [sample, setSample] = useState(testCaseRequest.isSample);
-  const onFinish = (values: ITestCaseRequest) => {
+
+  const onFinish = (values: any) => {
     console.log(values);
     testCaseRequest.name = values.name;
     testCaseRequest.score = values.score;
     testCaseRequest.input = values.input;
     testCaseRequest.expectedOutput = values.expectedOutput;
     testCaseRequest.isSample = sample;
-    submitHandler();
+    addTestCase();
+    // form.resetFields();
   };
 
   const onFinishFailed = (error: any) => {
@@ -31,9 +33,8 @@ const CreateTestCaseForm = ({ testCaseRequest, submitHandler }: Props) => {
   };
   return (
     <Form
+      form={form}
       name="basic"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -90,7 +91,7 @@ const CreateTestCaseForm = ({ testCaseRequest, submitHandler }: Props) => {
       >
         <TextArea placeholder="Expected output is required" showCount />
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+      <Form.Item>
         <Button
           size="large"
           type="ghost"

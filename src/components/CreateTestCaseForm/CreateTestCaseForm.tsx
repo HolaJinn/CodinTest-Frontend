@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CheckCircleOutlined } from "@ant-design/icons";
-import { Form, Input, Button, Switch } from "antd";
+import { Form, Input, Button, Switch, Tooltip } from "antd";
 import { ITestCaseRequest } from "../../modules/CompanyDashboard/models";
 
 const { TextArea } = Input;
@@ -58,12 +58,14 @@ const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
       </Form.Item>
 
       <Form.Item name="isSample" className="justify-center">
-        <Switch
-          checkedChildren="Sample"
-          unCheckedChildren="Not Sample"
-          onChange={onSwitchChange}
-          className="m-2"
-        />
+        <Tooltip title="Mark this test case as a sample">
+          <Switch
+            checkedChildren="Sample"
+            unCheckedChildren="Not Sample"
+            onChange={onSwitchChange}
+            className="m-2"
+          />
+        </Tooltip>
       </Form.Item>
 
       <Form.Item

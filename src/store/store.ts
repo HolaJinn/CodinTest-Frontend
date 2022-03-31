@@ -7,8 +7,9 @@ import emailVerificationReducer from "../modules/auth/store/slices/emailVerifica
 import resetPasswordReducer from "../modules/auth/store/slices/resetPasswordSlice"
 import userSliceReducer from "../modules/auth/store/slices/userSlice"
 import createExerciseReducer from "../modules/CompanyDashboard/store/slices/createExerciseSlice";
+import createInitialCodeReducer from "../modules/CompanyDashboard/store/slices/createInitialCodeSlice";
 import createTestCaseReducer from "../modules/CompanyDashboard/store/slices/createTestCaseSlice"
-
+import programmingLanguageReducer from "./slices/programmingLanguageSlice";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -19,6 +20,8 @@ export const store = configureStore({
         resetPassword: resetPasswordReducer,
         user: userSliceReducer,
         createExercise: createExerciseReducer,
-        createTestCase: createTestCaseReducer
+        createInitialCode: createInitialCodeReducer,
+        createTestCase: createTestCaseReducer,
+        programmingLanguage: programmingLanguageReducer
     }
 })

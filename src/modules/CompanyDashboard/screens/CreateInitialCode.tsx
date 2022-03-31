@@ -1,36 +1,35 @@
-import { LoadingOutlined } from "@ant-design/icons";
+import React from "react";
 import { Col, Breadcrumb, Spin, Alert, Steps } from "antd";
-import { IExerciseRequest } from "../models";
-import { ExerciseDifficulty } from "../../../models/ExerciceDifficulty";
-import { ExerciseStatus } from "../../../models/ExerciseStatus";
-import { createExercise } from "../store/slices/createExerciseSlice";
+import { LoadingOutlined } from "@ant-design/icons";
+import InitialCodeForm from "../../../components/InitialCodeForm/InitialCodeForm";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import CreateExerciseForm from "../../../components/CreateExerciseForm/CreateExerciseForm";
+import { IInitialCodeRequest } from "../models";
+import { createInitialCode } from "../store/slices/createInitialCodeSlice";
 import { useNavigate } from "react-router-dom";
-import { fetchProgrammingLanguages } from "../../../store/slices/programmingLanguageSlice";
 
 const { Step } = Steps;
 
-const CreateExercise = () => {
+const CreateInitialCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const exercise = useSelector(
+    (state: RootStateOrAny) => state.createExercise.exercise
+  );
   const creationState = useSelector(
-    (state: RootStateOrAny) => state.createExercise
+    (state: RootStateOrAny) => state.createInitialCode
   );
 
-  const exerciseRequest: IExerciseRequest = {
-    title: "",
-    description: "",
-    difficulty: ExerciseDifficulty.EASY,
-    status: ExerciseStatus.PUBLIC,
-    timerInMinute: 0,
-    tags: [],
+  console.log(creationState);
+
+  const initialCodeRequest: IInitialCodeRequest = {
+    exerciseId: exercise.id,
+    programmingLanguage: "",
+    initialCode: "",
   };
 
   const submitHandler = () => {
-    console.log(exerciseRequest);
-    dispatch(createExercise(exerciseRequest));
-    dispatch(fetchProgrammingLanguages());
+    console.log(initialCodeRequest);
+    dispatch(createInitialCode(initialCodeRequest));
   };
 
   return (
@@ -45,16 +44,16 @@ const CreateExercise = () => {
           </Breadcrumb>
         </div>
         <div className="px-5 py-2 bg-gray-150">
-          <Steps current={0} percent={60}>
-            <Step title="In Progress" description="Provide details" />
-            <Step title="Waiting" description="Provide test cases" />
-            <Step title="Waiting" description="Provide Tags" />
+          <Steps current={1} percent={60}>
+            <Step title="Finished" description="Provide Details" />
+            <Step title="In Progress" description="Provide Initial Code" />
+            <Step title="Waiting" description="Provide Test Cases" />
           </Steps>
         </div>
         <Col offset={3} span={18}>
           <div className="border border-current rounded shadow-xl my-5 px-12 py-4">
-            <CreateExerciseForm
-              exerciseRequest={exerciseRequest}
+            <InitialCodeForm
+              initialCodeRequest={initialCodeRequest}
               submitHandler={submitHandler}
             />
             {creationState.isCreating && (
@@ -66,7 +65,7 @@ const CreateExercise = () => {
               <Alert type="error" message={creationState.message} />
             )}
             {creationState.success &&
-              navigate("/company/create-exercise/initial-code")}
+              navigate("/company/create-exercise/add-test-cases")}
           </div>
         </Col>
       </div>
@@ -74,4 +73,4 @@ const CreateExercise = () => {
   );
 };
 
-export default CreateExercise;
+export default CreateInitialCode;

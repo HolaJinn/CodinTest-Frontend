@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CheckCircleOutlined, StarOutlined } from "@ant-design/icons";
-import { Form, Input, Button, Switch, Select } from "antd";
+import { Form, Input, Button, Switch, Select, Tooltip } from "antd";
 import { IExerciseRequest } from "../../modules/CompanyDashboard/models";
 import { ExerciseDifficulty } from "../../models/ExerciceDifficulty";
 import { ExerciseStatus } from "../../models/ExerciseStatus";
+import { getAllTagsService } from "../../modules/CompanyDashboard/services/dashboardServices";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -16,12 +17,21 @@ interface Props {
 const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
   const [timer, setTimer] = useState(false);
   const [timerValue, setTimerValue] = useState(0);
-  const [language, setLanguage] = useState("Java");
   const [difficulty, setDiffulty] = useState(ExerciseDifficulty.EASY);
+  const [tags, setTags] = useState([]);
+
+  const children: any[] = [];
+
+  tags.map((tag: any) => {
+    return children.push(<Option key={tag.id}>{tag.name}</Option>);
+  });
+
+  useEffect(() => {
+    getAllTagsService().then((response) => setTags(response.data));
+  });
 
   const onFinish = (values: IExerciseRequest) => {
     values.timerInMinute = timerValue;
-    values.programmingLanguage = language.toUpperCase();
     values.difficulty = difficulty;
     if (values.status) {
       values.status = ExerciseStatus.PUBLIC;
@@ -30,22 +40,16 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
     }
     exerciseRequest.title = values.title;
     exerciseRequest.description = values.description;
-    exerciseRequest.initialCode = values.initialCode;
-    exerciseRequest.programmingLanguage = values.programmingLanguage;
     exerciseRequest.difficulty = values.difficulty;
     exerciseRequest.status = values.status;
     exerciseRequest.timerInMinute = values.timerInMinute;
+    exerciseRequest.tags = values.tags;
     submitHandler();
   };
 
   const onFinishFailed = (error: any) => {
     console.log(error);
   };
-
-  const handleLanguageMenu = (value: string) => {
-    setLanguage(value);
-  };
-
   const changeTimerValue = (e: any) => {
     setTimerValue(e.target.value);
   };
@@ -56,6 +60,10 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
 
   const onSwitchChange = (checked: any) => {
     setTimer(checked);
+  };
+
+  const handleTagChange = (value: any) => {
+    console.log(value);
   };
 
   return (
@@ -105,11 +113,13 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
           <div className="mx-5">
             <Form.Item name="timerInMinute">
               <div className="my-1">
-                <Switch
-                  checkedChildren="Timer"
-                  unCheckedChildren="No Timer"
-                  onChange={onSwitchChange}
-                />
+                <Tooltip title="Add timer to this exercise" placement="right">
+                  <Switch
+                    checkedChildren="Timer"
+                    unCheckedChildren="No Timer"
+                    onChange={onSwitchChange}
+                  />
+                </Tooltip>
               </div>
               <Input
                 style={{ width: 200 }}
@@ -122,25 +132,28 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
           </div>
           <div>
             <Form.Item name="status">
-              <Switch checkedChildren="public" unCheckedChildren="private" />
+              <Tooltip
+                title="Make this exercise public to everyone"
+                placement="left"
+              >
+                <Switch checkedChildren="public" unCheckedChildren="private" />
+              </Tooltip>
             </Form.Item>
           </div>
         </div>
         <div className="flex justify-around items-center">
-          <div>
-            <Form.Item name="programmingLanguage" className="justify-center">
+          <div className="w-5/12">
+            <Form.Item name="tags">
               <Select
-                defaultValue="Java"
-                style={{ width: 200 }}
-                onChange={handleLanguageMenu}
+                mode="multiple"
+                allowClear
+                placeholder="Please select Tags"
+                onChange={handleTagChange}
               >
-                <Option value="Java">Java</Option>
-                <Option value="C++">C++</Option>
-                <Option value="Python">Python</Option>
+                {children}
               </Select>
             </Form.Item>
           </div>
-
           <div>
             <Form.Item name="difficulty" className="justify-center">
               <Select
@@ -162,11 +175,7 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
           </div>
         </div>
 
-        <Form.Item name="initialCode" className="justify-center">
-          <TextArea showCount placeholder="Initial Code" rows={5} />
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        <Form.Item>
           <Button
             size="large"
             type="ghost"

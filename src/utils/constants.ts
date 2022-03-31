@@ -7,5 +7,8 @@ export const SEND_RESET_PASSWORD_TOKEN_ENDPOINT = BASE_URL_ENDPOINT + "/auth/for
 export const RESET_PASSWORD_ENDPOINT = BASE_URL_ENDPOINT + "/auth/reset-password"
 export const GET_AUTHENTICATED_USER_ENDPOINT = BASE_URL_ENDPOINT + "/auth/current"
 
-export const CREATE_EXERCISE_ENDPOINT = BASE_URL_ENDPOINT + "/exercises"
-export const CREATE_TEST_CASE_ENDPOINT = CREATE_EXERCISE_ENDPOINT + "/test-cases"
+export const EXERCISE_ENDPOINT = BASE_URL_ENDPOINT + "/exercises"
+export const TEST_CASE_ENDPOINT = EXERCISE_ENDPOINT + "/test-cases"
+export const INITIAL_CODE_ENDPOINT = EXERCISE_ENDPOINT + "/initial-code"
+export const PROGRAMMING_LANGUAGES_ENDPOINT = BASE_URL_ENDPOINT + "/programming-languages"
+export const TAGS_ENDPOINT = BASE_URL_ENDPOINT + "/tags"

@@ -6,6 +6,11 @@ export interface IExerciseRequest {
     difficulty: ExerciseDifficulty,
     status: ExerciseStatus,
     timerInMinute: Number,
+    tags: number[]
+}
+
+export interface IInitialCodeRequest {
+    exerciseId: number,
     programmingLanguage: string,
     initialCode: string
 }

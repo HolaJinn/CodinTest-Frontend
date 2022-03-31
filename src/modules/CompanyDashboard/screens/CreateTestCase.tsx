@@ -20,8 +20,7 @@ import CreateTestCaseForm from "../../../components/CreateTestCaseForm/CreateTes
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { ITestCaseRequest } from "../models";
 import { createTestCase } from "../store/slices/createTestCaseSlice";
-import { TestCase } from "../../../models/TestCase";
-import { boolean } from "yup";
+import { useNavigate } from "react-router-dom";
 
 const { Step } = Steps;
 
@@ -46,6 +45,7 @@ const CreateTestCase = () => {
   const creationState = useSelector(
     (state: RootStateOrAny) => state.createTestCase
   );
+  const navigate = useNavigate();
 
   const testCaseRequest: ITestCaseRequest = {
     exerciseId: exercise.id,
@@ -197,6 +197,7 @@ const CreateTestCase = () => {
           {creationState.error && (
             <Alert type="error" message={creationState.message} />
           )}
+          {creationState.success && navigate("/company/exercises")}
         </div>
       </Col>
     </div>

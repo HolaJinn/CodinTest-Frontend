@@ -12,13 +12,4 @@ export interface Exercise {
     timerInMinute: number,
     programmingLanguage: ProgrammingLanguage,
     initialCode: string
-    // "company": {
-    //     "id": 1,
-    //     "name": "Facebook",
-    //     "country": "US",
-    //     "subscriptionDurationInDays": 14,
-    //     "active": true
-    // },
-    // "testCases": null,
-    // "tags": null
 }

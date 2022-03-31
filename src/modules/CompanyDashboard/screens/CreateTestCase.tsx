@@ -142,9 +142,9 @@ const CreateTestCase = () => {
       </div>
       <div className="px-5 py-2 bg-gray-150">
         <Steps current={1} percent={60}>
-          <Step title="Finished" description="Provide details" />
-          <Step title="In Progress" description="Provide test cases" />
-          <Step title="Waiting" description="Provide Tags" />
+          <Step title="Finished" description="Provide Details" />
+          <Step title="Finished" description="Provide Initial Code" />
+          <Step title="In Progress" description="Provide Test Cases" />
         </Steps>
       </div>
       <Col offset={3} span={18}>

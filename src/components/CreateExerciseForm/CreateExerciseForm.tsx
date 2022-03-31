@@ -145,10 +145,16 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
           <div className="w-5/12">
             <Form.Item name="tags">
               <Select
+                showSearch
                 mode="multiple"
                 allowClear
                 placeholder="Please select Tags"
                 onChange={handleTagChange}
+                optionFilterProp="children"
+                filterOption={(input, option: any) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+                  0
+                }
               >
                 {children}
               </Select>

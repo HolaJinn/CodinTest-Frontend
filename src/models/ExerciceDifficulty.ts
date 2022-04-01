@@ -1,5 +1,5 @@
 export enum ExerciseDifficulty {
-    EASY = "EASY",
-    MEDIUM = "MEDIUM",
-    HARD = "HARD"
+    EASY = "Easy",
+    MEDIUM = "Medium",
+    HARD = "Hard"
 }

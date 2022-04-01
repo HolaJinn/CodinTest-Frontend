@@ -1,4 +1,3 @@
-import { ProgrammingLanguage } from './ProgrammingLanguage';
 import { ExerciseDifficulty } from './ExerciceDifficulty';
 import { ExerciseStatus } from './ExerciseStatus';
 
@@ -10,6 +9,7 @@ export interface Exercise {
     difficulty: ExerciseDifficulty,
     status: ExerciseStatus,
     timerInMinute: number,
-    programmingLanguage: ProgrammingLanguage,
-    initialCode: string
+    programmingLanguageName: string,
+    initialCode: string,
+    createdDate: string
 }

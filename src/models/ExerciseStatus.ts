@@ -1,4 +1,4 @@
 export enum ExerciseStatus {
-    PUBLIC = "PUBLIC",
-    PRIVATE = "PRIVATE"
+    PUBLIC = "Public",
+    PRIVATE = "Private"
 }

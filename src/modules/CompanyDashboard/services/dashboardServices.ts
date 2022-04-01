@@ -14,6 +14,16 @@ export const createExerciseService = async (requset: IExerciseRequest) => {
     return response;
 }
 
+export const getExercisesService = async(options: Record<string, string>) => {
+    const url = apiUrl.EXERCISE_ENDPOINT
+    return await axiosClient.get(url, {
+        params: options, 
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}
+
 export const createInitialCodeService = async(request: IInitialCodeRequest) => {
     const url = apiUrl.INITIAL_CODE_ENDPOINT
     const response = await axiosClient.post(url, request, {

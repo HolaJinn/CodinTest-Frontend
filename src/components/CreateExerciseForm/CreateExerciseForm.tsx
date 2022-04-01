@@ -17,7 +17,7 @@ interface Props {
 const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
   const [timer, setTimer] = useState(false);
   const [timerValue, setTimerValue] = useState(0);
-  const [difficulty, setDiffulty] = useState(ExerciseDifficulty.EASY);
+  const [difficulty, setDifficulty] = useState(ExerciseDifficulty.EASY);
   const [tags, setTags] = useState([]);
 
   const children: any[] = [];
@@ -55,7 +55,8 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
   };
 
   const handleDifficultyMenu = (e: any) => {
-    setDiffulty(e.key);
+    console.log(e);
+    setDifficulty(e);
   };
 
   const onSwitchChange = (checked: any) => {
@@ -163,17 +164,17 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
           <div>
             <Form.Item name="difficulty" className="justify-center">
               <Select
-                defaultValue="EASY"
+                defaultValue="Easy"
                 style={{ width: 200 }}
                 onChange={handleDifficultyMenu}
               >
-                <Option value="EASY">
+                <Option value="Easy">
                   <StarOutlined /> Easy
                 </Option>
-                <Option value="MEDIUM">
+                <Option value="Medium">
                   <StarOutlined /> <StarOutlined /> Medium
                 </Option>
-                <Option value="HARD">
+                <Option value="Hard">
                   <StarOutlined /> <StarOutlined /> <StarOutlined /> Hard
                 </Option>
               </Select>

@@ -16,10 +16,12 @@ interface Props {
 
 const OwnerRegistrationForm = ({ registrationForm, submitHandler }: Props) => {
   const [selected, setSelected] = useState("TN");
+  const role = "OWNER";
 
   const onFinish = (values: any) => {
     values.country = selected;
     registrationForm = values;
+    registrationForm.role = role;
     console.log("FORM", registrationForm);
     submitHandler(registrationForm);
   };

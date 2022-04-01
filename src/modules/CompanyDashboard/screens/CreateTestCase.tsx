@@ -86,6 +86,9 @@ const CreateTestCase = () => {
   const saveTestCases = () => {
     console.log(testCases);
     testCases.map((testCase) => dispatch(createTestCase(testCase)));
+    if (creationState.success) {
+      navigate("/company/exercises");
+    }
   };
 
   const columns = [
@@ -141,7 +144,7 @@ const CreateTestCase = () => {
         </Breadcrumb>
       </div>
       <div className="px-5 py-2 bg-gray-150">
-        <Steps current={1} percent={60}>
+        <Steps current={2} percent={60}>
           <Step title="Finished" description="Provide Details" />
           <Step title="Finished" description="Provide Initial Code" />
           <Step title="In Progress" description="Provide Test Cases" />
@@ -149,7 +152,7 @@ const CreateTestCase = () => {
       </div>
       <Col offset={3} span={18}>
         <div className="border border-current rounded shadow-xl px-12 py-4 my-5">
-          <Table columns={columns} dataSource={list}></Table>
+          <Table columns={columns} dataSource={list} />
           <div>
             <Button
               shape="round"
@@ -197,7 +200,6 @@ const CreateTestCase = () => {
           {creationState.error && (
             <Alert type="error" message={creationState.message} />
           )}
-          {creationState.success && navigate("/company/exercises")}
         </div>
       </Col>
     </div>

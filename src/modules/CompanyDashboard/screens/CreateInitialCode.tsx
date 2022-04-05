@@ -36,21 +36,24 @@ const CreateInitialCode = () => {
     <>
       <div className="flex flex-col">
         <div className="p-5 bg-gray-100">
-          <Breadcrumb separator=">">
-            <Breadcrumb.Item href="/company/exercises">
-              Exercises
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Create Exercise</Breadcrumb.Item>
-          </Breadcrumb>
+          <Col offset={3}>
+            <Breadcrumb separator=">">
+              <Breadcrumb.Item href="/company/exercises">
+                Exercises
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>Create Exercise</Breadcrumb.Item>
+            </Breadcrumb>
+          </Col>
         </div>
-        <div className="px-5 py-2 bg-gray-150">
-          <Steps current={1} percent={60}>
-            <Step title="Finished" description="Provide Details" />
-            <Step title="In Progress" description="Provide Initial Code" />
-            <Step title="Waiting" description="Provide Test Cases" />
-          </Steps>
-        </div>
+
         <Col offset={3} span={18}>
+          <div className="px-5 py-2 bg-gray-150">
+            <Steps current={1} percent={60}>
+              <Step title="Finished" description="Provide Details" />
+              <Step title="In Progress" description="Provide Initial Code" />
+              <Step title="Waiting" description="Provide Test Cases" />
+            </Steps>
+          </div>
           <div className="border border-current rounded shadow-xl my-5 px-12 py-4">
             <InitialCodeForm
               initialCodeRequest={initialCodeRequest}

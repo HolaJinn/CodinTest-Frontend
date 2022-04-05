@@ -15,6 +15,8 @@ import {
   FileAddOutlined,
   DeleteOutlined,
   LoadingOutlined,
+  FolderViewOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -29,6 +31,10 @@ interface ExerciseItem extends Exercise {
 }
 
 const ExercisesScreen = () => {
+  const [sortBy, setSortBy] = useState("Most recent to least recent");
+
+  const [page, setPage] = useState(0);
+  const [limit] = useState(10);
   const [order, setOrder] = useState("ASC");
   const [properties, setProperties] = useState("id");
   const [inputSearch, setInputSearch] = useState("");
@@ -39,32 +45,43 @@ const ExercisesScreen = () => {
   const exercisesSelector = useSelector(
     (state: RootStateOrAny) => state.fetchExercises
   );
+  const totalElements: number = exercisesSelector.exercisesList.totalElements;
 
   const navigate = useNavigate();
 
   const handleSort = (e: any) => {
-    if (e === "Creation Date") {
+    if (e === "Most recent to least recent") {
       setProperties("CreatedDate");
+      setOrder("ASC");
+    } else if (e === "Least recent to most recent") {
+      setProperties("CreatedDate");
+      setOrder("DESC");
     } else {
       setProperties(e);
     }
+    setSortBy(e);
   };
 
   const onSearch = (e: any) => {
-    console.log(e);
     setInputSearch(e);
+  };
+
+  const onPageChange = (page: number, pageSize: number) => {
+    console.log(page);
+    console.log(pageSize);
+    setPage(page - 1);
   };
 
   useEffect(() => {
     const filterOption: Record<string, string> = {
-      page: "0",
-      limit: "10",
+      page: page.toString(),
+      limit: limit.toString(),
       order,
       properties,
       title: inputSearch,
     };
     dispatch(fetchExercises(filterOption));
-  }, [dispatch, properties, order, inputSearch]);
+  }, [dispatch, page, limit, properties, order, inputSearch]);
 
   if (!exercisesSelector.isFetching) {
     const list: Exercise[] = exercisesSelector.exercisesList.content;
@@ -99,11 +116,6 @@ const ExercisesScreen = () => {
       key: "title",
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
-    {
       title: "Timer In Minute",
       dataIndex: "timerInMinute",
       key: "timerInMinute",
@@ -112,11 +124,41 @@ const ExercisesScreen = () => {
       title: "Difficulty",
       dataIndex: "difficulty",
       key: "difficulty",
+      filters: [
+        {
+          text: "Easy",
+          value: "Easy",
+        },
+        {
+          text: "Medium",
+          value: "Medium",
+        },
+        {
+          text: "Hard",
+          value: "Hard",
+        },
+      ],
+      onFilter: (value: any, record: any) =>
+        record.difficulty.startsWith(value),
+      filterSearch: true,
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      filters: [
+        {
+          text: "Public",
+          value: "Public",
+        },
+        {
+          text: "Private",
+          value: "Private",
+        },
+      ],
+      onFilter: (value: any, record: any) =>
+        record.difficulty.startsWith(value),
+      filterSearch: true,
     },
     {
       title: "Programming Language",
@@ -133,11 +175,13 @@ const ExercisesScreen = () => {
       key: "action",
       render: (_: any, record: { key: React.Key }) => (
         <Space size="middle">
+          <Button icon={<FolderViewOutlined />} />
+          <Button icon={<EditOutlined />} />
           <Popconfirm
-            title="Sure to delete this test case?"
+            title="Sure to delete this exercise"
             // onConfirm={() => removeItem(record.key)}
           >
-            <Button icon={<DeleteOutlined />}>Delete</Button>
+            <Button icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
       ),
@@ -153,9 +197,11 @@ const ExercisesScreen = () => {
     <>
       <div className="flex flex-col">
         <div className="p-5 bg-gray-100">
-          <Breadcrumb separator=">">
-            <Breadcrumb.Item>Exercises</Breadcrumb.Item>
-          </Breadcrumb>
+          <Col offset={3}>
+            <Breadcrumb separator=">">
+              <Breadcrumb.Item>Exercises</Breadcrumb.Item>
+            </Breadcrumb>
+          </Col>
         </div>
         <div className="px-5">
           <Col offset={5} span={14}>
@@ -176,12 +222,18 @@ const ExercisesScreen = () => {
                 </div>
                 <div className="mx-5">
                   <Select
-                    defaultValue="Creation Date"
-                    style={{ width: 140 }}
+                    defaultValue={sortBy}
+                    style={{ width: 250 }}
                     onChange={handleSort}
                   >
-                    <Option value="Creation Date">Creation Date</Option>
+                    <Option value="Most recent to least recent">
+                      Most recent to least recent
+                    </Option>
+                    <Option value="Least recent to most recent">
+                      Least recent to most recent
+                    </Option>
                     <Option value="Title">Title</Option>
+                    <Option value="TimerInMinute">Timer</Option>
                   </Select>
                 </div>
               </div>
@@ -218,6 +270,12 @@ const ExercisesScreen = () => {
                   dataSource={exercises}
                   rowKey="id"
                   className="min-w-1200"
+                  pagination={{
+                    current: page + 1,
+                    total: totalElements,
+                    pageSize: limit,
+                    onChange: onPageChange,
+                  }}
                 />
               )}
           </div>

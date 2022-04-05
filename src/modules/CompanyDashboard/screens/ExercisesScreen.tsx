@@ -33,7 +33,7 @@ const ExercisesScreen = () => {
   const [properties, setProperties] = useState("id");
   const [inputSearch, setInputSearch] = useState("");
 
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  let exercises: ExerciseItem[] = [];
 
   const dispatch = useDispatch();
   const exercisesSelector = useSelector(
@@ -41,25 +41,6 @@ const ExercisesScreen = () => {
   );
 
   const navigate = useNavigate();
-
-  // console.log("List>>", exercisesSelector.exercisesList.content);
-  const list = exercisesSelector.exercisesList.content;
-
-  // if (list && list.length !== 0) {
-  //   list.map(
-  //     (item: Exercise) =>
-  //       (item.createdDate = new Date().toISOString().split("T")[0])
-  //   );
-  // }
-
-  // if (list) {
-  //   setExercises(list);
-  //   console.log(exercises);
-  //   // list.map((item: Exercise) => {
-  //   //   const date = item.createdDate.split("T");
-  //   //   return (item.createdDate = date[0] + " " + date[1]);
-  //   // });
-  // }
 
   const handleSort = (e: any) => {
     if (e === "Creation Date") {
@@ -83,11 +64,33 @@ const ExercisesScreen = () => {
       title: inputSearch,
     };
     dispatch(fetchExercises(filterOption));
-    if (list) {
-      setExercises(exercisesSelector.exercisesList.content);
-      console.log(exercises);
-    }
   }, [dispatch, properties, order, inputSearch]);
+
+  if (!exercisesSelector.isFetching) {
+    const list: Exercise[] = exercisesSelector.exercisesList.content;
+    exercises = [];
+
+    if (list) {
+      for (let i = 0; i < list.length; i++) {
+        let item = list[i];
+        const date = item.createdDate.split("T");
+        const exerciseItem: ExerciseItem = {
+          key: item.id,
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          creatorId: item.creatorId,
+          difficulty: item.difficulty,
+          status: item.status,
+          programmingLanguageName: item.programmingLanguageName,
+          createdDate: date[0] + " " + date[1].split(".")[0],
+          timerInMinute: item.timerInMinute,
+          initialCode: item.initialCode,
+        };
+        exercises.push(exerciseItem);
+      }
+    }
+  }
 
   const columns = [
     {
@@ -141,6 +144,11 @@ const ExercisesScreen = () => {
     },
   ];
 
+  if (exercisesSelector.isFetching) {
+    return (
+      <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+    );
+  }
   return (
     <>
       <div className="flex flex-col">
@@ -150,17 +158,17 @@ const ExercisesScreen = () => {
           </Breadcrumb>
         </div>
         <div className="px-5">
-          <div className="flex justify-end my-5">
-            <Button
-              size="large"
-              shape="round"
-              icon={<FileAddOutlined />}
-              onClick={(e) => navigate("/company/create-exercise")}
-            >
-              Create Exercise
-            </Button>
-          </div>
           <Col offset={5} span={14}>
+            <div className="flex justify-end my-5">
+              <Button
+                size="large"
+                shape="round"
+                icon={<FileAddOutlined />}
+                onClick={(e) => navigate("/company/create-exercise")}
+              >
+                Create Exercise
+              </Button>
+            </div>
             <div className="flex justify-between items-center">
               <div className="flex justify-between items-center">
                 <div className="m-0 p-0">
@@ -183,11 +191,11 @@ const ExercisesScreen = () => {
             </div>
           </Col>
           <div className="my-10 flex flex-col items-center justify-center">
-            {exercisesSelector.isFetching && (
-              <Spin
-                indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
-              />
-            )}
+            {/* {exercisesSelector.isFetching && (
+                <Spin
+                  indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+                />
+              )} */}
             {exercisesSelector.success &&
               exercisesSelector.exercisesList.content.length === 0 && (
                 <>
@@ -205,7 +213,12 @@ const ExercisesScreen = () => {
               )}
             {exercisesSelector.success &&
               exercisesSelector.exercisesList.content.length !== 0 && (
-                <Table columns={columns} dataSource={list} rowKey="id" />
+                <Table
+                  columns={columns}
+                  dataSource={exercises}
+                  rowKey="id"
+                  className="min-w-1200"
+                />
               )}
           </div>
         </div>

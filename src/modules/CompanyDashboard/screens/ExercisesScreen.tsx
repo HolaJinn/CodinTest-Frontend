@@ -9,6 +9,7 @@ import {
   Spin,
   Table,
   Col,
+  Checkbox,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
@@ -19,9 +20,10 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchExercises } from "../store/slices/fetchExerciseSlice";
 import { Exercise } from "../../../models/Exercise";
+import { deleteExercise } from "../store/slices/deleteExerciseSlice";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -38,6 +40,7 @@ const ExercisesScreen = () => {
   const [order, setOrder] = useState("ASC");
   const [properties, setProperties] = useState("id");
   const [inputSearch, setInputSearch] = useState("");
+  const [createdByMe, setCreatedByMe] = useState(false);
 
   let exercises: ExerciseItem[] = [];
 
@@ -62,13 +65,21 @@ const ExercisesScreen = () => {
     setSortBy(e);
   };
 
+  const onBoxChecked = (e: any) => {
+    setCreatedByMe(e.target.checked);
+  };
+
   const onSearch = (e: any) => {
     setInputSearch(e);
   };
 
+  const removeItem = (key: React.Key) => {
+    exercises = exercises.filter((item) => item.key !== key);
+    dispatch(deleteExercise(key.toString()));
+    console.log(exercises);
+  };
+
   const onPageChange = (page: number, pageSize: number) => {
-    console.log(page);
-    console.log(pageSize);
     setPage(page - 1);
   };
 
@@ -79,9 +90,10 @@ const ExercisesScreen = () => {
       order,
       properties,
       title: inputSearch,
+      createdByMe: createdByMe.toString(),
     };
     dispatch(fetchExercises(filterOption));
-  }, [dispatch, page, limit, properties, order, inputSearch]);
+  }, [dispatch, page, limit, properties, order, inputSearch, createdByMe]);
 
   if (!exercisesSelector.isFetching) {
     const list: Exercise[] = exercisesSelector.exercisesList.content;
@@ -175,11 +187,15 @@ const ExercisesScreen = () => {
       key: "action",
       render: (_: any, record: { key: React.Key }) => (
         <Space size="middle">
-          <Button icon={<FolderViewOutlined />} />
+          <Button
+            color="white"
+            className="bg-gray-800"
+            icon={<FolderViewOutlined />}
+          />
           <Button icon={<EditOutlined />} />
           <Popconfirm
             title="Sure to delete this exercise"
-            // onConfirm={() => removeItem(record.key)}
+            onConfirm={() => removeItem(record.key)}
           >
             <Button icon={<DeleteOutlined />} />
           </Popconfirm>
@@ -236,6 +252,11 @@ const ExercisesScreen = () => {
                     <Option value="TimerInMinute">Timer</Option>
                   </Select>
                 </div>
+              </div>
+              <div>
+                <Checkbox checked={createdByMe} onChange={onBoxChecked}>
+                  Created By Me
+                </Checkbox>
               </div>
               <div>
                 <Search placeholder="input search" onSearch={onSearch} />

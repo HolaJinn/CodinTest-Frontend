@@ -54,7 +54,7 @@ const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
       </Form.Item>
 
       <Form.Item name="score" className="justify-center">
-        <Input type="number" placeholder="Test case score" />
+        <Input type="number" placeholder="Test case score" min={0} />
       </Form.Item>
 
       <Form.Item name="isSample" className="justify-center">

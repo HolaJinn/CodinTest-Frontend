@@ -11,7 +11,7 @@ import createInitialCodeReducer from "../modules/CompanyDashboard/store/slices/c
 import createTestCaseReducer from "../modules/CompanyDashboard/store/slices/createTestCaseSlice"
 import programmingLanguageReducer from "./slices/programmingLanguageSlice";
 import fetchExerciseReducer from './../modules/CompanyDashboard/store/slices/fetchExerciseSlice';
-
+import deleteExerciseReducer from "../modules/CompanyDashboard/store/slices/deleteExerciseSlice";
 
 export const store = configureStore({
     reducer: {
@@ -26,6 +26,7 @@ export const store = configureStore({
         createInitialCode: createInitialCodeReducer,
         createTestCase: createTestCaseReducer,
         programmingLanguage: programmingLanguageReducer,
-        fetchExercises: fetchExerciseReducer
+        fetchExercises: fetchExerciseReducer,
+        deleteExercise: deleteExerciseReducer,
     }
 })

@@ -108,6 +108,7 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
                   placeholder="Timer in minute"
                   disabled={!timer}
                   onChange={(e) => changeTimerValue(e)}
+                  min={0}
                 />
                 <h2 className="ml-2">Minutes</h2>
               </div>

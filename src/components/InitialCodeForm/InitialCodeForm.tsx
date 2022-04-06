@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select, Tooltip } from "antd";
+import { Form, Button, Select, Tooltip } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { IInitialCodeRequest } from "../../modules/CompanyDashboard/models";
 import { ProgrammingLanguage } from "../../models/ProgrammingLanguage";
 import { useSelector, RootStateOrAny } from "react-redux";
+import CodeEditor from "../CodeEditor/CodeEditor";
 
-const { TextArea } = Input;
 const { Option } = Select;
 
 interface Props {
@@ -18,9 +18,10 @@ const InitialCodeForm = ({ initialCodeRequest, submitHandler }: Props) => {
     (state: RootStateOrAny) => state.programmingLanguage.list
   );
 
-  const [language, setLanguage] = useState("");
-
-  console.log(programmingLanguageList);
+  const [language, setLanguage] = useState("Java");
+  const [initialCode, setInitialCode] = useState(
+    'public class Main {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World");\n\t}\n}'
+  );
 
   const children: any[] = [];
 
@@ -31,15 +32,15 @@ const InitialCodeForm = ({ initialCodeRequest, submitHandler }: Props) => {
   });
 
   const onFinish = (values: any) => {
+    console.log(initialCode);
     initialCodeRequest.programmingLanguage = language;
-    initialCodeRequest.initialCode = values.initialCode;
+    initialCodeRequest.initialCode = initialCode;
     submitHandler();
   };
 
   const onFinishFailed = () => {};
 
   const handleLanguageMenu = (value: string) => {
-    console.log(value);
     setLanguage(value);
   };
 
@@ -56,6 +57,7 @@ const InitialCodeForm = ({ initialCodeRequest, submitHandler }: Props) => {
           <Form.Item name="programmingLanguage" className="justify-center">
             <Tooltip title="Provide programming language" placement="right">
               <Select
+                defaultValue={language}
                 showSearch
                 placeholder="Select a programming language"
                 style={{ width: 300 }}
@@ -72,7 +74,7 @@ const InitialCodeForm = ({ initialCodeRequest, submitHandler }: Props) => {
           </Form.Item>
 
           <Form.Item name="initialCode" className="justify-center">
-            <TextArea showCount placeholder="Initial Code" rows={5} />
+            <CodeEditor language={language} setInitialCode={setInitialCode} />
           </Form.Item>
           <Form.Item>
             <Button

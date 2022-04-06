@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { CheckCircleOutlined, StarOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  StarOutlined,
+  InfoCircleOutlined,
+} from "@ant-design/icons";
 import { Form, Input, Button, Switch, Select, Tooltip } from "antd";
 import { IExerciseRequest } from "../../modules/CompanyDashboard/models";
 import { ExerciseDifficulty } from "../../models/ExerciceDifficulty";
@@ -75,10 +79,121 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="on"
+        requiredMark="optional"
+        layout="vertical"
       >
+        <div className="flex justify-start">
+          <div className="mr-10">
+            <Form.Item
+              name="timerInMinute"
+              label="Timer"
+              tooltip={{
+                title: "Set timer for exercise",
+                icon: <InfoCircleOutlined />,
+              }}
+            >
+              <div className="my-1">
+                <Tooltip title="Add timer to this exercise" placement="right">
+                  <Switch
+                    checkedChildren="Timer"
+                    unCheckedChildren="No Timer"
+                    onChange={onSwitchChange}
+                  />
+                </Tooltip>
+              </div>
+              <div className="flex items-center justify-center">
+                <Input
+                  style={{ width: 150 }}
+                  type="number"
+                  placeholder="Timer in minute"
+                  disabled={!timer}
+                  onChange={(e) => changeTimerValue(e)}
+                />
+                <h2 className="ml-2">Minutes</h2>
+              </div>
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item
+              name="status"
+              label="Exercise Status"
+              tooltip={{
+                title: "Set the status of this exercise",
+                icon: <InfoCircleOutlined />,
+              }}
+            >
+              <Tooltip
+                title="Make this exercise public to everyone"
+                placement="left"
+              >
+                <Switch checkedChildren="public" unCheckedChildren="private" />
+              </Tooltip>
+            </Form.Item>
+          </div>
+        </div>
+        <div className="flex justify-start">
+          <div className="w-5/12 mr-10">
+            <Form.Item
+              name="tags"
+              label="Tags"
+              tooltip={{
+                title: "Choose tags for the exercise",
+                icon: <InfoCircleOutlined />,
+              }}
+            >
+              <Select
+                showSearch
+                mode="multiple"
+                allowClear
+                placeholder="Please select Tags"
+                onChange={handleTagChange}
+                optionFilterProp="children"
+                filterOption={(input, option: any) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+                  0
+                }
+              >
+                {children}
+              </Select>
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item
+              name="difficulty"
+              className="justify-center"
+              label="Difficulty"
+              tooltip={{
+                title: "Set the diffuculty of this exercise",
+                icon: <InfoCircleOutlined />,
+              }}
+            >
+              <Select
+                defaultValue="Easy"
+                style={{ width: 200 }}
+                onChange={handleDifficultyMenu}
+              >
+                <Option value="Easy">
+                  <StarOutlined /> Easy
+                </Option>
+                <Option value="Medium">
+                  <StarOutlined /> <StarOutlined /> Medium
+                </Option>
+                <Option value="Hard">
+                  <StarOutlined /> <StarOutlined /> <StarOutlined /> Hard
+                </Option>
+              </Select>
+            </Form.Item>
+          </div>
+        </div>
+
         <Form.Item
           name="title"
           className="justify-center"
+          label="Title"
+          tooltip={{
+            title: "Enter the title of the exercise",
+            icon: <InfoCircleOutlined />,
+          }}
           rules={[
             {
               required: true,
@@ -100,6 +215,11 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
         <Form.Item
           name="description"
           className="justify-center"
+          label="Description"
+          tooltip={{
+            title: "Enter the description of the exercise",
+            icon: <InfoCircleOutlined />,
+          }}
           rules={[
             {
               required: true,
@@ -109,78 +229,6 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
         >
           <TextArea showCount placeholder="Exercise Description" rows={8} />
         </Form.Item>
-
-        <div className="flex justify-around items-center">
-          <div className="mx-5">
-            <Form.Item name="timerInMinute">
-              <div className="my-1">
-                <Tooltip title="Add timer to this exercise" placement="right">
-                  <Switch
-                    checkedChildren="Timer"
-                    unCheckedChildren="No Timer"
-                    onChange={onSwitchChange}
-                  />
-                </Tooltip>
-              </div>
-              <Input
-                style={{ width: 200 }}
-                type="number"
-                placeholder="Timer in minute"
-                disabled={!timer}
-                onChange={(e) => changeTimerValue(e)}
-              />
-            </Form.Item>
-          </div>
-          <div>
-            <Form.Item name="status">
-              <Tooltip
-                title="Make this exercise public to everyone"
-                placement="left"
-              >
-                <Switch checkedChildren="public" unCheckedChildren="private" />
-              </Tooltip>
-            </Form.Item>
-          </div>
-        </div>
-        <div className="flex justify-around items-center">
-          <div className="w-5/12">
-            <Form.Item name="tags">
-              <Select
-                showSearch
-                mode="multiple"
-                allowClear
-                placeholder="Please select Tags"
-                onChange={handleTagChange}
-                optionFilterProp="children"
-                filterOption={(input, option: any) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-              >
-                {children}
-              </Select>
-            </Form.Item>
-          </div>
-          <div>
-            <Form.Item name="difficulty" className="justify-center">
-              <Select
-                defaultValue="Easy"
-                style={{ width: 200 }}
-                onChange={handleDifficultyMenu}
-              >
-                <Option value="Easy">
-                  <StarOutlined /> Easy
-                </Option>
-                <Option value="Medium">
-                  <StarOutlined /> <StarOutlined /> Medium
-                </Option>
-                <Option value="Hard">
-                  <StarOutlined /> <StarOutlined /> <StarOutlined /> Hard
-                </Option>
-              </Select>
-            </Form.Item>
-          </div>
-        </div>
 
         <Form.Item>
           <Button

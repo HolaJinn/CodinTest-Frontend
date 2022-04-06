@@ -84,7 +84,6 @@ const CreateTestCase = () => {
   };
 
   const saveTestCases = () => {
-    console.log(testCases);
     testCases.map((testCase) => dispatch(createTestCase(testCase)));
     if (creationState.success) {
       navigate("/company/exercises");

@@ -23,3 +23,14 @@ export interface ITestCaseRequest {
     input: string,
     expectedOutput: string
 }
+
+export interface ITechnicalTestRequest {
+    title: string,
+    description: string,
+    timerInMinute: number
+}
+
+export interface IAddExercisesToTechnicalTest {
+    technicalTestId: number,
+    exercises: number[]
+}

@@ -13,6 +13,8 @@ import CreateExercise from "../modules/CompanyDashboard/screens/CreateExercise";
 import CreateTestCase from "../modules/CompanyDashboard/screens/CreateTestCase";
 import CreateInitialCode from "../modules/CompanyDashboard/screens/CreateInitialCode";
 import TechnicalTestsScreen from "../modules/CompanyDashboard/screens/TechnicalTestsScreen";
+import CreateTechnicalTest from "../modules/CompanyDashboard/screens/CreateTechnicalTest";
+import AddExercisesToTechnicalTest from "../modules/CompanyDashboard/screens/AddExercisesToTechnicalTest";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -64,8 +66,16 @@ const AppRoutes = () => {
               element: <CreateTestCase />,
             },
             {
-              path: "/company/tests",
+              path: "/company/technical-tests",
               element: <TechnicalTestsScreen />,
+            },
+            {
+              path: "/company/create-technical-test",
+              element: <CreateTechnicalTest />,
+            },
+            {
+              path: "/company/create-technical-test/add-exercises",
+              element: <AddExercisesToTechnicalTest />,
             },
           ],
         },

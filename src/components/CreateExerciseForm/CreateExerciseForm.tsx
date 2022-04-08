@@ -200,14 +200,6 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
               required: true,
               message: "Please input the title!",
             },
-            {
-              min: 2,
-              message: "Your first name should contain at least 2 characters",
-            },
-            {
-              max: 20,
-              message: "Your first name should contain less 20 chatacters",
-            },
           ]}
         >
           <Input placeholder="Exercise Title" />

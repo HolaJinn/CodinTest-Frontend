@@ -12,3 +12,5 @@ export const TEST_CASE_ENDPOINT = EXERCISE_ENDPOINT + "/test-cases"
 export const INITIAL_CODE_ENDPOINT = EXERCISE_ENDPOINT + "/initial-code"
 export const PROGRAMMING_LANGUAGES_ENDPOINT = BASE_URL_ENDPOINT + "/programming-languages"
 export const TAGS_ENDPOINT = BASE_URL_ENDPOINT + "/tags"
+
+export const TECHNICAL_TEST_ENDPOINT = BASE_URL_ENDPOINT + "/technical-tests"

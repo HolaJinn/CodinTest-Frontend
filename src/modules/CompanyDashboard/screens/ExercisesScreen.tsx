@@ -24,6 +24,7 @@ import React, { useEffect, useState } from "react";
 import { fetchExercises } from "../store/slices/fetchExerciseSlice";
 import { Exercise } from "../../../models/Exercise";
 import { deleteExercise } from "../store/slices/deleteExerciseSlice";
+import { getAllTagsService } from "../services/dashboardServices";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -42,6 +43,12 @@ const ExercisesScreen = () => {
   const [inputSearch, setInputSearch] = useState("");
   const [createdByMe, setCreatedByMe] = useState(false);
 
+  const [tags, setTags] = useState("");
+
+  const [tagsList, setTagsList] = useState([]);
+
+  const children: any[] = [];
+
   let exercises: ExerciseItem[] = [];
 
   const dispatch = useDispatch();
@@ -51,6 +58,10 @@ const ExercisesScreen = () => {
   const totalElements: number = exercisesSelector.exercisesList.totalElements;
 
   const navigate = useNavigate();
+
+  tagsList.map((tag: any) => {
+    return children.push(<Option key={tag.id}>{tag.name}</Option>);
+  });
 
   const handleSort = (e: any) => {
     if (e === "Most recent to least recent") {
@@ -73,6 +84,18 @@ const ExercisesScreen = () => {
     setInputSearch(e);
   };
 
+  const handleTagChange = (value: any) => {
+    setTags((prev) => "");
+    const x: string = value.toString();
+    for (let i = 0; i < value.length; i++) {
+      console.log(value[i].toString());
+      x.concat(value[i].toString(), ",");
+    }
+    console.log("x", x);
+    setTags((prev) => prev.concat(x));
+    console.log("final tags", tags);
+  };
+
   const removeItem = (key: React.Key) => {
     exercises = exercises.filter((item) => item.key !== key);
     dispatch(deleteExercise(key.toString()));
@@ -84,6 +107,11 @@ const ExercisesScreen = () => {
   };
 
   useEffect(() => {
+    getAllTagsService().then((response) => setTagsList(response.data));
+  });
+
+  useEffect(() => {
+    console.log("hello");
     const filterOption: Record<string, string> = {
       page: page.toString(),
       limit: limit.toString(),
@@ -263,12 +291,26 @@ const ExercisesScreen = () => {
               </div>
             </div>
           </Col>
+          <Col offset={5} span={14}>
+            <div className="w-5/12">
+              <Select
+                showSearch
+                mode="multiple"
+                allowClear
+                placeholder="Please select Tags"
+                style={{ width: "100%" }}
+                onChange={handleTagChange}
+                optionFilterProp="children"
+                filterOption={(input, option: any) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+                  0
+                }
+              >
+                {children}
+              </Select>
+            </div>
+          </Col>
           <div className="my-10 flex flex-col items-center justify-center">
-            {/* {exercisesSelector.isFetching && (
-                <Spin
-                  indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
-                />
-              )} */}
             {exercisesSelector.success &&
               exercisesSelector.exercisesList.content.length === 0 && (
                 <>

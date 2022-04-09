@@ -4,13 +4,20 @@ import TechnicalTestCard from "../TechnicalTestCard/TechnicalTestCard";
 
 interface Props {
   technicalTests: TechnicalTestItem[];
+  removeItem: any;
 }
 
-const TechnicalTestsList = ({ technicalTests }: Props) => {
+const TechnicalTestsList = ({ technicalTests, removeItem }: Props) => {
   return (
     <>
       {technicalTests.map((technicalTest: TechnicalTestItem, index: number) => {
-        return <TechnicalTestCard technicalTest={technicalTest} />;
+        return (
+          <TechnicalTestCard
+            key={index}
+            technicalTest={technicalTest}
+            removeItem={removeItem}
+          />
+        );
       })}
     </>
   );

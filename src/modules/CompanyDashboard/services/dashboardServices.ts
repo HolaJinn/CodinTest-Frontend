@@ -92,3 +92,12 @@ export const addExercisesToTechnicalTestService = async(request: IAddExercisesTo
     })
     return response
 }
+
+export const deleteTechnicalTestService = async(id: number) => {
+    const url = apiUrl.TECHNICAL_TEST_ENDPOINT + "/" + id;
+    return await axiosClient.delete(url, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}

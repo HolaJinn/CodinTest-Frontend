@@ -12,9 +12,10 @@ import {
 
 interface Props {
   technicalTest: TechnicalTestItem;
+  removeItem: any;
 }
 
-const TechnicalTestCard = ({ technicalTest }: Props) => {
+const TechnicalTestCard = ({ technicalTest, removeItem }: Props) => {
   return (
     <div className="my-3">
       <Card
@@ -40,7 +41,7 @@ const TechnicalTestCard = ({ technicalTest }: Props) => {
             <Button icon={<EditOutlined />} />
             <Popconfirm
               title="Sure to delete this exercise"
-              // onConfirm={() => removeItem(record.key)}
+              onConfirm={() => removeItem(technicalTest.id)}
             >
               <Button icon={<DeleteOutlined />} className="mx-3" />
             </Popconfirm>

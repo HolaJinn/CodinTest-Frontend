@@ -99,7 +99,7 @@ const ExercisesScreen = () => {
   const removeItem = (key: React.Key) => {
     exercises = exercises.filter((item) => item.key !== key);
     dispatch(deleteExercise(key.toString()));
-    console.log(exercises);
+    window.location.reload();
   };
 
   const onPageChange = (page: number, pageSize: number) => {

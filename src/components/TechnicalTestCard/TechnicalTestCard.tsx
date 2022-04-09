@@ -1,0 +1,55 @@
+import { Button, Card, Popconfirm } from "antd";
+import React from "react";
+import { TechnicalTestItem } from "../../modules/CompanyDashboard/models";
+import {
+  UserOutlined,
+  UnorderedListOutlined,
+  ClockCircleOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+
+interface Props {
+  technicalTest: TechnicalTestItem;
+}
+
+const TechnicalTestCard = ({ technicalTest }: Props) => {
+  return (
+    <div className="my-3">
+      <Card
+        title={technicalTest.title}
+        className="border border-current rounded shadow-md my-5 px-12 py-4 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer"
+      >
+        <div className="flex item-center justify-between">
+          <div className="flex item-center justify-start">
+            <div className="flex">
+              <UserOutlined style={{ fontSize: "20px" }} />
+              <p className="text-md">{`${technicalTest.creator.firstName} ${technicalTest.creator.lastName}`}</p>
+            </div>
+            <div className="flex mx-5">
+              <UnorderedListOutlined style={{ fontSize: "20px" }} />
+              <p className="text-md mx-1">{`${technicalTest.exercises?.length}`}</p>
+            </div>
+            <div className="flex">
+              <ClockCircleOutlined style={{ fontSize: "20px" }} />
+              <p className="text-md mx-1">{`${technicalTest.timerInMinute} Minutes`}</p>
+            </div>
+          </div>
+          <div>
+            <Button icon={<EditOutlined />} />
+            <Popconfirm
+              title="Sure to delete this exercise"
+              // onConfirm={() => removeItem(record.key)}
+            >
+              <Button icon={<DeleteOutlined />} className="mx-3" />
+            </Popconfirm>
+            <Button icon={<UserAddOutlined />}>Invite</Button>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+};
+
+export default TechnicalTestCard;

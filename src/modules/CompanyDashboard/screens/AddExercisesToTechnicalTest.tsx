@@ -12,7 +12,7 @@ import {
   Steps,
   Alert,
 } from "antd";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   FileAddOutlined,
   CheckCircleOutlined,
@@ -125,9 +125,7 @@ const AddExercisesToTechnicalTest = () => {
   const submitHandler = () => {
     console.log(selectedExercises);
     dispatch(addExercisesToTechnicalTest(addExercisesToTechnicalTestRequest));
-    if (creationState.success) {
-      navigate("/company/technical-tests");
-    }
+    navigate("/company/technical-tests");
   };
 
   useEffect(() => {
@@ -254,9 +252,6 @@ const AddExercisesToTechnicalTest = () => {
     );
   }
 
-  if (creationState && creationState.success) {
-    return <Navigate to="/company/technical-tests" />;
-  }
   return (
     <>
       <div className="flex flex-col">

@@ -51,13 +51,13 @@ const ExercisesScreen = () => {
 
   let exercises: ExerciseItem[] = [];
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const exercisesSelector = useSelector(
     (state: RootStateOrAny) => state.fetchExercises
   );
   const totalElements: number = exercisesSelector.exercisesList.totalElements;
-
-  const navigate = useNavigate();
 
   tagsList.map((tag: any) => {
     return children.push(<Option key={tag.id}>{tag.name}</Option>);
@@ -111,7 +111,6 @@ const ExercisesScreen = () => {
   });
 
   useEffect(() => {
-    console.log("hello");
     const filterOption: Record<string, string> = {
       page: page.toString(),
       limit: limit.toString(),

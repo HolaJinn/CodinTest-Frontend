@@ -14,6 +14,7 @@ import fetchExerciseReducer from './../modules/CompanyDashboard/store/slices/fet
 import deleteExerciseReducer from "../modules/CompanyDashboard/store/slices/deleteExerciseSlice";
 import createTechnicalTestReducer from "../modules/CompanyDashboard/store/slices/createTechnicalTestSlice";
 import addExercisesToTechnicalTestReducer from "../modules/CompanyDashboard/store/slices/addExercisesToTechnicalTestSlice";
+import fetchTechnicalTestsReducer from "../modules/CompanyDashboard/store/slices/fetchTechnicalTestsSlice";
 
 export const store = configureStore({
     reducer: {
@@ -31,6 +32,7 @@ export const store = configureStore({
         fetchExercises: fetchExerciseReducer,
         deleteExercise: deleteExerciseReducer,
         createTechnicalTest: createTechnicalTestReducer,
-        addExercisesToTechnicalTest: addExercisesToTechnicalTestReducer
+        addExercisesToTechnicalTest: addExercisesToTechnicalTestReducer,
+        fetchTechnicalTests: fetchTechnicalTestsReducer
     }
 })

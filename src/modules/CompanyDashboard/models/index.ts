@@ -1,5 +1,6 @@
 import { ExerciseStatus } from './../../../models/ExerciseStatus';
 import { ExerciseDifficulty } from './../../../models/ExerciceDifficulty';
+import { TechnicalTest } from '../../../models/TechnicalTest';
 export interface IExerciseRequest {
     title: string,
     description: string,
@@ -34,3 +35,7 @@ export interface IAddExercisesToTechnicalTest {
     technicalTestId: number,
     exercises: number[]
 }
+
+export interface TechnicalTestItem extends TechnicalTest {
+    key: React.Key;
+  }

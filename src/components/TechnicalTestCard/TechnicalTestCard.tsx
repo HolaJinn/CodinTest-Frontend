@@ -13,9 +13,14 @@ import {
 interface Props {
   technicalTest: TechnicalTestItem;
   removeItem: any;
+  inviteCandidate: any;
 }
 
-const TechnicalTestCard = ({ technicalTest, removeItem }: Props) => {
+const TechnicalTestCard = ({
+  technicalTest,
+  removeItem,
+  inviteCandidate,
+}: Props) => {
   return (
     <div className="my-3">
       <Card
@@ -45,7 +50,12 @@ const TechnicalTestCard = ({ technicalTest, removeItem }: Props) => {
             >
               <Button icon={<DeleteOutlined />} className="mx-3" />
             </Popconfirm>
-            <Button icon={<UserAddOutlined />}>Invite</Button>
+            <Button
+              icon={<UserAddOutlined />}
+              onClick={() => inviteCandidate(technicalTest)}
+            >
+              Invite
+            </Button>
           </div>
         </div>
       </Card>

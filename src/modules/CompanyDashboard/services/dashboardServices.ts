@@ -1,4 +1,4 @@
-import { IExerciseRequest, ITestCaseRequest, IInitialCodeRequest, ITechnicalTestRequest, IAddExercisesToTechnicalTest } from './../models/index';
+import { IExerciseRequest, ITestCaseRequest, IInitialCodeRequest, ITechnicalTestRequest, IAddExercisesToTechnicalTest, IInvitationRequest } from './../models/index';
 import * as apiUrl from "../../../utils/constants"
 import axiosClient from '../../../api/axiosClient';
 
@@ -100,4 +100,14 @@ export const deleteTechnicalTestService = async(id: number) => {
             "Authorization": `Bearer ${token}`
         }
     })
+}
+
+export const createInvitationService = async(request: IInvitationRequest) => {
+    const url = apiUrl.INVITATION_ENDPOINT
+    const response = await axiosClient.post(url, request, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    return response
 }

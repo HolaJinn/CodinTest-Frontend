@@ -15,6 +15,8 @@ import CreateInitialCode from "../modules/CompanyDashboard/screens/CreateInitial
 import TechnicalTestsScreen from "../modules/CompanyDashboard/screens/TechnicalTestsScreen";
 import CreateTechnicalTest from "../modules/CompanyDashboard/screens/CreateTechnicalTest";
 import AddExercisesToTechnicalTest from "../modules/CompanyDashboard/screens/AddExercisesToTechnicalTest";
+import CreateInvitation from "../modules/CompanyDashboard/screens/CreateInvitation";
+import InvitationsScreen from "../modules/CompanyDashboard/screens/InvitationsScreen";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -76,6 +78,14 @@ const AppRoutes = () => {
             {
               path: "/company/create-technical-test/add-exercises",
               element: <AddExercisesToTechnicalTest />,
+            },
+            {
+              path: "/company/technical-tests/:id/invite-candidate",
+              element: <CreateInvitation />,
+            },
+            {
+              path: "/company/invitations",
+              element: <InvitationsScreen />,
             },
           ],
         },

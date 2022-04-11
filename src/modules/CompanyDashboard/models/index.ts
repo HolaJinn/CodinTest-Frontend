@@ -38,4 +38,12 @@ export interface IAddExercisesToTechnicalTest {
 
 export interface TechnicalTestItem extends TechnicalTest {
     key: React.Key;
-  }
+}
+
+export interface IInvitationRequest {
+    technicalTestId: number,
+    candidateEmail: string,
+    expirationDate: string,
+    subject: string,
+    content: string
+}

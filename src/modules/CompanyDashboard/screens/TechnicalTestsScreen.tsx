@@ -70,6 +70,11 @@ const TechnicalTestsScreen = () => {
     window.location.reload();
   };
 
+  const inviteCandidate = (technicalTest: TechnicalTestItem) => {
+    navigate(`/company/technical-tests/${technicalTest.id}/invite-candidate`);
+    localStorage.setItem("technicalTest", JSON.stringify(technicalTest));
+  };
+
   useEffect(() => {
     const filterOption: Record<string, string> = {
       page: page.toString(),
@@ -150,6 +155,7 @@ const TechnicalTestsScreen = () => {
               <TechnicalTestsList
                 technicalTests={technicalTests}
                 removeItem={removeItem}
+                inviteCandidate={inviteCandidate}
               />
             </div>
             <div className="flex justify-end my-10">

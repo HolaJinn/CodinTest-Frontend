@@ -26,7 +26,7 @@ const LoginLayout = ({ path }: Props) => {
 
   useEffect(() => {
     if (auth.isLoggedIn && path === "candidate") {
-      navigate("/dashboard");
+      navigate("/candidate/dashboard");
     } else if (auth.isLoggedIn && path === "company") {
       navigate("/company/dashboard");
     }

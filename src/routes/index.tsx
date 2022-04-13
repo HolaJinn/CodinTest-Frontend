@@ -17,6 +17,8 @@ import CreateTechnicalTest from "../modules/CompanyDashboard/screens/CreateTechn
 import AddExercisesToTechnicalTest from "../modules/CompanyDashboard/screens/AddExercisesToTechnicalTest";
 import CreateInvitation from "../modules/CompanyDashboard/screens/CreateInvitation";
 import InvitationsScreen from "../modules/CompanyDashboard/screens/InvitationsScreen";
+import CandidateInvitationsScreen from "../modules/CandidateDashboard/screens/CandidateInvitationsScreen";
+import CandidateLayout from "../modules/CandidateDashboard/layouts/CandidateLayout";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -40,8 +42,18 @@ const AppRoutes = () => {
       element: <PrivateRoute />,
       children: [
         {
-          path: "/dashboard",
-          element: <CandidateDashboard />,
+          path: "/candidate",
+          element: <CandidateLayout />,
+          children: [
+            {
+              path: "/candidate/dashboard",
+              element: <CandidateDashboard />,
+            },
+            {
+              path: "/candidate/invitations",
+              element: <CandidateInvitationsScreen />,
+            },
+          ],
         },
         {
           path: "/company",

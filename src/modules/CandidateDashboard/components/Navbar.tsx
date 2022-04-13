@@ -5,9 +5,9 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import ReactLogo from "../../../assets/image/logo.svg";
 
 const navigation = [
-  { name: "Home", href: "/dashboard", current: true },
-  { name: "Exercises", href: "/exercises", current: false },
-  { name: "Invitations", href: "/invitations", current: false },
+  { name: "Home", href: "/candidate/dashboard", current: true },
+  { name: "Exercises", href: "/candidate/exercises", current: false },
+  { name: "Invitations", href: "/candidate/invitations", current: false },
 ];
 
 function classNames(...classes: any) {

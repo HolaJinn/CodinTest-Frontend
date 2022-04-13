@@ -17,6 +17,7 @@ import addExercisesToTechnicalTestReducer from "../modules/CompanyDashboard/stor
 import fetchTechnicalTestsReducer from "../modules/CompanyDashboard/store/slices/fetchTechnicalTestsSlice";
 import deleteTechnicalTestReducer from "../modules/CompanyDashboard/store/slices/deleteTechnicalTestSlice";
 import createInvitationReducer from "../modules/CompanyDashboard/store/slices/createInvitationSlice";
+import fetchCurrentUserInvitationsReducer from "../modules/CandidateDashboard/store/slices/fetchCurrentUserInvitationsSlice";
 
 export const store = configureStore({
     reducer: {
@@ -37,6 +38,7 @@ export const store = configureStore({
         addExercisesToTechnicalTest: addExercisesToTechnicalTestReducer,
         fetchTechnicalTests: fetchTechnicalTestsReducer,
         deleteTechnicalTest: deleteTechnicalTestReducer,
-        createInvitation: createInvitationReducer
+        createInvitation: createInvitationReducer,
+        fetchCurrentUserInvitations: fetchCurrentUserInvitationsReducer
     }
 })

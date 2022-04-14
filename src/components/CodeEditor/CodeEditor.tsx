@@ -33,7 +33,7 @@ const CodeEditor = ({ language, setInitialCode }: Props) => {
       setValue(javaInitialCode);
     } else if (language === "C++") {
       setValue(cppInitialCode);
-    } else if (language === "Javascript") {
+    } else if (language === "JavaScript") {
       setValue(javascriptInitialCode);
     } else if (language === "Python") {
       setValue(pythonInitialCode);

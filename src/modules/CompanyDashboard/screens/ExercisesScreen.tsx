@@ -44,6 +44,7 @@ const ExercisesScreen = () => {
   const [createdByMe, setCreatedByMe] = useState(false);
 
   const [tags, setTags] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const [tagsList, setTagsList] = useState([]);
 
@@ -85,15 +86,10 @@ const ExercisesScreen = () => {
   };
 
   const handleTagChange = (value: any) => {
-    setTags((prev) => "");
-    const x: string = value.toString();
-    for (let i = 0; i < value.length; i++) {
-      console.log(value[i].toString());
-      x.concat(value[i].toString(), ",");
-    }
-    console.log("x", x);
-    setTags((prev) => prev.concat(x));
-    console.log("final tags", tags);
+    console.log(value);
+    setTags(value.toString());
+    setSelectedTags(value);
+    console.log(selectedTags);
   };
 
   const removeItem = (key: React.Key) => {
@@ -111,16 +107,26 @@ const ExercisesScreen = () => {
   });
 
   useEffect(() => {
-    const filterOption: Record<string, string> = {
+    const filterOptions: Record<string, string> = {
       page: page.toString(),
       limit: limit.toString(),
       order,
       properties,
-      title: inputSearch,
+      search: inputSearch,
       createdByMe: createdByMe.toString(),
+      tags,
     };
-    dispatch(fetchExercises(filterOption));
-  }, [dispatch, page, limit, properties, order, inputSearch, createdByMe]);
+    dispatch(fetchExercises(filterOptions));
+  }, [
+    dispatch,
+    page,
+    limit,
+    properties,
+    order,
+    inputSearch,
+    createdByMe,
+    tags,
+  ]);
 
   if (!exercisesSelector.isFetching) {
     const list: Exercise[] = exercisesSelector.exercisesList.content;
@@ -195,8 +201,7 @@ const ExercisesScreen = () => {
           value: "Private",
         },
       ],
-      onFilter: (value: any, record: any) =>
-        record.difficulty.startsWith(value),
+      onFilter: (value: any, record: any) => record.status.startsWith(value),
       filterSearch: true,
     },
     {
@@ -286,29 +291,39 @@ const ExercisesScreen = () => {
                 </Checkbox>
               </div>
               <div>
-                <Search placeholder="input search" onSearch={onSearch} />
+                <Search
+                  placeholder="input search"
+                  onSearch={onSearch}
+                  defaultValue={inputSearch}
+                />
+              </div>
+            </div>
+            <div className="flex justify-start items-center mt-3">
+              <div>
+                <h1 className="text-xl">Filter By</h1>
+              </div>
+              <div className="w-5/12 mx-5">
+                <Select
+                  showSearch
+                  defaultValue={selectedTags}
+                  mode="multiple"
+                  allowClear
+                  placeholder="Please select Tags"
+                  style={{ width: "100%" }}
+                  onChange={handleTagChange}
+                  optionFilterProp="children"
+                  filterOption={(input, option: any) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {children}
+                </Select>
               </div>
             </div>
           </Col>
-          <Col offset={5} span={14}>
-            <div className="w-5/12">
-              <Select
-                showSearch
-                mode="multiple"
-                allowClear
-                placeholder="Please select Tags"
-                style={{ width: "100%" }}
-                onChange={handleTagChange}
-                optionFilterProp="children"
-                filterOption={(input, option: any) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-              >
-                {children}
-              </Select>
-            </div>
-          </Col>
+
           <div className="my-10 flex flex-col items-center justify-center">
             {exercisesSelector.success &&
               exercisesSelector.exercisesList.content.length === 0 && (

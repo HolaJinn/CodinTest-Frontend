@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { Form, Input, Button, Switch, Tooltip } from "antd";
 import { ITestCaseRequest } from "../../modules/CompanyDashboard/models";
@@ -13,15 +13,18 @@ const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
   const [form] = Form.useForm();
   const [sample, setSample] = useState(testCaseRequest.isSample);
 
+  console.log(testCaseRequest.name);
+
+  useEffect(() => {}, [testCaseRequest.name]);
+
   const onFinish = (values: any) => {
-    console.log(values);
     testCaseRequest.name = values.name;
     testCaseRequest.score = values.score;
     testCaseRequest.input = values.input;
     testCaseRequest.expectedOutput = values.expectedOutput;
     testCaseRequest.isSample = sample;
+    form.resetFields();
     addTestCase();
-    // form.resetFields();
   };
 
   const onFinishFailed = (error: any) => {
@@ -42,6 +45,7 @@ const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
     >
       <Form.Item
         name="name"
+        initialValue={testCaseRequest.name}
         className="justify-center"
         rules={[
           {

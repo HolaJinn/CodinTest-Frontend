@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Col,
   Breadcrumb,
@@ -35,6 +35,8 @@ interface TestCaseItem {
 }
 
 const CreateTestCase = () => {
+  const [testCaseName, setTestCaseName] = useState("#TestCase0");
+  const [counter, setCounter] = useState(0);
   const [list, setList] = useState<TestCaseItem[]>([]);
   const [testCases, setTestCases] = useState<ITestCaseRequest[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -49,12 +51,14 @@ const CreateTestCase = () => {
 
   const testCaseRequest: ITestCaseRequest = {
     exerciseId: exercise.id,
-    name: "",
+    name: testCaseName,
     score: 0,
     isSample: false,
     input: "",
     expectedOutput: "",
   };
+
+  useEffect(() => {}, [testCaseName]);
 
   const addTestCase = () => {
     const newTest: TestCaseItem = {
@@ -69,6 +73,9 @@ const CreateTestCase = () => {
     setList([...list, newTest]);
     const newRequest: ITestCaseRequest = testCaseRequest;
     setTestCases([...testCases, newRequest]);
+    setCounter((prev) => prev + 1);
+    setTestCaseName("#TestCase" + counter.toString());
+    console.log(testCaseName);
   };
 
   const showModal = () => {
@@ -81,13 +88,13 @@ const CreateTestCase = () => {
 
   const removeItem = (key: React.Key) => {
     setList(list.filter((item) => item.key !== key));
+    setCounter((prev) => prev - 1);
+    setTestCaseName("#TestCase" + counter.toString());
   };
 
   const saveTestCases = () => {
     testCases.map((testCase) => dispatch(createTestCase(testCase)));
-    if (creationState.success) {
-      navigate("/company/exercises");
-    }
+    navigate("/company/exercises");
   };
 
   const columns = [
@@ -182,7 +189,6 @@ const CreateTestCase = () => {
             <Modal
               title="Add test case"
               visible={isModalVisible}
-              // onOk={handleOk}
               onCancel={handleCancel}
               footer={[
                 <Button key="cancel" onClick={handleCancel}>

@@ -50,9 +50,9 @@ const CreateExercise = () => {
         <Col offset={3} span={18}>
           <div className="px-5 py-2 bg-gray-150">
             <Steps current={0} percent={60}>
-              <Step title="In Progress" description="Provide details" />
-              <Step title="Waiting" description="Provide test cases" />
-              <Step title="Waiting" description="Provide Tags" />
+              <Step title="In Progress" description="Provide Details" />
+              <Step title="Waiting" description="Provide Initial Code" />
+              <Step title="Waiting" description="Provide Test Cases" />
             </Steps>
           </div>
           <div className="border border-current rounded shadow-xl my-5 px-12 py-4">

@@ -14,10 +14,10 @@ export const createExerciseService = async (requset: IExerciseRequest) => {
     return response;
 }
 
-export const getExercisesService = async(options: Record<string, string>) => {
+export const getExercisesService = async(filterOptions: Record<string, string> ) => {
     const url = apiUrl.EXERCISE_ENDPOINT
     return await axiosClient.get(url, {
-        params: options, 
+        params: filterOptions,
         headers: {
             "Authorization": `Bearer ${token}`
         }

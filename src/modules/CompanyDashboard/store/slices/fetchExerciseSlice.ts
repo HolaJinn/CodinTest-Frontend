@@ -20,9 +20,9 @@ const initialState: IFetchExerciseState = {
 
 export const fetchExercises = createAsyncThunk(
     "exercise/fetch",
-    async(options: Record<string, string>, thunkAPI) => {
+    async(filterOptions: Record<string, string>, thunkAPI) => {
         try{
-            return await getExercisesService(options)
+            return await getExercisesService(filterOptions)
         } catch(error: any) {
             console.log(error)
             return thunkAPI.rejectWithValue(error)

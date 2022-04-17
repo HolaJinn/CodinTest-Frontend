@@ -35,8 +35,8 @@ interface TestCaseItem {
 }
 
 const CreateTestCase = () => {
-  const [testCaseName, setTestCaseName] = useState("#TestCase0");
-  const [counter, setCounter] = useState(0);
+  const [testCaseName, setTestCaseName] = useState("#TestCase1");
+  const [counter, setCounter] = useState(1);
   const [list, setList] = useState<TestCaseItem[]>([]);
   const [testCases, setTestCases] = useState<ITestCaseRequest[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);

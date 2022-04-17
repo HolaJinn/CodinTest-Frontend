@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Breadcrumb, Col, Input, Pagination, Radio, Select } from "antd";
 import InvitationsList from "../../../components/InvitationsList/InvitationsList";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { string } from "yup";
 import { fetchCurrentUserInvitations } from "../store/slices/fetchCurrentUserInvitationsSlice";
 import { IInvitationItem } from "../models";
 import { Invitation } from "../../../models/Invitation";
+import { acceptInvitation } from "../store/slices/acceptInvitationSlice";
+import { rejectInvitation } from "../store/slices/rejectInvitationSlice";
 
 const { Option } = Select;
 const { Search } = Input;
@@ -53,6 +54,16 @@ const CandidateInvitationsScreen = () => {
 
   const onPageChange = (page: number, pageSize: number) => {
     setPage(page - 1);
+  };
+
+  const onStartTestClicked = (invitationId: number) => {
+    dispatch(acceptInvitation(invitationId));
+    window.location.reload();
+  };
+
+  const onRejectTestClicked = (invitationId: number) => {
+    dispatch(rejectInvitation(invitationId));
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -128,13 +139,17 @@ const CandidateInvitationsScreen = () => {
                   <Radio value="Pending">Pending</Radio>
                   <Radio value="Accepted">Accepted</Radio>
                   <Radio value="Rejected">Rejected</Radio>
-                  <Radio value="Done">Done</Radio>
+                  <Radio value="Expired">Expired</Radio>
                 </Radio.Group>
               </div>
             </div>
 
             <div>
-              <InvitationsList invitationsList={invitationsList} />
+              <InvitationsList
+                invitationsList={invitationsList}
+                startTestClick={onStartTestClicked}
+                rejectTestClick={onRejectTestClicked}
+              />
             </div>
             <div className="flex justify-end my-10">
               <Pagination

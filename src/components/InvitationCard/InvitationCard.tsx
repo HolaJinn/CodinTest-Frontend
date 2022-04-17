@@ -1,16 +1,23 @@
 import React from "react";
-import { Button, Card } from "antd";
+import { Button, Card, Popconfirm } from "antd";
 import { IInvitationItem } from "../../modules/CandidateDashboard/models";
 import {
   UserOutlined,
   HomeOutlined,
+  CloseCircleOutlined,
   PlayCircleOutlined,
 } from "@ant-design/icons";
 
 interface Props {
   invitation: IInvitationItem;
+  startTestClick: any;
+  rejectTestClick: any;
 }
-const InvitationCard = ({ invitation }: Props) => {
+const InvitationCard = ({
+  invitation,
+  startTestClick,
+  rejectTestClick,
+}: Props) => {
   return (
     <div className="my-3">
       <Card
@@ -28,7 +35,23 @@ const InvitationCard = ({ invitation }: Props) => {
               <p className="text-md mx-2">{`${invitation.company.name}`}</p>
             </div>
           </div>
-          <Button icon={<PlayCircleOutlined />}>Start Test</Button>
+          {invitation.state === "Pending" && (
+            <div className="flex">
+              <Button
+                icon={<PlayCircleOutlined />}
+                className="mr-3"
+                onClick={() => startTestClick(invitation.id)}
+              >
+                Start Test
+              </Button>
+              <Popconfirm
+                title="Sure to reject?"
+                onConfirm={() => rejectTestClick(invitation.id)}
+              >
+                <Button icon={<CloseCircleOutlined />}>Reject Test</Button>
+              </Popconfirm>
+            </div>
+          )}
         </div>
         <p>
           <b>Invited on:</b> {invitation.createdDate}

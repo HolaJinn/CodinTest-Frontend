@@ -4,13 +4,26 @@ import InvitationCard from "../InvitationCard/InvitationCard";
 
 interface Props {
   invitationsList: IInvitationItem[];
+  startTestClick: any;
+  rejectTestClick: any;
 }
 
-const InvitationsList = ({ invitationsList }: Props) => {
+const InvitationsList = ({
+  invitationsList,
+  startTestClick,
+  rejectTestClick,
+}: Props) => {
   return (
     <>
       {invitationsList.map((invitation: IInvitationItem, index: number) => {
-        return <InvitationCard key={index} invitation={invitation} />;
+        return (
+          <InvitationCard
+            key={index}
+            invitation={invitation}
+            startTestClick={startTestClick}
+            rejectTestClick={rejectTestClick}
+          />
+        );
       })}
     </>
   );

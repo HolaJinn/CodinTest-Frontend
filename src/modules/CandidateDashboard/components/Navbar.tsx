@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import ReactLogo from "../../../assets/image/logo.svg";
+import { NavLink } from "react-router-dom";
 
 const navigation = [
   { name: "Home", href: "/candidate/dashboard", current: true },
@@ -52,7 +53,7 @@ export default function Navbar() {
                       className="color-white"
                     />
                     <a
-                      href="/dashboard"
+                      href="/candidate/dashboard"
                       className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
                     >
                       CodinTest
@@ -61,21 +62,26 @@ export default function Navbar() {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "px-3 py-2 rounded-md text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
+                    <NavLink
+                      to="/candidate/exercises"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      }
+                    >
+                      Exercises
+                    </NavLink>
+                    <NavLink
+                      to="/candidate/invitations"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      }
+                    >
+                      Invitations
+                    </NavLink>
                   </div>
                 </div>
               </div>

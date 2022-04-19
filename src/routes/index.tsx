@@ -19,6 +19,8 @@ import CreateInvitation from "../modules/CompanyDashboard/screens/CreateInvitati
 import InvitationsScreen from "../modules/CompanyDashboard/screens/InvitationsScreen";
 import CandidateInvitationsScreen from "../modules/CandidateDashboard/screens/CandidateInvitationsScreen";
 import CandidateLayout from "../modules/CandidateDashboard/layouts/CandidateLayout";
+import CandidateExercicsesScreen from "../modules/CandidateDashboard/screens/CandidateExercicsesScreen";
+import CandidatesScreen from "../modules/CompanyDashboard/screens/CandidatesScreen";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -52,6 +54,10 @@ const AppRoutes = () => {
             {
               path: "/candidate/invitations",
               element: <CandidateInvitationsScreen />,
+            },
+            {
+              path: "/candidate/exercises",
+              element: <CandidateExercicsesScreen />,
             },
           ],
         },
@@ -98,6 +104,10 @@ const AppRoutes = () => {
             {
               path: "/company/invitations",
               element: <InvitationsScreen />,
+            },
+            {
+              path: "/company/candidates",
+              element: <CandidatesScreen />,
             },
           ],
         },

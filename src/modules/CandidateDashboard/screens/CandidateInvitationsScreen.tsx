@@ -48,7 +48,6 @@ const CandidateInvitationsScreen = () => {
   };
 
   const onRadioChange = (e: any) => {
-    console.log(e.target.value);
     setInvitationState(e.target.value);
   };
 

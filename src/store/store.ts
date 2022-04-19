@@ -16,6 +16,7 @@ import createTechnicalTestReducer from "../modules/CompanyDashboard/store/slices
 import addExercisesToTechnicalTestReducer from "../modules/CompanyDashboard/store/slices/addExercisesToTechnicalTestSlice";
 import fetchTechnicalTestsReducer from "../modules/CompanyDashboard/store/slices/fetchTechnicalTestsSlice";
 import deleteTechnicalTestReducer from "../modules/CompanyDashboard/store/slices/deleteTechnicalTestSlice";
+import fetchInvitationsReducer from "../modules/CompanyDashboard/store/slices/fetchInvitationsSlice";
 import createInvitationReducer from "../modules/CompanyDashboard/store/slices/createInvitationSlice";
 import fetchCurrentUserInvitationsReducer from "../modules/CandidateDashboard/store/slices/fetchCurrentUserInvitationsSlice";
 import acceptInvitationReducer from '../modules/CandidateDashboard/store/slices/acceptInvitationSlice';
@@ -40,6 +41,7 @@ export const store = configureStore({
         addExercisesToTechnicalTest: addExercisesToTechnicalTestReducer,
         fetchTechnicalTests: fetchTechnicalTestsReducer,
         deleteTechnicalTest: deleteTechnicalTestReducer,
+        fetchInvitations: fetchInvitationsReducer,
         createInvitation: createInvitationReducer,
         fetchCurrentUserInvitations: fetchCurrentUserInvitationsReducer,
         acceptInvitation: acceptInvitationReducer,

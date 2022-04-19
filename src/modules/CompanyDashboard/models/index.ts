@@ -1,6 +1,7 @@
 import { ExerciseStatus } from './../../../models/ExerciseStatus';
 import { ExerciseDifficulty } from './../../../models/ExerciceDifficulty';
 import { TechnicalTest } from '../../../models/TechnicalTest';
+import { Invitation } from '../../../models/Invitation';
 export interface IExerciseRequest {
     title: string,
     description: string,
@@ -46,4 +47,8 @@ export interface IInvitationRequest {
     expirationDate: string,
     subject: string,
     content: string
+}
+
+export interface IInvitationItem extends Invitation {
+    key: React.Key
 }

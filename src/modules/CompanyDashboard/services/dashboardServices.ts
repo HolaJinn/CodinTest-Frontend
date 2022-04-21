@@ -1,4 +1,4 @@
-import { IExerciseRequest, ITestCaseRequest, IInitialCodeRequest, ITechnicalTestRequest, IAddExercisesToTechnicalTest, IInvitationRequest } from './../models/index';
+import { IExerciseRequest, ITestCaseRequest, IInitialCodeRequest, ITechnicalTestRequest, IAddExercisesToTechnicalTest, IInvitationRequest, IRecruiterRegisterRequest } from './../models/index';
 import * as apiUrl from "../../../utils/constants"
 import axiosClient from '../../../api/axiosClient';
 
@@ -130,4 +130,14 @@ export const getRelatedCandidatesService = async(options: Record<string, string>
             "Authorization": `Bearer ${token}`
         }
     })
+}
+
+export const addRecruiterService = async (request: IRecruiterRegisterRequest) => {
+    const url = apiUrl.ADD_RECRUITER_ENDPOINT
+    const response = await axiosClient.post(url, request, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+    return response
 }

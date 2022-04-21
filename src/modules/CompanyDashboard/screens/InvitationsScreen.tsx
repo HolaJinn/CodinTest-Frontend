@@ -33,7 +33,7 @@ const InvitationsScreen = () => {
   const [properties, setProperties] = useState("id");
   const [createdByMe, setCreatedByMe] = useState(false);
   const [inputSearch, setInputSearch] = useState("");
-  const [invitationState, setInvitationState] = useState("");
+  const [invitationState, setInvitationState] = useState("All");
 
   let invitationsList: IInvitationItem[] = [];
 

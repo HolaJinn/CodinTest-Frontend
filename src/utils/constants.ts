@@ -15,6 +15,9 @@ export const TAGS_ENDPOINT = BASE_URL_ENDPOINT + "/tags"
 
 export const TECHNICAL_TEST_ENDPOINT = BASE_URL_ENDPOINT + "/technical-tests"
 
+export const RECRUITER_ENDPOINT = BASE_URL_ENDPOINT + "/company/recruiters"
+export const ADD_RECRUITER_ENDPOINT = BASE_URL_ENDPOINT + "/company/add-recruiter"
+
 export const INVITATION_ENDPOINT = BASE_URL_ENDPOINT + "/invitations"
 export const RELATED_CANDIDATES_ENDPOINT = INVITATION_ENDPOINT + "/related-candidates"
 export const CURRENT_USER_INVITATIONS_ENDPOINT = INVITATION_ENDPOINT + "/my-invitations"

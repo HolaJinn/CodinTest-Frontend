@@ -57,3 +57,12 @@ export interface IInvitationItem extends Invitation {
 export interface IRelatedCandidateItem extends IUser {
     key: React.Key
 }
+
+export interface IRecruiterRegisterRequest {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    role: string;
+    roleInCompany: string,
+  }

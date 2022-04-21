@@ -21,6 +21,9 @@ import CandidateInvitationsScreen from "../modules/CandidateDashboard/screens/Ca
 import CandidateLayout from "../modules/CandidateDashboard/layouts/CandidateLayout";
 import CandidateExercicsesScreen from "../modules/CandidateDashboard/screens/CandidateExercicsesScreen";
 import RelatedCandidatesScreen from "../modules/CompanyDashboard/screens/RelatedCandidatesScreen";
+import CompanyDetailsScreen from "../modules/CompanyDashboard/screens/CompanyDetailsScreen";
+import RecruitesScreen from "../modules/CompanyDashboard/screens/RecruitesScreen";
+import AddRecruiter from "../modules/CompanyDashboard/screens/AddRecruiter";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -108,6 +111,18 @@ const AppRoutes = () => {
             {
               path: "/company/candidates",
               element: <RelatedCandidatesScreen />,
+            },
+            {
+              path: "/company/details",
+              element: <CompanyDetailsScreen />,
+            },
+            {
+              path: "/company/recruiters",
+              element: <RecruitesScreen />,
+            },
+            {
+              path: "/company/add-recruiter",
+              element: <AddRecruiter />,
             },
           ],
         },

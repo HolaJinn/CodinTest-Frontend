@@ -1,3 +1,4 @@
+import { IUser } from './../../../models/User';
 import { ExerciseStatus } from './../../../models/ExerciseStatus';
 import { ExerciseDifficulty } from './../../../models/ExerciceDifficulty';
 import { TechnicalTest } from '../../../models/TechnicalTest';
@@ -50,5 +51,9 @@ export interface IInvitationRequest {
 }
 
 export interface IInvitationItem extends Invitation {
+    key: React.Key
+}
+
+export interface IRelatedCandidateItem extends IUser {
     key: React.Key
 }

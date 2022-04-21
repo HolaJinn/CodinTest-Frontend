@@ -20,7 +20,7 @@ import InvitationsScreen from "../modules/CompanyDashboard/screens/InvitationsSc
 import CandidateInvitationsScreen from "../modules/CandidateDashboard/screens/CandidateInvitationsScreen";
 import CandidateLayout from "../modules/CandidateDashboard/layouts/CandidateLayout";
 import CandidateExercicsesScreen from "../modules/CandidateDashboard/screens/CandidateExercicsesScreen";
-import CandidatesScreen from "../modules/CompanyDashboard/screens/CandidatesScreen";
+import RelatedCandidatesScreen from "../modules/CompanyDashboard/screens/RelatedCandidatesScreen";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -107,7 +107,7 @@ const AppRoutes = () => {
             },
             {
               path: "/company/candidates",
-              element: <CandidatesScreen />,
+              element: <RelatedCandidatesScreen />,
             },
           ],
         },

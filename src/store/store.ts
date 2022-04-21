@@ -21,7 +21,7 @@ import createInvitationReducer from "../modules/CompanyDashboard/store/slices/cr
 import fetchCurrentUserInvitationsReducer from "../modules/CandidateDashboard/store/slices/fetchCurrentUserInvitationsSlice";
 import acceptInvitationReducer from '../modules/CandidateDashboard/store/slices/acceptInvitationSlice';
 import rejectInvitationReducer from "../modules/CandidateDashboard/store/slices/rejectInvitationSlice";
-
+import fetchRelatedCandidatesReducer from "../modules/CompanyDashboard/store/slices/fetchRelatedCandidates";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -45,6 +45,7 @@ export const store = configureStore({
         createInvitation: createInvitationReducer,
         fetchCurrentUserInvitations: fetchCurrentUserInvitationsReducer,
         acceptInvitation: acceptInvitationReducer,
-        rejectInvitation: rejectInvitationReducer
+        rejectInvitation: rejectInvitationReducer,
+        fetchRelatedCandidates: fetchRelatedCandidatesReducer
     }
 })

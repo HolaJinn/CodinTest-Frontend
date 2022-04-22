@@ -58,6 +58,11 @@ export interface IRelatedCandidateItem extends IUser {
     key: React.Key
 }
 
+export interface IRecruiterItem extends IUser {
+    key: React.Key
+    roleName: string
+}
+
 export interface IRecruiterRegisterRequest {
     firstName: string;
     lastName: string;

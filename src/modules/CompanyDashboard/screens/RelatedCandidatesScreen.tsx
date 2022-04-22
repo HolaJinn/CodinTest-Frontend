@@ -8,7 +8,7 @@ import { fetchRelatedCandiates } from "../store/slices/fetchRelatedCandidates";
 const RelatedCandidatesScreen = () => {
   const [page, setPage] = useState(0);
   const [limit] = useState(10);
-  const [order, setOrder] = useState("ASC");
+  const [order] = useState("ASC");
 
   let relatedCandidatesList: IRelatedCandidateItem[] = [];
 

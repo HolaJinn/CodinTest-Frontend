@@ -132,6 +132,16 @@ export const getRelatedCandidatesService = async(options: Record<string, string>
     })
 }
 
+export const getRecruitersService = async(options: Record<string, string>) => {
+    const url = apiUrl.RECRUITER_ENDPOINT
+    return await axiosClient.get(url, {
+        params: options,
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}
+
 export const addRecruiterService = async (request: IRecruiterRegisterRequest) => {
     const url = apiUrl.ADD_RECRUITER_ENDPOINT
     const response = await axiosClient.post(url, request, {

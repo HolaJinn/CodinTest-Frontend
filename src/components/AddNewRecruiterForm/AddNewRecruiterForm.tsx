@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Switch, Select, Tooltip } from "antd";
+import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { IRecruiterRegisterRequest } from "../../modules/CompanyDashboard/models";
 

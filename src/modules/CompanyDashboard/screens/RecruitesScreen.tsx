@@ -19,7 +19,6 @@ import { IRecruiterItem } from "../models";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { fetchRecruiters } from "../store/slices/fetchRecruitersSlice";
 import { IUser } from "../../../models/User";
-import { Role } from "../../../models/Role";
 
 const { Option } = Select;
 const { Search } = Input;

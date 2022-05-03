@@ -1,5 +1,7 @@
+import { Tag } from './Tag';
 import { ExerciseDifficulty } from './ExerciceDifficulty';
 import { ExerciseStatus } from './ExerciseStatus';
+import { TestCase } from './TestCase';
 
 export interface Exercise {
     id: number,
@@ -12,4 +14,6 @@ export interface Exercise {
     programmingLanguageName: string,
     initialCode: string,
     createdDate: string
+    tags?: Tag[],
+    testCases?: TestCase[]
 }

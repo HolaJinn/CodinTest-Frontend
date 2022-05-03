@@ -10,6 +10,8 @@ import {
   Table,
   Col,
   Checkbox,
+  Modal,
+  Drawer,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
@@ -18,6 +20,7 @@ import {
   LoadingOutlined,
   FolderViewOutlined,
   EditOutlined,
+  FilterOutlined,
 } from "@ant-design/icons";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
@@ -25,6 +28,8 @@ import { fetchExercises } from "../store/slices/fetchExerciseSlice";
 import { Exercise } from "../../../models/Exercise";
 import { deleteExercise } from "../store/slices/deleteExerciseSlice";
 import { getAllTagsService } from "../services/dashboardServices";
+import ExerciseDetails from "../../../components/ExerciseDetails/ExerciseDetails";
+import { fetchExerciseDetails } from "../store/slices/fetchExerciseDetailsSlice";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -36,6 +41,8 @@ interface ExerciseItem extends Exercise {
 const ExercisesScreen = () => {
   const [sortBy, setSortBy] = useState("Most recent to least recent");
 
+  const [drawerVisibility, setDrawerVisibility] = useState(false);
+
   const [page, setPage] = useState(0);
   const [limit] = useState(10);
   const [order, setOrder] = useState("ASC");
@@ -43,6 +50,8 @@ const ExercisesScreen = () => {
   const [inputSearch, setInputSearch] = useState("");
   const [createdByMe, setCreatedByMe] = useState(false);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [exerciseDetailsId, setExerciseDetailsId] = useState<React.Key>();
   const [tags, setTags] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -96,6 +105,21 @@ const ExercisesScreen = () => {
     exercises = exercises.filter((item) => item.key !== key);
     dispatch(deleteExercise(key.toString()));
     window.location.reload();
+  };
+
+  const showDrawer = () => {
+    setDrawerVisibility(!drawerVisibility);
+  };
+
+  const showModal = (key: React.Key) => {
+    console.log(key);
+    setExerciseDetailsId(key);
+    dispatch(fetchExerciseDetails(key.toString()));
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   const onPageChange = (page: number, pageSize: number) => {
@@ -223,6 +247,7 @@ const ExercisesScreen = () => {
             color="white"
             className="bg-gray-800"
             icon={<FolderViewOutlined />}
+            onClick={() => showModal(record.key)}
           />
           <Button icon={<EditOutlined />} />
           <Popconfirm
@@ -252,57 +277,48 @@ const ExercisesScreen = () => {
           </Col>
         </div>
         <div className="px-5">
-          <Col offset={5} span={14}>
-            <div className="flex justify-end my-5">
-              <Button
-                size="large"
-                shape="round"
-                icon={<FileAddOutlined />}
-                onClick={(e) => navigate("/company/create-exercise")}
-              >
-                Create Exercise
-              </Button>
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="flex justify-between items-center">
-                <div className="m-0 p-0">
-                  <h1 className="text-xl">Sort By</h1>
-                </div>
-                <div className="mx-5">
-                  <Select
-                    defaultValue={sortBy}
-                    style={{ width: 250 }}
-                    onChange={handleSort}
-                  >
-                    <Option value="Most recent to least recent">
-                      Most recent to least recent
-                    </Option>
-                    <Option value="Least recent to most recent">
-                      Least recent to most recent
-                    </Option>
-                    <Option value="Title">Title</Option>
-                    <Option value="TimerInMinute">Timer</Option>
-                  </Select>
-                </div>
-              </div>
-              <div>
-                <Checkbox checked={createdByMe} onChange={onBoxChecked}>
-                  Created By Me
-                </Checkbox>
-              </div>
-              <div>
+          <Drawer
+            title="Filter exercises"
+            placement="left"
+            closable={false}
+            onClose={showDrawer}
+            visible={drawerVisibility}
+            getContainer={false}
+            style={{ position: "absolute" }}
+          >
+            <div>
+              <div className="mb-5">
+                <h1 className="text-xl">Search by keywords</h1>
                 <Search
                   placeholder="input search"
                   onSearch={onSearch}
                   defaultValue={inputSearch}
                 />
               </div>
-            </div>
-            <div className="flex justify-start items-center mt-3">
-              <div>
-                <h1 className="text-xl">Filter By</h1>
+              <div className="mb-5">
+                <h1 className="text-xl">Sort By</h1>
+                <Select
+                  defaultValue={sortBy}
+                  style={{ width: 250 }}
+                  onChange={handleSort}
+                >
+                  <Option value="Most recent to least recent">
+                    Most recent to least recent
+                  </Option>
+                  <Option value="Least recent to most recent">
+                    Least recent to most recent
+                  </Option>
+                  <Option value="Title">Title</Option>
+                  <Option value="TimerInMinute">Timer</Option>
+                </Select>
               </div>
-              <div className="w-5/12 mx-5">
+              <div className="mb-5">
+                <Checkbox checked={createdByMe} onChange={onBoxChecked}>
+                  Created By Me
+                </Checkbox>
+              </div>
+              <div className="mb-5">
+                <h1 className="text-xl">Filter By</h1>
                 <Select
                   showSearch
                   defaultValue={selectedTags}
@@ -321,6 +337,26 @@ const ExercisesScreen = () => {
                   {children}
                 </Select>
               </div>
+            </div>
+          </Drawer>
+          <Col offset={5} span={14}>
+            <div className="flex justify-between my-5">
+              <Button
+                size="large"
+                shape="round"
+                icon={<FilterOutlined />}
+                onClick={(e) => showDrawer()}
+              >
+                Filter Exercises
+              </Button>
+              <Button
+                size="large"
+                shape="round"
+                icon={<FileAddOutlined />}
+                onClick={(e) => navigate("/company/create-exercise")}
+              >
+                Create Exercise
+              </Button>
             </div>
           </Col>
 
@@ -355,6 +391,19 @@ const ExercisesScreen = () => {
                   }}
                 />
               )}
+            <Modal
+              title="Exercise Details"
+              visible={isModalVisible}
+              onCancel={handleCancel}
+              width={1000}
+              footer={[
+                <Button key="cancel" onClick={handleCancel}>
+                  Cancel
+                </Button>,
+              ]}
+            >
+              <ExerciseDetails />
+            </Modal>
           </div>
         </div>
       </div>

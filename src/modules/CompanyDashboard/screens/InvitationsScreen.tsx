@@ -10,11 +10,13 @@ import {
   Popconfirm,
   Table,
   Checkbox,
+  Drawer,
 } from "antd";
 import {
   DeleteOutlined,
   FolderViewOutlined,
   EditOutlined,
+  FilterOutlined,
 } from "@ant-design/icons";
 import { IInvitationItem } from "../models";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
@@ -26,6 +28,8 @@ const { Search } = Input;
 
 const InvitationsScreen = () => {
   const [sortBy, setSortBy] = useState("Most recent to least recent");
+
+  const [drawerVisibility, setDrawerVisibility] = useState(false);
 
   const [page, setPage] = useState(0);
   const [limit] = useState(10);
@@ -55,6 +59,10 @@ const InvitationsScreen = () => {
       setProperties(e);
     }
     setSortBy(e);
+  };
+
+  const showDrawer = () => {
+    setDrawerVisibility(!drawerVisibility);
   };
 
   const onBoxChecked = (e: any) => {
@@ -164,51 +172,73 @@ const InvitationsScreen = () => {
         </Col>
       </div>
       <div className="py-5">
-        <Col offset={5} span={14}>
-          <div className="flex justify-between items-center">
-            <div className="flex justify-between items-center">
-              <div>
-                <h1 className="text-xl">Sort By</h1>
-              </div>
-              <div className="mx-5">
-                <Select
-                  defaultValue={sortBy}
-                  style={{ width: 250 }}
-                  onChange={handleSort}
-                >
-                  <Option value="Most recent to least recent">
-                    Most recent to least recent
-                  </Option>
-                  <Option value="Least recent to most recent">
-                    Least recent to most recent
-                  </Option>
-                </Select>
-              </div>
+        <Drawer
+          title="Filter exercises"
+          placement="left"
+          closable={false}
+          onClose={showDrawer}
+          visible={drawerVisibility}
+          getContainer={false}
+          style={{ position: "absolute" }}
+        >
+          <div>
+            <div className="mb-5">
+              <h1 className="text-xl">Search by keywords</h1>
+              <Search
+                placeholder="input search"
+                onSearch={onSearch}
+                defaultValue={inputSearch}
+              />
             </div>
-            <div>
+            <div className="mb-5">
+              <h1 className="text-xl">Sort By</h1>
+              <Select
+                defaultValue={sortBy}
+                style={{ width: 250 }}
+                onChange={handleSort}
+              >
+                <Option value="Most recent to least recent">
+                  Most recent to least recent
+                </Option>
+                <Option value="Least recent to most recent">
+                  Least recent to most recent
+                </Option>
+                <Option value="Title">Title</Option>
+                <Option value="TimerInMinute">Timer</Option>
+              </Select>
+            </div>
+            <div className="mb-5">
               <Checkbox checked={createdByMe} onChange={onBoxChecked}>
                 Created By Me
               </Checkbox>
             </div>
             <div>
-              <Search placeholder="input search" onSearch={onSearch} />
+              <div>
+                <h1 className="text-xl">Invitation State</h1>
+              </div>
+              <div className="mx-5 flex flex-col items-center justify-start my-5">
+                <Radio.Group onChange={onRadioChange} value={invitationState}>
+                  <Radio value="All">All</Radio>
+                  <Radio value="Pending">Pending</Radio>
+                  <Radio value="Accepted">Accepted</Radio>
+                  <Radio value="Rejected">Rejected</Radio>
+                  <Radio value="Expired">Expired</Radio>
+                </Radio.Group>
+              </div>
             </div>
           </div>
-          <div className="flex items-center justify-start my-5">
-            <div>
-              <h1 className="text-xl">Invitation State</h1>
-            </div>
-            <div className="mx-5">
-              <Radio.Group onChange={onRadioChange} value={invitationState}>
-                <Radio value="All">All</Radio>
-                <Radio value="Pending">Pending</Radio>
-                <Radio value="Accepted">Accepted</Radio>
-                <Radio value="Rejected">Rejected</Radio>
-                <Radio value="Expired">Expired</Radio>
-              </Radio.Group>
-            </div>
+        </Drawer>
+        <Col offset={5} span={14}>
+          <div className="flex justify-start my-5">
+            <Button
+              size="large"
+              shape="round"
+              icon={<FilterOutlined />}
+              onClick={(e) => showDrawer()}
+            >
+              Filter Invitations
+            </Button>
           </div>
-
           <div>
             <Table
               columns={columns}

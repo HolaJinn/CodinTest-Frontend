@@ -20,6 +20,7 @@ interface Props {
 
 const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
   const [timer, setTimer] = useState(false);
+  const [isPublic, setIsPublic] = useState(false);
   const [timerValue, setTimerValue] = useState(0);
   const [difficulty, setDifficulty] = useState(ExerciseDifficulty.EASY);
   const [tags, setTags] = useState([]);
@@ -37,7 +38,7 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
   const onFinish = (values: IExerciseRequest) => {
     values.timerInMinute = timerValue;
     values.difficulty = difficulty;
-    if (values.status) {
+    if (isPublic) {
       values.status = ExerciseStatus.PUBLIC;
     } else {
       values.status = ExerciseStatus.PRIVATE;
@@ -65,6 +66,10 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
 
   const onSwitchChange = (checked: any) => {
     setTimer(checked);
+  };
+
+  const onStatusSwitchChange = (checked: any) => {
+    setIsPublic(checked);
   };
 
   const handleTagChange = (value: any) => {
@@ -127,7 +132,11 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
                 title="Make this exercise public to everyone"
                 placement="left"
               >
-                <Switch checkedChildren="public" unCheckedChildren="private" />
+                <Switch
+                  checkedChildren="public"
+                  unCheckedChildren="private"
+                  onChange={onStatusSwitchChange}
+                />
               </Tooltip>
             </Form.Item>
           </div>

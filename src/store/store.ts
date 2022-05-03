@@ -11,6 +11,7 @@ import createInitialCodeReducer from "../modules/CompanyDashboard/store/slices/c
 import createTestCaseReducer from "../modules/CompanyDashboard/store/slices/createTestCaseSlice"
 import programmingLanguageReducer from "./slices/programmingLanguageSlice";
 import fetchExerciseReducer from './../modules/CompanyDashboard/store/slices/fetchExerciseSlice';
+import fetchExerciseDetailsReducer from "./../modules/CompanyDashboard/store/slices/fetchExerciseDetailsSlice";
 import deleteExerciseReducer from "../modules/CompanyDashboard/store/slices/deleteExerciseSlice";
 import createTechnicalTestReducer from "../modules/CompanyDashboard/store/slices/createTechnicalTestSlice";
 import addExercisesToTechnicalTestReducer from "../modules/CompanyDashboard/store/slices/addExercisesToTechnicalTestSlice";
@@ -38,6 +39,7 @@ export const store = configureStore({
         createTestCase: createTestCaseReducer,
         programmingLanguage: programmingLanguageReducer,
         fetchExercises: fetchExerciseReducer,
+        fetchExerciseDetails: fetchExerciseDetailsReducer,
         deleteExercise: deleteExerciseReducer,
         createTechnicalTest: createTechnicalTestReducer,
         addExercisesToTechnicalTest: addExercisesToTechnicalTestReducer,

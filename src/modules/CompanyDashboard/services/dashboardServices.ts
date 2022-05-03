@@ -54,6 +54,15 @@ export const getAllProgrammingLanguagesService = async() => {
     return await axiosClient.get(url)
 }
 
+export const getExerciseDetailsService = async(id: string) => {
+    const url = apiUrl.EXERCISE_ENDPOINT + "/" + id
+    return await axiosClient.get(url, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}
+
 export const deleteExerciseService = async(id: string) => {
     const url = apiUrl.EXERCISE_ENDPOINT + "/" + id;
     return await axiosClient.delete(url, {

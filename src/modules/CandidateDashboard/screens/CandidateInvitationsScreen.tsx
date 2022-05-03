@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, Col, Input, Pagination, Radio, Select } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Col,
+  Drawer,
+  Input,
+  Pagination,
+  Radio,
+  Select,
+} from "antd";
+import { FilterOutlined } from "@ant-design/icons";
 import InvitationsList from "../../../components/InvitationsList/InvitationsList";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { fetchCurrentUserInvitations } from "../store/slices/fetchCurrentUserInvitationsSlice";
@@ -13,6 +23,8 @@ const { Search } = Input;
 
 const CandidateInvitationsScreen = () => {
   const [sortBy, setSortBy] = useState("Most recent to least recent");
+
+  const [drawerVisibility, setDrawerVisibility] = useState(false);
 
   const [page, setPage] = useState(0);
   const [limit] = useState(10);
@@ -41,6 +53,10 @@ const CandidateInvitationsScreen = () => {
       setProperties(e);
     }
     setSortBy(e);
+  };
+
+  const showDrawer = () => {
+    setDrawerVisibility(!drawerVisibility);
   };
 
   const onSearch = (e: any) => {
@@ -104,31 +120,52 @@ const CandidateInvitationsScreen = () => {
           </Col>
         </div>
         <div className="py-5">
-          <Col offset={5} span={14}>
-            <div className="flex justify-between items-center">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h1 className="text-xl">Sort By</h1>
-                </div>
-                <div className="mx-5">
-                  <Select
-                    defaultValue={sortBy}
-                    style={{ width: 250 }}
-                    onChange={handleSort}
-                  >
-                    <Option value="Most recent to least recent">
-                      Most recent to least recent
-                    </Option>
-                    <Option value="Least recent to most recent">
-                      Least recent to most recent
-                    </Option>
-                  </Select>
-                </div>
+          <Drawer
+            title="Filter exercises"
+            placement="left"
+            closable={false}
+            onClose={showDrawer}
+            visible={drawerVisibility}
+            getContainer={false}
+            style={{ position: "absolute" }}
+          >
+            <div>
+              <div className="mb-5">
+                <h1 className="text-xl">Search by keywords</h1>
+                <Search
+                  placeholder="input search"
+                  onSearch={onSearch}
+                  defaultValue={inputSearch}
+                />
               </div>
-              <div>
-                <Search placeholder="input search" onSearch={onSearch} />
+              <div className="mb-5">
+                <h1 className="text-xl">Sort By</h1>
+                <Select
+                  defaultValue={sortBy}
+                  style={{ width: 250 }}
+                  onChange={handleSort}
+                >
+                  <Option value="Most recent to least recent">
+                    Most recent to least recent
+                  </Option>
+                  <Option value="Least recent to most recent">
+                    Least recent to most recent
+                  </Option>
+                  <Option value="Title">Title</Option>
+                  <Option value="TimerInMinute">Timer</Option>
+                </Select>
               </div>
             </div>
+          </Drawer>
+          <Col offset={5} span={14}>
+            <Button
+              size="large"
+              shape="round"
+              icon={<FilterOutlined />}
+              onClick={(e) => showDrawer()}
+            >
+              Filter Invitations
+            </Button>
             <div className="flex items-center justify-start my-5">
               <div>
                 <h1 className="text-xl">Invitation State</h1>

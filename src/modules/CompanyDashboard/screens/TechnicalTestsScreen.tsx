@@ -4,11 +4,12 @@ import {
   Button,
   Checkbox,
   Col,
+  Drawer,
   Input,
   Pagination,
   Select,
 } from "antd";
-import { FileAddOutlined } from "@ant-design/icons";
+import { FileAddOutlined, FilterOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { fetchTechnicalTests } from "../store/slices/fetchTechnicalTestsSlice";
@@ -22,6 +23,8 @@ const { Search } = Input;
 
 const TechnicalTestsScreen = () => {
   const [sortBy, setSortBy] = useState("Most recent to least recent");
+
+  const [drawerVisibility, setDrawerVisibility] = useState(false);
 
   const [page, setPage] = useState(0);
   const [limit] = useState(10);
@@ -51,6 +54,10 @@ const TechnicalTestsScreen = () => {
       setProperties(e);
     }
     setSortBy(e);
+  };
+
+  const showDrawer = () => {
+    setDrawerVisibility(!drawerVisibility);
   };
 
   const onBoxChecked = (e: any) => {
@@ -109,8 +116,58 @@ const TechnicalTestsScreen = () => {
           </Col>
         </div>
         <div className="px-5">
+          <Drawer
+            title="Filter technical tests"
+            placement="left"
+            closable={false}
+            onClose={showDrawer}
+            visible={drawerVisibility}
+            getContainer={false}
+            style={{ position: "absolute" }}
+          >
+            <div>
+              <div className="mb-5">
+                <h1 className="text-xl">Search by keywords</h1>
+                <Search
+                  placeholder="input search"
+                  onSearch={onSearch}
+                  defaultValue={inputSearch}
+                />
+              </div>
+              <div className="mb-5">
+                <h1 className="text-xl">Sort By</h1>
+                <Select
+                  defaultValue={sortBy}
+                  style={{ width: 250 }}
+                  onChange={handleSort}
+                >
+                  <Option value="Most recent to least recent">
+                    Most recent to least recent
+                  </Option>
+                  <Option value="Least recent to most recent">
+                    Least recent to most recent
+                  </Option>
+                  <Option value="Title">Title</Option>
+                  <Option value="TimerInMinute">Timer</Option>
+                </Select>
+              </div>
+              <div className="mb-5">
+                <Checkbox checked={createdByMe} onChange={onBoxChecked}>
+                  Created By Me
+                </Checkbox>
+              </div>
+            </div>
+          </Drawer>
           <Col offset={5} span={14}>
-            <div className="flex justify-end my-5">
+            <div className="flex justify-between my-5">
+              <Button
+                size="large"
+                shape="round"
+                icon={<FilterOutlined />}
+                onClick={(e) => showDrawer()}
+              >
+                Filter Tests
+              </Button>
               <Button
                 size="large"
                 shape="round"
@@ -119,37 +176,6 @@ const TechnicalTestsScreen = () => {
               >
                 Create Test
               </Button>
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="flex justify-between items-center">
-                <div className="m-0 p-0">
-                  <h1 className="text-xl">Sort By</h1>
-                </div>
-                <div className="mx-5">
-                  <Select
-                    defaultValue={sortBy}
-                    style={{ width: 250 }}
-                    onChange={handleSort}
-                  >
-                    <Option value="Most recent to least recent">
-                      Most recent to least recent
-                    </Option>
-                    <Option value="Least recent to most recent">
-                      Least recent to most recent
-                    </Option>
-                    <Option value="Title">Title</Option>
-                    <Option value="TimerInMinute">Timer</Option>
-                  </Select>
-                </div>
-              </div>
-              <div>
-                <Checkbox checked={createdByMe} onChange={onBoxChecked}>
-                  Created By Me
-                </Checkbox>
-              </div>
-              <div>
-                <Search placeholder="input search" onSearch={onSearch} />
-              </div>
             </div>
             <div>
               <TechnicalTestsList

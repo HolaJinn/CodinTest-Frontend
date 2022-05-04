@@ -87,7 +87,7 @@ const ShortcutExercises = () => {
         title="Exercises that might interest you"
         className="border border-current rounded shadow-md my-5 px-12 py-2"
         extra={
-          <Button onClick={() => navigate("/company/exercises")}>
+          <Button onClick={() => navigate("/candidate/exercises")}>
             Show all
           </Button>
         }

@@ -3,6 +3,7 @@ import { ExerciseStatus } from './../../../models/ExerciseStatus';
 import { ExerciseDifficulty } from './../../../models/ExerciceDifficulty';
 import { TechnicalTest } from '../../../models/TechnicalTest';
 import { Invitation } from '../../../models/Invitation';
+import { Exercise } from '../../../models/Exercise';
 export interface IExerciseRequest {
     title: string,
     description: string,
@@ -70,4 +71,7 @@ export interface IRecruiterRegisterRequest {
     password: string;
     role: string;
     roleInCompany: string,
+  }
+  export interface ExerciseItem extends Exercise {
+    key: React.Key;
   }

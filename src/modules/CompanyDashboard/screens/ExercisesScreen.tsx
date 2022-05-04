@@ -30,13 +30,10 @@ import { deleteExercise } from "../store/slices/deleteExerciseSlice";
 import { getAllTagsService } from "../services/dashboardServices";
 import ExerciseDetails from "../../../components/ExerciseDetails/ExerciseDetails";
 import { fetchExerciseDetails } from "../store/slices/fetchExerciseDetailsSlice";
+import { ExerciseItem } from "../models";
 
 const { Search } = Input;
 const { Option } = Select;
-
-interface ExerciseItem extends Exercise {
-  key: React.Key;
-}
 
 const ExercisesScreen = () => {
   const [sortBy, setSortBy] = useState("Most recent to least recent");

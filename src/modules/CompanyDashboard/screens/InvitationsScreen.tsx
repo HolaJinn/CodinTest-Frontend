@@ -173,9 +173,9 @@ const InvitationsScreen = () => {
       </div>
       <div className="py-5">
         <Drawer
-          title="Filter exercises"
+          title="Filter invitations"
           placement="left"
-          closable={false}
+          closable={true}
           onClose={showDrawer}
           visible={drawerVisibility}
           getContainer={false}

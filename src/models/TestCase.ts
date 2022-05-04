@@ -3,7 +3,7 @@ export interface TestCase{
     exerciseId: number,
     name: string,
     score: number,
-    isSample: boolean,
+    sample: boolean,
     input: string,
     expectedOutput: string
 }

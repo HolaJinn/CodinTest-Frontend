@@ -88,7 +88,15 @@ const ExerciseDetails = () => {
           <Collapse accordion>
             {testCases &&
               testCases.map((testCase) => (
-                <Panel header={testCase.name} key={testCase.id}>
+                <Panel
+                  header={testCase.name}
+                  key={testCase.id}
+                  extra={
+                    testCase.sample
+                      ? "This is a sample test case"
+                      : "This is not a sample test case"
+                  }
+                >
                   <h1>Score:</h1>
                   <p>{testCase.score}</p>
                   <Divider />

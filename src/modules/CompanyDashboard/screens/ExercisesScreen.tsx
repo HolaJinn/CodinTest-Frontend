@@ -112,7 +112,6 @@ const ExercisesScreen = () => {
   };
 
   const showModal = (key: React.Key) => {
-    console.log(key);
     setExerciseDetailsId(key);
     dispatch(fetchExerciseDetails(key.toString()));
     setIsModalVisible(true);

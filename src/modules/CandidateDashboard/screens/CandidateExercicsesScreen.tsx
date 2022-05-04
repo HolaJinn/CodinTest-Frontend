@@ -314,6 +314,9 @@ const CandidateExercicsesScreen = () => {
           </Col>
 
           <div className="my-10 flex flex-col items-center justify-center">
+            {exercises.length === 0 && (
+              <Empty description={"There is no new exercises"} />
+            )}
             {exercisesSelector.success &&
               exercisesSelector.exercisesList.content.length !== 0 && (
                 <Table

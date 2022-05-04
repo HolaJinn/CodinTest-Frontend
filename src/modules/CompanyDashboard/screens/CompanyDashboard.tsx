@@ -22,7 +22,7 @@ const CompanyDashboard = () => {
       <div className="py-5">
         <Col offset={3} span={18}>
           <h1 className="text-xl">Welcome {currentUser.firstName}</h1>
-          <div className="flex items-start ">
+          <div className="flex items-start my-5">
             <div className=" mx-5 w-6/12">
               <ShortcutInvitations />
             </div>

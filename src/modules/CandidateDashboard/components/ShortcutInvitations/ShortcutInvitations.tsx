@@ -1,25 +1,22 @@
-import { Button, Card } from "antd";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { Invitation } from "../../../../models/Invitation";
 import { IInvitationItem } from "../../models";
-import { fetchInvitations } from "../../store/slices/fetchInvitationsSlice";
+import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { fetchCurrentUserInvitations } from "../../store/slices/fetchCurrentUserInvitationsSlice";
+import { Invitation } from "../../../../models/Invitation";
+import { Button, Card, Empty } from "antd";
 
 const ShortcutInvitations = () => {
   const [page] = useState(0);
   const [limit] = useState(3);
   const [order] = useState("DESC");
   const [properties] = useState("createdDate");
-  const [createdByMe] = useState(true);
-  const [invitationState] = useState("All");
-
+  const [invitationState] = useState("Pending");
   let invitationsList: IInvitationItem[] = [];
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const invitationsSelector = useSelector(
-    (state: RootStateOrAny) => state.fetchInvitations
+    (state: RootStateOrAny) => state.fetchCurrentUserInvitations
   );
 
   useEffect(() => {
@@ -28,11 +25,10 @@ const ShortcutInvitations = () => {
       limit: limit.toString(),
       order,
       properties,
-      createdByMe: createdByMe.toString(),
       state: invitationState,
     };
-    dispatch(fetchInvitations(filterOption));
-  }, [dispatch, page, limit, order, properties, createdByMe, invitationState]);
+    dispatch(fetchCurrentUserInvitations(filterOption));
+  }, [dispatch, page, limit, order, properties, invitationState]);
   if (invitationsSelector.invitationsList.content) {
     invitationsList = invitationsSelector.invitationsList.content.map(
       (invitation: Invitation, index: number) => {
@@ -48,17 +44,21 @@ const ShortcutInvitations = () => {
       }
     );
   }
+
   return (
     <>
       <Card
-        title="Your latest invitations"
+        title="Your pending invitations"
         className="border border-current rounded shadow-md my-5 px-12 py-2"
         extra={
-          <Button onClick={() => navigate("/company/invitations")}>
+          <Button onClick={() => navigate("/candidate/invitations")}>
             Show all
           </Button>
         }
       >
+        {invitationsList.length === 0 && (
+          <Empty description={"You have no pending invitations"} />
+        )}
         {invitationsList.map((invitation: IInvitationItem) => (
           <div key={invitation.id} className="border border-current mb-3 p-2">
             <div className="flex ">

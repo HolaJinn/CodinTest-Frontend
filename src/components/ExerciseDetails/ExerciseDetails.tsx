@@ -12,6 +12,7 @@ import { useSelector, RootStateOrAny } from "react-redux";
 import { Exercise } from "../../models/Exercise";
 import { TestCase } from "../../models/TestCase";
 import { Tag } from "../../models/Tag";
+import { IUser } from "../../models/User";
 
 const { Panel } = Collapse;
 
@@ -22,6 +23,8 @@ const IconFont = createFromIconfontCN({
   ],
 });
 const ExerciseDetails = () => {
+  const user = localStorage.getItem("user");
+  const currentUser: IUser = JSON.parse(user!);
   const [testCases, setTestCases] = useState<TestCase[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const exerciseSelector = useSelector(
@@ -56,12 +59,14 @@ const ExerciseDetails = () => {
               Diffiulty: {exercise.difficulty}
             </h1>
           </div>
-          <div className="flex items-center mr-5">
-            <CheckCircleOutlined />
-            <h1 className="text-sm ml-2 mb-0">
-              {testCases && testCases.length} test cases
-            </h1>
-          </div>
+          {exercise.creatorId === currentUser.id ? (
+            <div className="flex items-center mr-5">
+              <CheckCircleOutlined />
+              <h1 className="text-sm ml-2 mb-0">
+                {testCases && testCases.length} test cases
+              </h1>
+            </div>
+          ) : null}
         </div>
         <div className="flex items-center mt-5">
           <h1 className="text-sm mb-0 mr-1">
@@ -86,7 +91,33 @@ const ExerciseDetails = () => {
         <Divider />
         <div>
           <Collapse accordion>
-            {testCases &&
+            {exercise.creatorId !== currentUser.id &&
+              testCases &&
+              testCases.map(
+                (testCase) =>
+                  testCase.sample && (
+                    <Panel
+                      header={testCase.name}
+                      key={testCase.id}
+                      extra={
+                        testCase.sample
+                          ? "This is a sample test case"
+                          : "This is not a sample test case"
+                      }
+                    >
+                      <h1>Score:</h1>
+                      <p>{testCase.score}</p>
+                      <Divider />
+                      <h1>Input:</h1>
+                      <p>{testCase.input}</p>
+                      <Divider />
+                      <h1>Expected Output:</h1>
+                      <p>{testCase.expectedOutput}</p>
+                    </Panel>
+                  )
+              )}
+            {exercise.creatorId === currentUser.id &&
+              testCases &&
               testCases.map((testCase) => (
                 <Panel
                   header={testCase.name}

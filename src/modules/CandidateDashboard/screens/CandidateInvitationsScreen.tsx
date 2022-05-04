@@ -4,6 +4,7 @@ import {
   Button,
   Col,
   Drawer,
+  Empty,
   Input,
   Pagination,
   Radio,
@@ -181,6 +182,9 @@ const CandidateInvitationsScreen = () => {
             </div>
 
             <div>
+              {invitationsList.length === 0 && (
+                <Empty description={"No invitations found"} />
+              )}
               <InvitationsList
                 invitationsList={invitationsList}
                 startTestClick={onStartTestClicked}

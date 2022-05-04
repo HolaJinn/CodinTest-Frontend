@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Modal } from "antd";
-import { createFromIconfontCN } from "@ant-design/icons";
-import { ClockCircleOutlined, StarOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
-import { ExerciseItem } from "../../models";
-import { fetchExercises } from "../../store/slices/fetchExerciseSlice";
+import { fetchExercises } from "../../../CompanyDashboard/store/slices/fetchExerciseSlice";
 import { Exercise } from "../../../../models/Exercise";
-import { fetchExerciseDetails } from "../../store/slices/fetchExerciseDetailsSlice";
+import { ExerciseItem } from "../../models";
+import { Button, Card, Empty, Modal } from "antd";
+import { ClockCircleOutlined, StarOutlined } from "@ant-design/icons";
+import { createFromIconfontCN } from "@ant-design/icons";
+import { fetchExerciseDetails } from "../../../CompanyDashboard/store/slices/fetchExerciseDetailsSlice";
 import ExerciseDetails from "../../../../components/ExerciseDetails/ExerciseDetails";
 
 const IconFont = createFromIconfontCN({
@@ -22,16 +22,14 @@ const ShortcutExercises = () => {
   const [limit] = useState(3);
   const [order] = useState("DESC");
   const [properties] = useState("createdDate");
-  const [createdByMe] = useState(true);
+  const [status] = useState("Public");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [exerciseDetailsId, setExerciseDetailsId] = useState<React.Key>();
 
   let exercises: ExerciseItem[] = [];
-
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const exercisesSelector = useSelector(
     (state: RootStateOrAny) => state.fetchExercises
@@ -46,17 +44,16 @@ const ShortcutExercises = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
   useEffect(() => {
     const filterOptions: Record<string, string> = {
       page: page.toString(),
       limit: limit.toString(),
       order,
       properties,
-      createdByMe: createdByMe.toString(),
+      status,
     };
     dispatch(fetchExercises(filterOptions));
-  }, [dispatch, page, limit, properties, order, createdByMe]);
+  }, [dispatch, page, limit, properties, order, status]);
 
   if (!exercisesSelector.isFetching) {
     const list: Exercise[] = exercisesSelector.exercisesList.content;
@@ -83,10 +80,11 @@ const ShortcutExercises = () => {
       }
     }
   }
+
   return (
     <>
       <Card
-        title="Your latest exercises"
+        title="Exercises that might interest you"
         className="border border-current rounded shadow-md my-5 px-12 py-2"
         extra={
           <Button onClick={() => navigate("/company/exercises")}>
@@ -94,6 +92,9 @@ const ShortcutExercises = () => {
           </Button>
         }
       >
+        {exercises.length === 0 && (
+          <Empty description={"There is no new exercises"} />
+        )}
         {exercises.map((exercise: ExerciseItem, index: number) => (
           <div
             key={index}

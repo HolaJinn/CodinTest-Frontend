@@ -30,6 +30,11 @@ const ShortcutExercises = () => {
 
   let exercises: ExerciseItem[] = [];
 
+  const exerciseDetailsSelector = useSelector(
+    (state: RootStateOrAny) => state.fetchExerciseDetails
+  );
+  const exercise: Exercise = exerciseDetailsSelector.exerciseDetails;
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -139,7 +144,7 @@ const ShortcutExercises = () => {
           </Button>,
         ]}
       >
-        <ExerciseDetails />
+        <ExerciseDetails exercise={exercise} />
       </Modal>
     </>
   );

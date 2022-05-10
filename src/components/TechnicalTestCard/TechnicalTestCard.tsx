@@ -14,18 +14,23 @@ interface Props {
   technicalTest: TechnicalTestItem;
   removeItem: any;
   inviteCandidate: any;
+  showModal: any;
 }
 
 const TechnicalTestCard = ({
   technicalTest,
   removeItem,
   inviteCandidate,
+  showModal,
 }: Props) => {
   return (
     <div className="my-3">
       <Card
         title={technicalTest.title}
         className="border border-current rounded shadow-md my-5 px-12 py-4 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer"
+        onClick={() => {
+          showModal(technicalTest.id);
+        }}
       >
         <div className="flex item-center justify-between">
           <div className="flex item-center justify-start">

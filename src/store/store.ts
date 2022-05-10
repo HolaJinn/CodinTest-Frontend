@@ -25,6 +25,7 @@ import rejectInvitationReducer from "../modules/CandidateDashboard/store/slices/
 import fetchRelatedCandidatesReducer from "../modules/CompanyDashboard/store/slices/fetchRelatedCandidates";
 import addRecruiterReducer from "../modules/CompanyDashboard/store/slices/addRecruiterSlice";
 import fetchRecruitersReducer from "../modules/CompanyDashboard/store/slices/fetchRecruitersSlice";
+import fetchTechnicalTestDetailsReducer from "../modules/CompanyDashboard/store/slices/fetchTechnicalTestDetailsSlice";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -44,6 +45,7 @@ export const store = configureStore({
         createTechnicalTest: createTechnicalTestReducer,
         addExercisesToTechnicalTest: addExercisesToTechnicalTestReducer,
         fetchTechnicalTests: fetchTechnicalTestsReducer,
+        fetchTechnicalTestDetails: fetchTechnicalTestDetailsReducer,
         deleteTechnicalTest: deleteTechnicalTestReducer,
         fetchInvitations: fetchInvitationsReducer,
         createInvitation: createInvitationReducer,

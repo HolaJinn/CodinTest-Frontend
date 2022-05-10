@@ -26,8 +26,6 @@ const ShortcutExercises = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [exerciseDetailsId, setExerciseDetailsId] = useState<React.Key>();
-
   let exercises: ExerciseItem[] = [];
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,8 +33,12 @@ const ShortcutExercises = () => {
     (state: RootStateOrAny) => state.fetchExercises
   );
 
+  const exerciseDetailsSelector = useSelector(
+    (state: RootStateOrAny) => state.fetchExerciseDetails
+  );
+  const exercise: Exercise = exerciseDetailsSelector.exerciseDetails;
+
   const showModal = (key: React.Key) => {
-    setExerciseDetailsId(key);
     dispatch(fetchExerciseDetails(key.toString()));
     setIsModalVisible(true);
   };
@@ -140,7 +142,7 @@ const ShortcutExercises = () => {
           </Button>,
         ]}
       >
-        <ExerciseDetails />
+        <ExerciseDetails exercise={exercise} />
       </Modal>
     </>
   );

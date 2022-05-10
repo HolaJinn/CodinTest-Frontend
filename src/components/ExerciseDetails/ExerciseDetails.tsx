@@ -8,7 +8,6 @@ import {
 } from "@ant-design/icons";
 import { createFromIconfontCN } from "@ant-design/icons";
 
-import { useSelector, RootStateOrAny } from "react-redux";
 import { Exercise } from "../../models/Exercise";
 import { TestCase } from "../../models/TestCase";
 import { Tag } from "../../models/Tag";
@@ -16,22 +15,21 @@ import { IUser } from "../../models/User";
 
 const { Panel } = Collapse;
 
+interface Props {
+  exercise: Exercise;
+}
+
 const IconFont = createFromIconfontCN({
   scriptUrl: [
     "//at.alicdn.com/t/font_1788044_0dwu4guekcwr.js", // icon-javascript, icon-java, icon-shoppingcart (overrided)
     "//at.alicdn.com/t/font_1788592_a5xf2bdic3u.js", // icon-shoppingcart, icon-python
   ],
 });
-const ExerciseDetails = () => {
+const ExerciseDetails = ({ exercise }: Props) => {
   const user = localStorage.getItem("user");
   const currentUser: IUser = JSON.parse(user!);
   const [testCases, setTestCases] = useState<TestCase[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
-  const exerciseSelector = useSelector(
-    (state: RootStateOrAny) => state.fetchExerciseDetails
-  );
-
-  const exercise: Exercise = exerciseSelector.exerciseDetails;
 
   useEffect(() => {
     if (exercise) {

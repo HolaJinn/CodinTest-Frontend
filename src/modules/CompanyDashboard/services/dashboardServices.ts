@@ -92,6 +92,15 @@ export const getTechnicalTestsService = async (options: Record<string, string>) 
     })
 }
 
+export const getTechnicalTestDetailsService = async (id: number) => {
+    const url = apiUrl.TECHNICAL_TEST_ENDPOINT + "/" + id
+    return await axiosClient.get(url, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}
+
 export const addExercisesToTechnicalTestService = async(request: IAddExercisesToTechnicalTest) => {
     const url = apiUrl.TECHNICAL_TEST_ENDPOINT + "/exercises"
     const response = await axiosClient.post(url, request, {

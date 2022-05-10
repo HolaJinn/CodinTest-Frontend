@@ -6,6 +6,7 @@ import {
   Col,
   Drawer,
   Input,
+  Modal,
   Pagination,
   Select,
 } from "antd";
@@ -17,6 +18,8 @@ import { TechnicalTest } from "../../../models/TechnicalTest";
 import TechnicalTestsList from "../../../components/TechnicalTestsList/TechnicalTestsList";
 import { TechnicalTestItem } from "../models";
 import { deleteTechnicalTest } from "../store/slices/deleteTechnicalTestSlice";
+import { fetchTechnicalTestDetails } from "../store/slices/fetchTechnicalTestDetailsSlice";
+import TechnicalTestDetails from "../../../components/TechnicalTestDetails/TechnicalTestDetails";
 
 const { Option } = Select;
 const { Search } = Input;
@@ -33,6 +36,8 @@ const TechnicalTestsScreen = () => {
   const [inputSearch, setInputSearch] = useState("");
   const [createdByMe, setCreatedByMe] = useState(false);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   let technicalTests: TechnicalTestItem[] = [];
 
   const navigate = useNavigate();
@@ -42,6 +47,13 @@ const TechnicalTestsScreen = () => {
   );
 
   const totalElements = technicalTestsSelector.technicalTestsList.totalElements;
+
+  const technicalTestSelector = useSelector(
+    (state: RootStateOrAny) => state.fetchTechnicalTestDetails
+  );
+
+  const technicalTest: TechnicalTest =
+    technicalTestSelector.technicalTestDetails;
 
   const handleSort = (e: any) => {
     if (e === "Most recent to least recent") {
@@ -66,6 +78,15 @@ const TechnicalTestsScreen = () => {
 
   const onSearch = (e: any) => {
     setInputSearch(e);
+  };
+
+  const showModal = (id: number) => {
+    dispatch(fetchTechnicalTestDetails(id));
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   const onPageChange = (page: number, pageSize: number) => {
@@ -182,8 +203,22 @@ const TechnicalTestsScreen = () => {
                 technicalTests={technicalTests}
                 removeItem={removeItem}
                 inviteCandidate={inviteCandidate}
+                showModal={showModal}
               />
             </div>
+            <Modal
+              title="Technical Test Details"
+              visible={isModalVisible}
+              onCancel={handleCancel}
+              width={1000}
+              footer={[
+                <Button key="cancel" onClick={handleCancel}>
+                  Cancel
+                </Button>,
+              ]}
+            >
+              <TechnicalTestDetails technicalTest={technicalTest} />
+            </Modal>
             <div className="flex justify-end my-10">
               <Pagination
                 current={page + 1}

@@ -6,12 +6,14 @@ interface Props {
   technicalTests: TechnicalTestItem[];
   removeItem: any;
   inviteCandidate: any;
+  showModal: any;
 }
 
 const TechnicalTestsList = ({
   technicalTests,
   removeItem,
   inviteCandidate,
+  showModal,
 }: Props) => {
   return (
     <>
@@ -22,6 +24,7 @@ const TechnicalTestsList = ({
             technicalTest={technicalTest}
             removeItem={removeItem}
             inviteCandidate={inviteCandidate}
+            showModal={showModal}
           />
         );
       })}

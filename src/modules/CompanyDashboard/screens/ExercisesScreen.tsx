@@ -48,7 +48,6 @@ const ExercisesScreen = () => {
   const [createdByMe, setCreatedByMe] = useState(false);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [exerciseDetailsId, setExerciseDetailsId] = useState<React.Key>();
   const [tags, setTags] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -64,11 +63,17 @@ const ExercisesScreen = () => {
   const exercisesSelector = useSelector(
     (state: RootStateOrAny) => state.fetchExercises
   );
+
   const totalElements: number = exercisesSelector.exercisesList.totalElements;
 
   tagsList.map((tag: any) => {
     return children.push(<Option key={tag.id}>{tag.name}</Option>);
   });
+
+  const exerciseDetailsSelector = useSelector(
+    (state: RootStateOrAny) => state.fetchExerciseDetails
+  );
+  const exercise: Exercise = exerciseDetailsSelector.exerciseDetails;
 
   const handleSort = (e: any) => {
     if (e === "Most recent to least recent") {
@@ -109,7 +114,6 @@ const ExercisesScreen = () => {
   };
 
   const showModal = (key: React.Key) => {
-    setExerciseDetailsId(key);
     dispatch(fetchExerciseDetails(key.toString()));
     setIsModalVisible(true);
   };
@@ -398,7 +402,7 @@ const ExercisesScreen = () => {
                 </Button>,
               ]}
             >
-              <ExerciseDetails />
+              <ExerciseDetails exercise={exercise} />
             </Modal>
           </div>
         </div>

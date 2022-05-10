@@ -17,7 +17,6 @@ import {
   LoadingOutlined,
   FilterOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Exercise } from "../../../models/Exercise";
 import { fetchExerciseDetails } from "../../CompanyDashboard/store/slices/fetchExerciseDetailsSlice";
@@ -45,7 +44,6 @@ const CandidateExercicsesScreen = () => {
   const [status] = useState("Public");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [exerciseDetailsId, setExerciseDetailsId] = useState<React.Key>();
   const [tags, setTags] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -64,6 +62,11 @@ const CandidateExercicsesScreen = () => {
   tagsList.map((tag: any) => {
     return children.push(<Option key={tag.id}>{tag.name}</Option>);
   });
+
+  const exerciseDetailsSelector = useSelector(
+    (state: RootStateOrAny) => state.fetchExerciseDetails
+  );
+  const exercise: Exercise = exerciseDetailsSelector.exerciseDetails;
 
   const handleSort = (e: any) => {
     if (e === "Most recent to least recent") {
@@ -94,8 +97,6 @@ const CandidateExercicsesScreen = () => {
   };
 
   const showModal = (key: React.Key) => {
-    console.log(key);
-    setExerciseDetailsId(key);
     dispatch(fetchExerciseDetails(key.toString()));
     setIsModalVisible(true);
   };
@@ -343,7 +344,7 @@ const CandidateExercicsesScreen = () => {
                 </Button>,
               ]}
             >
-              <ExerciseDetails />
+              <ExerciseDetails exercise={exercise} />
             </Modal>
           </div>
         </div>

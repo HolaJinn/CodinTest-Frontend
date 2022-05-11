@@ -10,7 +10,8 @@ import { ExerciseDifficulty } from "../../models/ExerciceDifficulty";
 import { ExerciseStatus } from "../../models/ExerciseStatus";
 import { getAllTagsService } from "../../modules/CompanyDashboard/services/dashboardServices";
 
-const { TextArea } = Input;
+import RichTextEditor from "react-rte";
+
 const { Option } = Select;
 
 interface Props {
@@ -24,6 +25,10 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
   const [timerValue, setTimerValue] = useState(0);
   const [difficulty, setDifficulty] = useState(ExerciseDifficulty.EASY);
   const [tags, setTags] = useState([]);
+
+  const [textEditorValue, setTextEditorValue] = useState(() =>
+    RichTextEditor.createEmptyValue()
+  );
 
   const children: any[] = [];
 
@@ -44,7 +49,7 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
       values.status = ExerciseStatus.PRIVATE;
     }
     exerciseRequest.title = values.title;
-    exerciseRequest.description = values.description;
+    exerciseRequest.description = textEditorValue.toString("html");
     exerciseRequest.difficulty = values.difficulty;
     exerciseRequest.status = values.status;
     exerciseRequest.timerInMinute = values.timerInMinute;
@@ -74,6 +79,10 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
 
   const handleTagChange = (value: any) => {
     console.log(value);
+  };
+
+  const handleChange = (value: any) => {
+    setTextEditorValue(value);
   };
 
   return (
@@ -213,24 +222,13 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
         >
           <Input placeholder="Exercise Title" />
         </Form.Item>
-
-        <Form.Item
-          name="description"
-          className="justify-center"
-          label="Description"
-          tooltip={{
-            title: "Enter the description of the exercise",
-            icon: <InfoCircleOutlined />,
-          }}
-          rules={[
-            {
-              required: true,
-              message: "Please input the exercise description!",
-            },
-          ]}
+        <label
+          title="Description"
+          className="ant-form-item-required ant-form-item-required-mark-optional"
         >
-          <TextArea showCount placeholder="Exercise Description" rows={8} />
-        </Form.Item>
+          Description
+        </label>
+        <RichTextEditor value={textEditorValue} onChange={handleChange} />
 
         <Form.Item>
           <Button

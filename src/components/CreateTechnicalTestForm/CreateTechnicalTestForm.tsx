@@ -3,7 +3,7 @@ import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { ITechnicalTestRequest } from "../../modules/CompanyDashboard/models";
 
-const { TextArea } = Input;
+import RichTextEditor from "react-rte";
 
 interface Props {
   technicalTestRequest: ITechnicalTestRequest;
@@ -17,6 +17,10 @@ const CreateTechnicalTestForm = ({
   const [timer, setTimer] = useState(false);
   const [timerValue, setTimerValue] = useState(0);
 
+  const [textEditorValue, setTextEditorValue] = useState(() =>
+    RichTextEditor.createEmptyValue()
+  );
+
   const onSwitchChange = (checked: any) => {
     setTimer(checked);
   };
@@ -28,13 +32,17 @@ const CreateTechnicalTestForm = ({
   const onFinish = (values: ITechnicalTestRequest) => {
     values.timerInMinute = timerValue;
     technicalTestRequest.title = values.title;
-    technicalTestRequest.description = values.description;
+    technicalTestRequest.description = textEditorValue.toString("html");
     technicalTestRequest.timerInMinute = values.timerInMinute;
     submitHandler();
   };
 
   const onFinishFailed = (error: any) => {
     console.log(error);
+  };
+
+  const handleChange = (value: any) => {
+    setTextEditorValue(value);
   };
 
   return (
@@ -102,27 +110,14 @@ const CreateTechnicalTestForm = ({
           <Input placeholder="Technical Test Title" />
         </Form.Item>
 
-        <Form.Item
-          name="description"
-          className="justify-center"
-          label="Description"
-          tooltip={{
-            title: "Enter the description of the technical test",
-            icon: <InfoCircleOutlined />,
-          }}
-          rules={[
-            {
-              required: true,
-              message: "Please input the technical test description!",
-            },
-          ]}
+        <label
+          title="Description"
+          className="ant-form-item-required ant-form-item-required-mark-optional"
         >
-          <TextArea
-            showCount
-            placeholder="Technical Test Description"
-            rows={8}
-          />
-        </Form.Item>
+          Description
+        </label>
+        <RichTextEditor value={textEditorValue} onChange={handleChange} />
+
         <Form.Item>
           <Button
             size="large"

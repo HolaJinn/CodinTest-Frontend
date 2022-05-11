@@ -13,6 +13,8 @@ import { TestCase } from "../../models/TestCase";
 import { Tag } from "../../models/Tag";
 import { IUser } from "../../models/User";
 
+import RichTextEditor from "react-rte";
+
 const { Panel } = Collapse;
 
 interface Props {
@@ -30,6 +32,10 @@ const ExerciseDetails = ({ exercise }: Props) => {
   const currentUser: IUser = JSON.parse(user!);
   const [testCases, setTestCases] = useState<TestCase[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
+
+  const [textEditorValue] = useState(() =>
+    RichTextEditor.createValueFromString(exercise.description, "html")
+  );
 
   useEffect(() => {
     if (exercise) {
@@ -84,7 +90,8 @@ const ExerciseDetails = ({ exercise }: Props) => {
         </div>
         <Divider />
         <div>
-          <p>{exercise.description}</p>
+          <h2 className="text-md">Question</h2>
+          <RichTextEditor readOnly value={textEditorValue} />
         </div>
         <Divider />
         <div>

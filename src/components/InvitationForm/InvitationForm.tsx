@@ -4,7 +4,7 @@ import { Form, Input, Button, DatePicker, TimePicker } from "antd";
 import moment from "moment";
 import { IInvitationRequest } from "../../modules/CompanyDashboard/models";
 
-const { TextArea } = Input;
+import RichTextEditor from "react-rte";
 
 interface Props {
   invitationRequest: IInvitationRequest;
@@ -14,6 +14,10 @@ interface Props {
 const InvitationForm = ({ invitationRequest, submitHandler }: Props) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+
+  const [textEditorValue, setTextEditorValue] = useState(() =>
+    RichTextEditor.createEmptyValue()
+  );
 
   const onDateChange = (date: any) => {
     const dateString = moment(date).format("YYYY-MM-DD");
@@ -25,14 +29,18 @@ const InvitationForm = ({ invitationRequest, submitHandler }: Props) => {
     setTime(timeString);
   };
   const onFinish = (values: any) => {
-    console.log(values);
     invitationRequest.expirationDate = date + "T" + time;
     invitationRequest.subject = values.subject;
     invitationRequest.candidateEmail = values.candidateEmail;
-    invitationRequest.content = values.content;
+    invitationRequest.content = textEditorValue.toString("html");
     submitHandler();
   };
   const onFinishFailed = () => {};
+
+  const handleChange = (value: any) => {
+    setTextEditorValue(value);
+  };
+
   return (
     <>
       <Form
@@ -120,23 +128,14 @@ const InvitationForm = ({ invitationRequest, submitHandler }: Props) => {
           <Input placeholder="Invitation subject" />
         </Form.Item>
 
-        <Form.Item
-          name="content"
-          className="justify-center"
-          label="Content"
-          tooltip={{
-            title: "Enter the content of the invitation",
-            icon: <InfoCircleOutlined />,
-          }}
-          rules={[
-            {
-              required: true,
-              message: "Please input the content of the invitation!",
-            },
-          ]}
+        <label
+          title="Content"
+          className="ant-form-item-required ant-form-item-required-mark-optional"
         >
-          <TextArea showCount placeholder="Invitation content" rows={8} />
-        </Form.Item>
+          Content
+        </label>
+        <RichTextEditor value={textEditorValue} onChange={handleChange} />
+
         <Form.Item>
           <Button
             size="large"

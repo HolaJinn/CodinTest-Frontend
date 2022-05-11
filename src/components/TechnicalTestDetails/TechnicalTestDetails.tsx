@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Collapse } from "antd";
+import { Collapse, Divider } from "antd";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { TechnicalTest } from "../../models/TechnicalTest";
 import { Exercise } from "../../models/Exercise";
 import ExerciseDetails from "../ExerciseDetails/ExerciseDetails";
+import RichTextEditor from "react-rte";
 
 const { Panel } = Collapse;
 
@@ -13,6 +14,10 @@ interface Props {
 
 const TechnicalTestDetails = ({ technicalTest }: Props) => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
+
+  const [textEditorValue] = useState(() =>
+    RichTextEditor.createValueFromString(technicalTest.description, "html")
+  );
 
   useEffect(() => {
     if (technicalTest) {
@@ -33,6 +38,11 @@ const TechnicalTestDetails = ({ technicalTest }: Props) => {
               Recommended time: {technicalTest.timerInMinute} minutes
             </h1>
           </div>
+        </div>
+        <Divider />
+        <div className="mb-5">
+          <h2 className="text-md">Question</h2>
+          <RichTextEditor readOnly value={textEditorValue} />
         </div>
         {exercises && (
           <h2 className="text-xl">

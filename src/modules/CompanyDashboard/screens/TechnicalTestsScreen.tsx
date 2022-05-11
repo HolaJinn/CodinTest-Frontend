@@ -5,6 +5,7 @@ import {
   Checkbox,
   Col,
   Drawer,
+  Empty,
   Input,
   Modal,
   Pagination,
@@ -48,12 +49,12 @@ const TechnicalTestsScreen = () => {
 
   const totalElements = technicalTestsSelector.technicalTestsList.totalElements;
 
-  const technicalTestSelector = useSelector(
+  const technicalTestDetailsSelector = useSelector(
     (state: RootStateOrAny) => state.fetchTechnicalTestDetails
   );
 
   const technicalTest: TechnicalTest =
-    technicalTestSelector.technicalTestDetails;
+    technicalTestDetailsSelector.technicalTestDetails;
 
   const handleSort = (e: any) => {
     if (e === "Most recent to least recent") {
@@ -198,35 +199,45 @@ const TechnicalTestsScreen = () => {
                 Create Test
               </Button>
             </div>
-            <div>
-              <TechnicalTestsList
-                technicalTests={technicalTests}
-                removeItem={removeItem}
-                inviteCandidate={inviteCandidate}
-                showModal={showModal}
-              />
-            </div>
-            <Modal
-              title="Technical Test Details"
-              visible={isModalVisible}
-              onCancel={handleCancel}
-              width={1000}
-              footer={[
-                <Button key="cancel" onClick={handleCancel}>
-                  Cancel
-                </Button>,
-              ]}
-            >
-              <TechnicalTestDetails technicalTest={technicalTest} />
-            </Modal>
-            <div className="flex justify-end my-10">
-              <Pagination
-                current={page + 1}
-                total={totalElements}
-                pageSize={limit}
-                onChange={onPageChange}
-              />
-            </div>
+            {technicalTestsSelector.success &&
+              technicalTestsSelector.technicalTestsList.content.length ===
+                0 && <Empty />}
+            {technicalTestsSelector.success &&
+              technicalTestsSelector.technicalTestsList.content.length > 0 && (
+                <div>
+                  <div>
+                    <TechnicalTestsList
+                      technicalTests={technicalTests}
+                      removeItem={removeItem}
+                      inviteCandidate={inviteCandidate}
+                      showModal={showModal}
+                    />
+                  </div>
+                  <div className="flex justify-end my-10">
+                    <Pagination
+                      current={page + 1}
+                      total={totalElements}
+                      pageSize={limit}
+                      onChange={onPageChange}
+                    />
+                  </div>
+                </div>
+              )}
+            {!technicalTestDetailsSelector.isFetching && technicalTest && (
+              <Modal
+                title="Technical Test Details"
+                visible={isModalVisible}
+                onCancel={handleCancel}
+                width={1000}
+                footer={[
+                  <Button key="cancel" onClick={handleCancel}>
+                    Cancel
+                  </Button>,
+                ]}
+              >
+                <TechnicalTestDetails technicalTest={technicalTest} />
+              </Modal>
+            )}
           </Col>
         </div>
       </div>

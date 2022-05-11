@@ -8,7 +8,7 @@ export const createExerciseService = async (requset: IExerciseRequest) => {
     const url = apiUrl.EXERCISE_ENDPOINT
     const response = await axiosClient.post(url, requset, {
         headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token!}`
         }
     })
     return response;

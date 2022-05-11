@@ -82,6 +82,7 @@ const InvitationForm = ({ invitationRequest, submitHandler }: Props) => {
         <Form.Item
           name="candidateEmail"
           className="justify-center"
+          initialValue={invitationRequest.candidateEmail}
           label="Canidate Email"
           tooltip={{
             title: "Enter the candidate's email",

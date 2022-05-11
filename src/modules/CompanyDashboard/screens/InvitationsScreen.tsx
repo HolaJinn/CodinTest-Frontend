@@ -148,9 +148,9 @@ const InvitationsScreen = () => {
       key: "candidateEmail",
     },
     {
-      title: "Rating",
-      dataIndex: "rating",
-      key: "rating",
+      title: "State",
+      dataIndex: "state",
+      key: "state",
     },
     {
       title: "Subject",
@@ -174,7 +174,7 @@ const InvitationsScreen = () => {
             onClick={() => showModal(record.key)}
           />
           <Button icon={<EditOutlined />} />
-          <Popconfirm title="Sure to delete this exercise">
+          <Popconfirm title="Sure to delete this invitation">
             <Button icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>

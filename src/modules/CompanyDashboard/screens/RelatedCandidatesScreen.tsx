@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Breadcrumb, Button, Col, Space, Table } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { IUser } from "../../../models/User";
 import { IRelatedCandidateItem } from "../models";
 import { fetchRelatedCandiates } from "../store/slices/fetchRelatedCandidates";
@@ -13,6 +14,7 @@ const RelatedCandidatesScreen = () => {
 
   let relatedCandidatesList: IRelatedCandidateItem[] = [];
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const relatedCandidatesSelector = useSelector(
     (state: RootStateOrAny) => state.fetchRelatedCandidates
@@ -22,6 +24,12 @@ const RelatedCandidatesScreen = () => {
 
   const onPageChange = (page: number, pageSize: number) => {
     setPage(page - 1);
+  };
+
+  const sendInvitation = (key: React.Key) => {
+    let x: any = key.valueOf();
+    localStorage.setItem("wantToInvite", relatedCandidatesList[x].email);
+    navigate("/company/technical-tests");
   };
 
   useEffect(() => {
@@ -66,7 +74,14 @@ const RelatedCandidatesScreen = () => {
       key: "action",
       render: (_: any, record: { key: React.Key }) => (
         <Space size="middle">
-          <Button icon={<UserAddOutlined />}>Invite</Button>
+          <Button
+            icon={<UserAddOutlined />}
+            onClick={() => {
+              sendInvitation(record.key);
+            }}
+          >
+            Invite
+          </Button>
         </Space>
       ),
     },

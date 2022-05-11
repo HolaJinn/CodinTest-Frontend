@@ -106,7 +106,11 @@ const ExercisesScreen = () => {
   const removeItem = (key: React.Key) => {
     exercises = exercises.filter((item) => item.key !== key);
     dispatch(deleteExercise(key.toString()));
-    window.location.reload();
+    //added timeout just to make sure that the exercise is deleted
+    //maybe not the best practise but it works
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
   };
 
   const showDrawer = () => {

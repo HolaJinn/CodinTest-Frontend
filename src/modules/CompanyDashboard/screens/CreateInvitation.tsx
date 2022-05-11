@@ -18,9 +18,11 @@ const CreateInvitation = () => {
     localStorage.getItem("technicalTest")!
   );
 
+  const candidateEmail: string = localStorage.getItem("wantToInvite")!;
+
   const invitationRequest: IInvitationRequest = {
     technicalTestId: technicalTest.id,
-    candidateEmail: "",
+    candidateEmail: candidateEmail,
     expirationDate: "",
     subject: technicalTest.title,
     content: "",
@@ -29,6 +31,7 @@ const CreateInvitation = () => {
   const submitHandler = () => {
     dispatch(createInvitation(invitationRequest));
     localStorage.removeItem("technicalTest");
+    localStorage.removeItem("wantToInvite");
     navigate("/company/invitations");
   };
 

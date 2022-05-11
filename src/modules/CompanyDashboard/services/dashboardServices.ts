@@ -140,6 +140,15 @@ export const getInvitationsService = async(options: Record<string, string>) => {
     })
 }
 
+export const getInvitationDetailsService = async(id: string) => {
+    const url = apiUrl.INVITATION_ENDPOINT + "/" + id
+    return await axiosClient.get(url, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+}
+
 export const getRelatedCandidatesService = async(options: Record<string, string>) => {
     const url = apiUrl.RELATED_CANDIDATES_ENDPOINT
     return await axiosClient.get(url, {

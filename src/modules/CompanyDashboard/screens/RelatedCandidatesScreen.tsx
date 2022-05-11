@@ -1,5 +1,6 @@
-import { Breadcrumb, Col, Table } from "antd";
 import React, { useEffect, useState } from "react";
+import { Breadcrumb, Button, Col, Space, Table } from "antd";
+import { UserAddOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { IUser } from "../../../models/User";
 import { IRelatedCandidateItem } from "../models";
@@ -59,6 +60,15 @@ const RelatedCandidatesScreen = () => {
       title: "Last Name",
       dataIndex: "lastName",
       key: "lastName",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_: any, record: { key: React.Key }) => (
+        <Space size="middle">
+          <Button icon={<UserAddOutlined />}>Invite</Button>
+        </Space>
+      ),
     },
   ];
 

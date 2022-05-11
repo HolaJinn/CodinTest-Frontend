@@ -11,6 +11,7 @@ import {
   Table,
   Checkbox,
   Drawer,
+  Modal,
 } from "antd";
 import {
   DeleteOutlined,
@@ -22,6 +23,8 @@ import { IInvitationItem } from "../models";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { fetchInvitations } from "../store/slices/fetchInvitationsSlice";
 import { Invitation } from "../../../models/Invitation";
+import { fetchInvitationDetails } from "../store/slices/fetchInvitationDetailsSlice";
+import InvitationDetails from "../../../components/InvitationDetails/InvitationDetails";
 
 const { Option } = Select;
 const { Search } = Input;
@@ -39,6 +42,8 @@ const InvitationsScreen = () => {
   const [inputSearch, setInputSearch] = useState("");
   const [invitationState, setInvitationState] = useState("All");
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   let invitationsList: IInvitationItem[] = [];
 
   const dispatch = useDispatch();
@@ -47,6 +52,10 @@ const InvitationsScreen = () => {
   );
 
   const totalElements = invitationsSelector.invitationsList.totalElements;
+
+  const invitationDetailsSelector = useSelector(
+    (state: RootStateOrAny) => state.fetchInvitationDetails
+  );
 
   const handleSort = (e: any) => {
     if (e === "Most recent to least recent") {
@@ -63,6 +72,15 @@ const InvitationsScreen = () => {
 
   const showDrawer = () => {
     setDrawerVisibility(!drawerVisibility);
+  };
+
+  const showModal = (key: React.Key) => {
+    dispatch(fetchInvitationDetails(key.toString()));
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   const onBoxChecked = (e: any) => {
@@ -109,12 +127,12 @@ const InvitationsScreen = () => {
 
   if (invitationsSelector.invitationsList.content) {
     invitationsList = invitationsSelector.invitationsList.content.map(
-      (invitation: Invitation, index: number) => {
+      (invitation: Invitation) => {
         const createdDate = invitation.createdDate.split("T");
         const expirationDate = invitation.expirationDate.split("T");
         return {
           ...invitation,
-          key: index,
+          key: invitation.id,
           createdDate: createdDate[0] + " " + createdDate[1].split(".")[0],
           expirationDate:
             expirationDate[0] + " " + expirationDate[1].split(".")[0],
@@ -153,6 +171,7 @@ const InvitationsScreen = () => {
             color="white"
             className="bg-gray-800"
             icon={<FolderViewOutlined />}
+            onClick={() => showModal(record.key)}
           />
           <Button icon={<EditOutlined />} />
           <Popconfirm title="Sure to delete this exercise">
@@ -252,6 +271,21 @@ const InvitationsScreen = () => {
                 onChange: onPageChange,
               }}
             />
+            <Modal
+              title="Invitation Details"
+              visible={isModalVisible}
+              onCancel={handleCancel}
+              width={1000}
+              footer={[
+                <Button key="cancel" onClick={handleCancel}>
+                  Cancel
+                </Button>,
+              ]}
+            >
+              <InvitationDetails
+                invitationDetailsSelector={invitationDetailsSelector}
+              />
+            </Modal>
           </div>
         </Col>
       </div>

@@ -6,12 +6,14 @@ interface Props {
   invitationsList: IInvitationItem[];
   startTestClick: any;
   rejectTestClick: any;
+  showModal: any;
 }
 
 const InvitationsList = ({
   invitationsList,
   startTestClick,
   rejectTestClick,
+  showModal,
 }: Props) => {
   return (
     <>
@@ -22,6 +24,7 @@ const InvitationsList = ({
             invitation={invitation}
             startTestClick={startTestClick}
             rejectTestClick={rejectTestClick}
+            showModal={showModal}
           />
         );
       })}

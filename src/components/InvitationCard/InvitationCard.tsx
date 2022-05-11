@@ -12,17 +12,20 @@ interface Props {
   invitation: IInvitationItem;
   startTestClick: any;
   rejectTestClick: any;
+  showModal: any;
 }
 const InvitationCard = ({
   invitation,
   startTestClick,
   rejectTestClick,
+  showModal,
 }: Props) => {
   return (
     <div className="my-3">
       <Card
         title={invitation.subject}
         className="border border-current rounded shadow-md my-5 px-12 py-4 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer"
+        onClick={() => showModal(invitation.id)}
       >
         <div className="flex item-center justify-between">
           <div className="flex itm-center justify-start">

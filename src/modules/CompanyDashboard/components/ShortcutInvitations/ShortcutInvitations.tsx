@@ -1,10 +1,12 @@
-import { Button, Card } from "antd";
+import { Button, Card, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import { Invitation } from "../../../../models/Invitation";
 import { IInvitationItem } from "../../models";
 import { fetchInvitations } from "../../store/slices/fetchInvitationsSlice";
 import { useNavigate } from "react-router-dom";
+import InvitationDetails from "../../../../components/InvitationDetails/InvitationDetails";
+import { fetchInvitationDetails } from "../../store/slices/fetchInvitationDetailsSlice";
 
 const ShortcutInvitations = () => {
   const [page] = useState(0);
@@ -14,6 +16,8 @@ const ShortcutInvitations = () => {
   const [createdByMe] = useState(true);
   const [invitationState] = useState("All");
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   let invitationsList: IInvitationItem[] = [];
 
   const navigate = useNavigate();
@@ -21,6 +25,19 @@ const ShortcutInvitations = () => {
   const invitationsSelector = useSelector(
     (state: RootStateOrAny) => state.fetchInvitations
   );
+
+  const invitationDetailsSelector = useSelector(
+    (state: RootStateOrAny) => state.fetchInvitationDetails
+  );
+
+  const showModal = (key: React.Key) => {
+    dispatch(fetchInvitationDetails(key.toString()));
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   useEffect(() => {
     const filterOption: Record<string, string> = {
@@ -60,7 +77,11 @@ const ShortcutInvitations = () => {
         }
       >
         {invitationsList.map((invitation: IInvitationItem) => (
-          <div key={invitation.id} className="border border-current mb-3 p-2">
+          <div
+            key={invitation.id}
+            className="border border-current mb-3 p-2 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer"
+            onClick={() => showModal(invitation.id)}
+          >
             <div className="flex ">
               <h1 className="mr-2">Invited Candidate: </h1>
               <p>{invitation.candidateEmail}</p>
@@ -80,6 +101,21 @@ const ShortcutInvitations = () => {
           </div>
         ))}
       </Card>
+      <Modal
+        title="Invitation Details"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        width={1000}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>
+            Cancel
+          </Button>,
+        ]}
+      >
+        <InvitationDetails
+          invitationDetailsSelector={invitationDetailsSelector}
+        />
+      </Modal>
     </>
   );
 };

@@ -26,8 +26,6 @@ const ShortcutExercises = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [exerciseDetailsId, setExerciseDetailsId] = useState<React.Key>();
-
   let exercises: ExerciseItem[] = [];
 
   const exerciseDetailsSelector = useSelector(
@@ -43,7 +41,6 @@ const ShortcutExercises = () => {
   );
 
   const showModal = (key: React.Key) => {
-    setExerciseDetailsId(key);
     dispatch(fetchExerciseDetails(key.toString()));
     setIsModalVisible(true);
   };

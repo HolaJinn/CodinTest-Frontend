@@ -6,6 +6,7 @@ import {
   Drawer,
   Empty,
   Input,
+  Modal,
   Pagination,
   Radio,
   Select,
@@ -18,6 +19,8 @@ import { IInvitationItem } from "../models";
 import { Invitation } from "../../../models/Invitation";
 import { acceptInvitation } from "../store/slices/acceptInvitationSlice";
 import { rejectInvitation } from "../store/slices/rejectInvitationSlice";
+import { fetchInvitationDetails } from "../../CompanyDashboard/store/slices/fetchInvitationDetailsSlice";
+import InvitationDetails from "../../../components/InvitationDetails/InvitationDetails";
 
 const { Option } = Select;
 const { Search } = Input;
@@ -34,6 +37,8 @@ const CandidateInvitationsScreen = () => {
   const [inputSearch, setInputSearch] = useState("");
   const [invitationState, setInvitationState] = useState("Pending");
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   let invitationsList: IInvitationItem[] = [];
 
   const dispatch = useDispatch();
@@ -42,6 +47,10 @@ const CandidateInvitationsScreen = () => {
   );
 
   const totalElements = invitationsSelector.invitationsList.totalElements;
+
+  const invitationDetailsSelector = useSelector(
+    (state: RootStateOrAny) => state.fetchInvitationDetails
+  );
 
   const handleSort = (e: any) => {
     if (e === "Most recent to least recent") {
@@ -58,6 +67,15 @@ const CandidateInvitationsScreen = () => {
 
   const showDrawer = () => {
     setDrawerVisibility(!drawerVisibility);
+  };
+
+  const showModal = (key: React.Key) => {
+    dispatch(fetchInvitationDetails(key.toString()));
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   const onSearch = (e: any) => {
@@ -96,12 +114,12 @@ const CandidateInvitationsScreen = () => {
 
   if (invitationsSelector.invitationsList.content) {
     invitationsList = invitationsSelector.invitationsList.content.map(
-      (invitation: Invitation, index: number) => {
+      (invitation: Invitation) => {
         const createdDate = invitation.createdDate.split("T");
         const expirationDate = invitation.expirationDate.split("T");
         return {
           ...invitation,
-          key: index,
+          key: invitation.id,
           createdDate: createdDate[0] + " " + createdDate[1].split(".")[0],
           expirationDate:
             expirationDate[0] + " " + expirationDate[1].split(".")[0],
@@ -189,7 +207,23 @@ const CandidateInvitationsScreen = () => {
                 invitationsList={invitationsList}
                 startTestClick={onStartTestClicked}
                 rejectTestClick={onRejectTestClicked}
+                showModal={showModal}
               />
+              <Modal
+                title="Invitation Details"
+                visible={isModalVisible}
+                onCancel={handleCancel}
+                width={1000}
+                footer={[
+                  <Button key="cancel" onClick={handleCancel}>
+                    Cancel
+                  </Button>,
+                ]}
+              >
+                <InvitationDetails
+                  invitationDetailsSelector={invitationDetailsSelector}
+                />
+              </Modal>
             </div>
             <div className="flex justify-end my-10">
               <Pagination

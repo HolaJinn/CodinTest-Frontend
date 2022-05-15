@@ -6,16 +6,20 @@ import { ITestCaseRequest } from "../../modules/CompanyDashboard/models";
 const { TextArea } = Input;
 interface Props {
   testCaseRequest: ITestCaseRequest;
+  counter: number;
   addTestCase: any;
+  handleCancel: any;
 }
 
-const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
+const CreateTestCaseForm = ({
+  testCaseRequest,
+  counter,
+  addTestCase,
+  handleCancel,
+}: Props) => {
   const [form] = Form.useForm();
-  const [sample, setSample] = useState(testCaseRequest.isSample);
-
-  console.log(testCaseRequest.name);
-
-  useEffect(() => {}, [testCaseRequest.name]);
+  const [name] = useState("#TestCase" + counter);
+  const [sample, setSample] = useState(false);
 
   const onFinish = (values: any) => {
     testCaseRequest.name = values.name;
@@ -23,8 +27,9 @@ const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
     testCaseRequest.input = values.input;
     testCaseRequest.expectedOutput = values.expectedOutput;
     testCaseRequest.isSample = sample;
-    form.resetFields();
     addTestCase();
+    form.resetFields();
+    handleCancel();
   };
 
   const onFinishFailed = (error: any) => {
@@ -34,6 +39,10 @@ const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
   const onSwitchChange = (change: any) => {
     setSample(change);
   };
+
+  useEffect(() => {
+    console.log(testCaseRequest.name);
+  }, [testCaseRequest.name]);
   return (
     <Form
       form={form}
@@ -45,7 +54,7 @@ const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
     >
       <Form.Item
         name="name"
-        initialValue={testCaseRequest.name}
+        initialValue={name}
         className="justify-center"
         rules={[
           {
@@ -99,6 +108,7 @@ const CreateTestCaseForm = ({ testCaseRequest, addTestCase }: Props) => {
       </Form.Item>
       <Form.Item>
         <Button
+          className="mt-5"
           size="large"
           type="ghost"
           htmlType="submit"

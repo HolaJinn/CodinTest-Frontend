@@ -96,7 +96,9 @@ const TechnicalTestsScreen = () => {
 
   const removeItem = (id: number) => {
     dispatch(deleteTechnicalTest(id));
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
   };
 
   const inviteCandidate = (technicalTest: TechnicalTestItem) => {

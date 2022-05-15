@@ -27,19 +27,20 @@ const { Step } = Steps;
 interface TestCaseItem {
   key: React.Key;
   exerciseId: number;
-  name: String;
-  score: Number;
-  isSample: Boolean;
-  input: String;
-  expectedOutput: String;
+  name: string;
+  score: number;
+  isSample: boolean;
+  input: string;
+  expectedOutput: string;
 }
 
 const CreateTestCase = () => {
-  const [testCaseName, setTestCaseName] = useState("#TestCase1");
-  const [counter, setCounter] = useState(1);
+  const [key, setKey] = useState(1);
+  const [testCaseName, setTestCaseName] = useState("#TestCase");
+  // const [counter, setCounter] = useState(1);
   const [list, setList] = useState<TestCaseItem[]>([]);
-  const [testCases, setTestCases] = useState<ITestCaseRequest[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
   const dispatch = useDispatch();
   const exercise = useSelector(
     (state: RootStateOrAny) => state.createExercise.exercise
@@ -49,20 +50,19 @@ const CreateTestCase = () => {
   );
   const navigate = useNavigate();
 
-  const testCaseRequest: ITestCaseRequest = {
+  let counter = list.length + 1;
+  const [testCaseRequest, setTestCaseRequest] = useState<ITestCaseRequest>({
     exerciseId: exercise.id,
-    name: testCaseName,
+    name: "",
     score: 0,
     isSample: false,
     input: "",
     expectedOutput: "",
-  };
-
-  useEffect(() => {}, [testCaseName]);
+  });
 
   const addTestCase = () => {
     const newTest: TestCaseItem = {
-      key: list.length + 1,
+      key: key,
       exerciseId: testCaseRequest.exerciseId,
       name: testCaseRequest.name,
       score: testCaseRequest.score,
@@ -71,11 +71,21 @@ const CreateTestCase = () => {
       expectedOutput: testCaseRequest.expectedOutput,
     };
     setList([...list, newTest]);
-    const newRequest: ITestCaseRequest = testCaseRequest;
-    setTestCases([...testCases, newRequest]);
-    setCounter((prev) => prev + 1);
-    setTestCaseName("#TestCase" + counter.toString());
-    console.log(testCaseName);
+    setKey((prev) => prev + 1);
+    // setCounter((prev) => prev + 1);
+    setTestCaseName("#TestCase");
+    setTestCaseRequest({
+      ...testCaseRequest,
+      name: testCaseName + counter.toString(),
+    });
+  };
+  const removeItem = (key: React.Key) => {
+    setList(list.filter((item) => item.key !== key));
+    setTestCaseRequest({
+      ...testCaseRequest,
+      name: testCaseName + counter.toString(),
+    });
+    counter = list.length;
   };
 
   const showModal = () => {
@@ -86,16 +96,31 @@ const CreateTestCase = () => {
     setIsModalVisible(false);
   };
 
-  const removeItem = (key: React.Key) => {
-    setList(list.filter((item) => item.key !== key));
-    setCounter((prev) => prev - 1);
-    setTestCaseName("#TestCase" + counter.toString());
-  };
-
   const saveTestCases = () => {
-    testCases.map((testCase) => dispatch(createTestCase(testCase)));
+    // eslint-disable-next-line array-callback-return
+    list.map((item: TestCaseItem) => {
+      const testCaseRequest: ITestCaseRequest = {
+        exerciseId: item.exerciseId,
+        name: item.name,
+        score: item.score,
+        isSample: item.isSample,
+        input: item.input,
+        expectedOutput: item.expectedOutput,
+      };
+      dispatch(createTestCase(testCaseRequest));
+    });
     navigate("/company/exercises");
   };
+
+  useEffect(() => {
+    console.log(list);
+  }, [list]);
+
+  useEffect(() => {
+    console.log(counter);
+
+    console.log(testCaseRequest);
+  }, [testCaseName, counter, list, testCaseRequest]);
 
   const columns = [
     {
@@ -186,21 +211,25 @@ const CreateTestCase = () => {
             >
               Add Another Test Case
             </Button>
-            <Modal
-              title="Add test case"
-              visible={isModalVisible}
-              onCancel={handleCancel}
-              footer={[
-                <Button key="cancel" onClick={handleCancel}>
-                  Cancel
-                </Button>,
-              ]}
-            >
-              <CreateTestCaseForm
-                testCaseRequest={testCaseRequest}
-                addTestCase={addTestCase}
-              />
-            </Modal>
+            {isModalVisible && (
+              <Modal
+                title="Add test case"
+                visible={isModalVisible}
+                onCancel={handleCancel}
+                footer={[
+                  <Button key="cancel" onClick={handleCancel}>
+                    Cancel
+                  </Button>,
+                ]}
+              >
+                <CreateTestCaseForm
+                  testCaseRequest={testCaseRequest}
+                  counter={counter}
+                  addTestCase={addTestCase}
+                  handleCancel={handleCancel}
+                />
+              </Modal>
+            )}
           </div>
           {creationState.isCreating && (
             <Spin

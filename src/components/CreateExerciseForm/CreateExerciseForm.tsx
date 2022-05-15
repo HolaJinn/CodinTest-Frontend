@@ -232,6 +232,7 @@ const CreateExerciseForm = ({ exerciseRequest, submitHandler }: Props) => {
 
         <Form.Item>
           <Button
+            className="mt-5"
             size="large"
             type="ghost"
             htmlType="submit"

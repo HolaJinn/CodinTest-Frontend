@@ -120,6 +120,7 @@ const CreateTechnicalTestForm = ({
 
         <Form.Item>
           <Button
+            className="mt-3"
             size="large"
             type="ghost"
             htmlType="submit"

@@ -233,7 +233,7 @@ const TechnicalTestsScreen = () => {
                 width={1000}
                 footer={[
                   <Button key="cancel" onClick={handleCancel}>
-                    Cancel
+                    Close
                   </Button>,
                 ]}
               >

@@ -138,7 +138,7 @@ const AddExercisesToTechnicalTest = () => {
       limit: limit.toString(),
       order,
       properties,
-      title: inputSearch,
+      search: inputSearch,
       createdByMe: createdByMe.toString(),
     };
     dispatch(fetchExercises(filterOption));

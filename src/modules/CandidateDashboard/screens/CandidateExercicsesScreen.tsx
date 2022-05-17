@@ -18,6 +18,7 @@ import {
   FilterOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Exercise } from "../../../models/Exercise";
 import { fetchExerciseDetails } from "../../CompanyDashboard/store/slices/fetchExerciseDetailsSlice";
 import { getAllTagsService } from "../../CompanyDashboard/services/dashboardServices";
@@ -53,6 +54,7 @@ const CandidateExercicsesScreen = () => {
 
   let exercises: ExerciseItem[] = [];
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const exercisesSelector = useSelector(
     (state: RootStateOrAny) => state.fetchExercises
@@ -99,6 +101,13 @@ const CandidateExercicsesScreen = () => {
   const showModal = (key: React.Key) => {
     dispatch(fetchExerciseDetails(key.toString()));
     setIsModalVisible(true);
+  };
+
+  const passExercise = (key: React.Key) => {
+    dispatch(fetchExerciseDetails(key.toString()));
+    setTimeout(() => {
+      navigate("/candidate/exercises/pass-exercise/" + key);
+    }, 2000);
   };
 
   const handleCancel = () => {
@@ -223,6 +232,13 @@ const CandidateExercicsesScreen = () => {
             icon={<FolderViewOutlined />}
             onClick={() => showModal(record.key)}
           />
+          <Button
+            color="white"
+            className="bg-gray-800"
+            onClick={() => passExercise(record.key)}
+          >
+            Pass Exercise
+          </Button>
         </Space>
       ),
     },
@@ -333,19 +349,21 @@ const CandidateExercicsesScreen = () => {
                   }}
                 />
               )}
-            <Modal
-              title="Exercise Details"
-              visible={isModalVisible}
-              onCancel={handleCancel}
-              width={1000}
-              footer={[
-                <Button key="cancel" onClick={handleCancel}>
-                  Cancel
-                </Button>,
-              ]}
-            >
-              <ExerciseDetails exercise={exercise} />
-            </Modal>
+            {!exerciseDetailsSelector.isFetching && exercise && (
+              <Modal
+                title="Exercise Details"
+                visible={isModalVisible}
+                onCancel={handleCancel}
+                width={1000}
+                footer={[
+                  <Button key="cancel" onClick={handleCancel}>
+                    Close
+                  </Button>,
+                ]}
+              >
+                <ExerciseDetails exercise={exercise} />
+              </Modal>
+            )}
           </div>
         </div>
       </div>

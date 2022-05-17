@@ -24,6 +24,7 @@ import RelatedCandidatesScreen from "../modules/CompanyDashboard/screens/Related
 import CompanyDetailsScreen from "../modules/CompanyDashboard/screens/CompanyDetailsScreen";
 import RecruitesScreen from "../modules/CompanyDashboard/screens/RecruitesScreen";
 import AddRecruiter from "../modules/CompanyDashboard/screens/AddRecruiter";
+import CodinTestIDE from "../modules/CodinTestIDE/screens/CodinTestIDE";
 
 const AppRoutes = () => {
   return useRoutes([
@@ -61,6 +62,10 @@ const AppRoutes = () => {
             {
               path: "/candidate/exercises",
               element: <CandidateExercicsesScreen />,
+            },
+            {
+              path: "/candidate/exercises/pass-exercise/:id",
+              element: <CodinTestIDE />,
             },
           ],
         },

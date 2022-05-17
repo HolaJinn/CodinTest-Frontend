@@ -14,15 +14,11 @@ function Navbar() {
             <div className="w-full flex items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <img
-                    src={ReactLogo}
-                    alt="React Logo"
-                    className="color-white"
-                  />
+                  <img src={ReactLogo} alt="React Logo" />
                 </div>
                 <a
                   href="/"
-                  className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                  className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-lg font-mono font-bold"
                 >
                   CodinTest
                 </a>

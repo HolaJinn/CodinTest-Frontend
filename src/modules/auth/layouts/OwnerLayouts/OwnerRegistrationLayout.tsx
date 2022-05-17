@@ -22,6 +22,7 @@ const OwnerRegistrationLayout = () => {
     country: "",
   };
   const submitHandler = (registrationForm: IOwnerRegistrationPayload) => {
+    console.log(registrationForm);
     dispatch(registerOwner(registrationForm));
   };
   return (

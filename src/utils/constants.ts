@@ -25,4 +25,4 @@ export const ACCEPT_INVITATION_ENDPOINT = INVITATION_ENDPOINT + "/accept-invitat
 export const REJECT_INVITATION_ENDPOINT = INVITATION_ENDPOINT + "/reject-invitation"
 
 export const SUBMIT_CODE_ENDPOINT = BASE_URL_ENDPOINT + "/judge/submit-code"
-export const TEST_CODE_ENDPOINT = BASE_URL_ENDPOINT + "/judge/submit-code"
+export const TEST_CODE_ENDPOINT = BASE_URL_ENDPOINT + "/judge/test-code"

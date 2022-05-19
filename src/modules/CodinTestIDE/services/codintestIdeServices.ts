@@ -18,3 +18,17 @@ export const executeCodeService = async (answerSubmission: IAnswerSubmission) =>
     })
     return response
 }   
+
+export const runTestService = async (answerSubmission: IAnswerSubmission) => {
+    const url = apiUrl.TEST_CODE_ENDPOINT + "/" + answerSubmission.exerciseId;
+    const request = {
+        code: answerSubmission.code,
+        programmingLanguage: answerSubmission.programmingLanguage
+    }
+    const response = await axiosClient.post(url, request,{
+        headers: {
+            "Authorization": `Bearer ${token}` 
+        }
+    })
+    return response
+}

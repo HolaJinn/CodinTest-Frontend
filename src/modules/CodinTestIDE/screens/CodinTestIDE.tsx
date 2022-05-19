@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Row } from "antd";
-import { ClockCircleOutlined } from "@ant-design/icons";
+import { Button, Col, Row, Tabs } from "antd";
+import {
+  ClockCircleOutlined,
+  CheckCircleOutlined,
+  SendOutlined,
+} from "@ant-design/icons";
 import { createFromIconfontCN } from "@ant-design/icons";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import RichTextEditor from "react-rte";
@@ -9,6 +13,12 @@ import { Exercise } from "../../../models/Exercise";
 import CountdownTimer from "../../../components/CountdownTimer/CountdownTimer";
 import { IAnswerSubmission } from "../models";
 import { executeCode } from "../store/slices/executeCodeSlice";
+import { TestCase } from "../../../models/TestCase";
+import SampleTestCases from "../layouts/SampleTestCases";
+import ExecutionResults from "../layouts/ExecutionResults";
+import { runTest } from "../store/slices/runTestSlice";
+
+const { TabPane } = Tabs;
 
 const IconFont = createFromIconfontCN({
   scriptUrl: [
@@ -22,6 +32,17 @@ const CodinTestIDE = () => {
     (state: RootStateOrAny) => state.fetchExerciseDetails
   );
   const exercise: Exercise = exerciseDetailsSelector.exerciseDetails;
+  let sampleTestCases: TestCase[] = [];
+  if (exercise) {
+    const allTestCases: TestCase[] =
+      exerciseDetailsSelector.exerciseDetails.testCases;
+    allTestCases.map((testCase: TestCase) => {
+      if (testCase.sample === true) {
+        sampleTestCases.push(testCase);
+      }
+      return null;
+    });
+  }
 
   const [textEditorValue] = useState(() =>
     RichTextEditor.createValueFromString(exercise.description, "html")
@@ -38,6 +59,10 @@ const CodinTestIDE = () => {
   const submitCode = () => {
     console.log(answerSubmission);
     dispatch(executeCode(answerSubmission));
+  };
+
+  const submitCodeForTesting = () => {
+    dispatch(runTest(answerSubmission));
   };
 
   useEffect(() => {}, [exercise]);
@@ -59,7 +84,7 @@ const CodinTestIDE = () => {
               )}
             </div>
           </div>
-          <div className="flex items-center justify-between">
+          <div>
             <div className=" mx-5 flex items-center justify-between">
               <ClockCircleOutlined />
               <h2 className="Text-xl mx-2 mb-0">
@@ -67,8 +92,20 @@ const CodinTestIDE = () => {
               </h2>
             </div>
 
-            <CountdownTimer timerInMinute={exercise.timerInMinute} />
             {/* <CountdownTimer timerInMinute={61} /> */}
+          </div>
+          <div className="flex items-center justify-between">
+            <CountdownTimer timerInMinute={exercise.timerInMinute} />
+            <Button
+              className="ml-5"
+              size="large"
+              type="ghost"
+              htmlType="submit"
+              onClick={() => submitCode()}
+              icon={<CheckCircleOutlined />}
+            >
+              Submit
+            </Button>
           </div>
         </div>
         <Row>
@@ -89,17 +126,35 @@ const CodinTestIDE = () => {
             </div>
           </Col>
         </Row>
-        <div className="flex items-center justify-end p-5">
-          <Button
-            className="mt-5"
-            size="large"
-            type="ghost"
-            htmlType="submit"
-            onClick={() => submitCode()}
-          >
-            Submit
-          </Button>
-        </div>
+        <Row>
+          <Col span={24}>
+            <Tabs
+              className="text-blue-600"
+              defaultActiveKey="1"
+              tabBarExtraContent={
+                <Button
+                  className="ml-5"
+                  size="large"
+                  type="ghost"
+                  htmlType="submit"
+                  onClick={() => submitCodeForTesting()}
+                  icon={<SendOutlined />}
+                >
+                  Run Code
+                </Button>
+              }
+              size="large"
+              type="card"
+            >
+              <TabPane tab="Test Cases" key="1">
+                <SampleTestCases sampleTestCases={sampleTestCases} />
+              </TabPane>
+              <TabPane tab="Execution Result" key="2">
+                <ExecutionResults />
+              </TabPane>
+            </Tabs>
+          </Col>
+        </Row>
       </div>
     );
   } else {

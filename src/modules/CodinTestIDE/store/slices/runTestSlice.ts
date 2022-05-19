@@ -1,9 +1,9 @@
 import { ExecutionResult } from './../../../../models/ExercutionResult';
-import { executeCodeService } from './../../services/codintestIdeServices';
+import { runTestService } from './../../services/codintestIdeServices';
 import { createSlice, createAsyncThunk, Slice } from "@reduxjs/toolkit";
 import { IAnswerSubmission } from "../../models";
 
-interface IExecuteCodeState {
+interface IRunTestState {
     isExecuting: boolean,
     success: boolean,
     error: boolean,
@@ -11,7 +11,7 @@ interface IExecuteCodeState {
     executionResult?: ExecutionResult[]
 }
 
-const initialState: IExecuteCodeState = {
+const initialState: IRunTestState = {
     isExecuting: false,
     success: false,
     error: false,
@@ -19,11 +19,11 @@ const initialState: IExecuteCodeState = {
     executionResult: undefined
 }
 
-export const executeCode = createAsyncThunk(
-    "executeCode/execute",
+export const runTest = createAsyncThunk(
+    "runTest/execute",
     async(answerSubmittion: IAnswerSubmission, thunkAPI) => {
         try {
-            const reponse = await executeCodeService(answerSubmittion)
+            const reponse = await runTestService(answerSubmittion)
             return reponse
         } catch (error: any) {
             console.log(error)
@@ -32,26 +32,26 @@ export const executeCode = createAsyncThunk(
     }
 )
 
-const executeCodeSlice: Slice = createSlice({
+const runTestSlice: Slice = createSlice({
     name: "executeCode",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(executeCode.pending, (state) => {
+        builder.addCase(runTest.pending, (state) => {
             state.isExecuting = true
             state.success = false
             state.error = false
             state.message = ""
             state.executionResult = undefined
         })
-        builder.addCase(executeCode.fulfilled, (state, action: any) => {
+        builder.addCase(runTest.fulfilled, (state, action: any) => {
             state.isExecuting = false
             state.success = true
             state.error = false
             state.message = "Execution is completed"
             state.executionResult = action.payload.data
         })
-        builder.addCase(executeCode.rejected, (state, action: any) => {
+        builder.addCase(runTest.rejected, (state, action: any) => {
             state.isExecuting = false
             state.success = false
             state.error = true
@@ -61,4 +61,4 @@ const executeCodeSlice: Slice = createSlice({
     }
 })
 
-export default executeCodeSlice.reducer
+export default runTestSlice.reducer

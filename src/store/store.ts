@@ -28,6 +28,7 @@ import fetchRecruitersReducer from "../modules/CompanyDashboard/store/slices/fet
 import fetchTechnicalTestDetailsReducer from "../modules/CompanyDashboard/store/slices/fetchTechnicalTestDetailsSlice";
 import fetchInvitationDetailsReducer from "../modules/CompanyDashboard/store/slices/fetchInvitationDetailsSlice";
 import executeCodeReducer from "../modules/CodinTestIDE/store/slices/executeCodeSlice";
+import runTestReducer from "../modules/CodinTestIDE/store/slices/runTestSlice";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -58,6 +59,7 @@ export const store = configureStore({
         fetchRelatedCandidates: fetchRelatedCandidatesReducer,
         fetchRecruiters: fetchRecruitersReducer,
         addRecruiter: addRecruiterReducer,
-        executeCode: executeCodeReducer
+        executeCode: executeCodeReducer,
+        runTest: runTestReducer
     }
 })

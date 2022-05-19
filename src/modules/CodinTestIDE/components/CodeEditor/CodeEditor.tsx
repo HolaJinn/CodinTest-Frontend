@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/mode-java";
@@ -7,27 +7,28 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/snippets/java";
 
 interface Props {
-  initialCode: string;
+  sourceCode: string;
+  mode: string;
+  setSourceCode: any;
 }
-const CodeEditor = ({ initialCode }: Props) => {
+const CodeEditor = ({ sourceCode, mode, setSourceCode }: Props) => {
   return (
     <div>
       <AceEditor
-        // mode={language.toLowerCase()}
-        mode="java"
+        mode={mode.toLowerCase()}
+        // mode="java"
         theme="github"
         name="code-editor"
         height="24rem"
-        width="50rem"
+        width="40rem"
         fontSize={16}
-        value={initialCode}
+        value={sourceCode}
         focus={true}
         enableBasicAutocompletion={true}
         enableLiveAutocompletion={true}
         enableSnippets={true}
         onChange={(newValue) => {
-          //   setInitialCode(newValue);
-          //   setValue(newValue);
+          setSourceCode(newValue);
         }}
       />
     </div>

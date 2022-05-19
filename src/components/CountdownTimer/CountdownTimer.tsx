@@ -1,4 +1,4 @@
-import { time } from "console";
+import Text from "antd/lib/typography/Text";
 import React, { useEffect, useState } from "react";
 
 interface Props {
@@ -20,7 +20,6 @@ const CountdownTimer = ({ timerInMinute }: Props) => {
   }
 
   const [timer, setTimer] = useState(initialTimer);
-  console.log(timer);
 
   const [displayTimer, setDisplayTimer] = useState({
     hours:
@@ -41,61 +40,61 @@ const CountdownTimer = ({ timerInMinute }: Props) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      updateTimer();
+      let { hours, minutes, seconds } = timer;
+      if (hours === 0 && minutes === 0 && seconds === 0) {
+        setIsTimeOver(true);
+        return;
+      }
+      if (seconds === 0) {
+        seconds = 59;
+        minutes--;
+        if (minutes === 0 && hours !== 0) {
+          minutes = 59;
+          if (hours > 0) {
+            hours--;
+          }
+        }
+      }
+      seconds--;
+      setTimer({ hours, minutes, seconds });
+      if (hours.toString().length < 2) {
+        setDisplayTimer({
+          hours: "0" + hours.toString(),
+          minutes: minutes.toString(),
+          seconds: seconds.toString(),
+        });
+      }
+      if (minutes.toString().length < 2) {
+        setDisplayTimer({
+          hours: "0" + hours.toString(),
+          minutes: "0" + minutes.toString(),
+          seconds: seconds.toString(),
+        });
+      }
+      if (seconds.toString().length < 2) {
+        setDisplayTimer({
+          ...displayTimer,
+          seconds: "0" + seconds.toString(),
+        });
+      }
     }, 1000);
     return () => clearInterval(interval);
   }, [timer, displayTimer]);
 
-  const updateTimer = () => {
-    let { hours, minutes, seconds } = timer;
-    if (hours === 0 && minutes === 0 && seconds === 0) {
-      setIsTimeOver(true);
-      return;
-    }
-    if (seconds === 0) {
-      seconds = 59;
-      minutes--;
-      if (minutes === 0 && hours !== 0) {
-        minutes = 59;
-        if (hours > 0) {
-          hours--;
-        }
-      }
-    }
-    seconds--;
-    setTimer({ hours, minutes, seconds });
-    if (hours.toString().length < 2) {
-      setDisplayTimer({
-        hours: "0" + hours.toString(),
-        minutes: minutes.toString(),
-        seconds: seconds.toString(),
-      });
-    }
-    if (minutes.toString().length < 2) {
-      setDisplayTimer({
-        hours: hours.toString(),
-        minutes: "0" + minutes.toString(),
-        seconds: seconds.toString(),
-      });
-    }
-    if (seconds.toString().length < 2) {
-      setDisplayTimer({
-        hours: hours.toString(),
-        minutes: minutes.toString(),
-        seconds: "0" + seconds.toString(),
-      });
-    }
-  };
   return (
     <div>
       <span>
         {!isTimeOver && (
-          <>
+          <Text type="success" className="font-bold">
             {displayTimer.hours} : {displayTimer.minutes} :{" "}
             {displayTimer.seconds}
-          </>
+          </Text>
         )}
-        {isTimeOver && <span>Time is over</span>}
+        {isTimeOver && (
+          <Text className="text-md font-bold" type="danger">
+            Time is over
+          </Text>
+        )}
       </span>
     </div>
   );

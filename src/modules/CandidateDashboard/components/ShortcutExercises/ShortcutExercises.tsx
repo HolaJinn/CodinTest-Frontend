@@ -131,19 +131,21 @@ const ShortcutExercises = () => {
           </div>
         ))}
       </Card>
-      <Modal
-        title="Exercise Details"
-        visible={isModalVisible}
-        onCancel={handleCancel}
-        width={1000}
-        footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Close
-          </Button>,
-        ]}
-      >
-        <ExerciseDetails exercise={exercise} />
-      </Modal>
+      {!exerciseDetailsSelector.isFetching && exercise && (
+        <Modal
+          title="Exercise Details"
+          visible={isModalVisible}
+          onCancel={handleCancel}
+          width={1000}
+          footer={[
+            <Button key="cancel" onClick={handleCancel}>
+              Close
+            </Button>,
+          ]}
+        >
+          <ExerciseDetails exercise={exercise} />
+        </Modal>
+      )}
     </>
   );
 };

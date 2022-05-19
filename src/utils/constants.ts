@@ -23,3 +23,6 @@ export const RELATED_CANDIDATES_ENDPOINT = INVITATION_ENDPOINT + "/related-candi
 export const CURRENT_USER_INVITATIONS_ENDPOINT = INVITATION_ENDPOINT + "/my-invitations"
 export const ACCEPT_INVITATION_ENDPOINT = INVITATION_ENDPOINT + "/accept-invitation"
 export const REJECT_INVITATION_ENDPOINT = INVITATION_ENDPOINT + "/reject-invitation"
+
+export const SUBMIT_CODE_ENDPOINT = BASE_URL_ENDPOINT + "/judge/submit-code"
+export const TEST_CODE_ENDPOINT = BASE_URL_ENDPOINT + "/judge/submit-code"

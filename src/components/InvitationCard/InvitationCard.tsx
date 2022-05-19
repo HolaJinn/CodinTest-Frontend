@@ -25,10 +25,12 @@ const InvitationCard = ({
       <Card
         title={invitation.subject}
         className="border border-current rounded shadow-md my-5 px-12 py-4 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer"
-        onClick={() => showModal(invitation.id)}
       >
         <div className="flex item-center justify-between">
-          <div className="flex itm-center justify-start">
+          <div
+            className="flex itm-center justify-start"
+            onClick={() => showModal(invitation.id)}
+          >
             <div className="flex">
               <UserOutlined style={{ fontSize: "20px" }} />
               <p className="text-md mx-2">{`${invitation.invitedBy.firstName} ${invitation.invitedBy.lastName}`}</p>

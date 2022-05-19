@@ -56,6 +56,7 @@ const AddExercisesToTechnicalTest = () => {
   const [tags, setTags] = useState("");
 
   const [tagsList, setTagsList] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const children: any[] = [];
 
@@ -107,15 +108,10 @@ const AddExercisesToTechnicalTest = () => {
   };
 
   const handleTagChange = (value: any) => {
-    setTags((prev) => "");
-    const x: string = value.toString();
-    for (let i = 0; i < value.length; i++) {
-      console.log(value[i].toString());
-      x.concat(value[i].toString(), ",");
-    }
-    console.log("x", x);
-    setTags((prev) => prev.concat(x));
-    console.log("final tags", tags);
+    console.log(value);
+    setTags(value.toString());
+    setSelectedTags(value);
+    console.log(selectedTags);
   };
 
   const onPageChange = (page: number, pageSize: number) => {
@@ -140,9 +136,19 @@ const AddExercisesToTechnicalTest = () => {
       properties,
       search: inputSearch,
       createdByMe: createdByMe.toString(),
+      tags,
     };
     dispatch(fetchExercises(filterOption));
-  }, [dispatch, page, limit, properties, order, inputSearch, createdByMe]);
+  }, [
+    dispatch,
+    page,
+    limit,
+    properties,
+    order,
+    inputSearch,
+    createdByMe,
+    tags,
+  ]);
 
   if (!exercisesSelector.isFetching) {
     const list: Exercise[] = exercisesSelector.exercisesList.content;
@@ -314,6 +320,7 @@ const AddExercisesToTechnicalTest = () => {
                 <div className="w-5/12">
                   <Select
                     showSearch
+                    defaultValue={selectedTags}
                     mode="multiple"
                     allowClear
                     placeholder="Please select Tags"

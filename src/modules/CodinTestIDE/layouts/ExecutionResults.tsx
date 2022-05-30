@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector, RootStateOrAny } from "react-redux";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { ExecutionResult } from "../../../models/ExercutionResult";
+
+import { ExecutionResult } from "../../../models/ExecutionResult";
 
 const ExecutionResults = () => {
   const codeExecutionResultSelector = useSelector(
@@ -46,8 +47,8 @@ const ExecutionResults = () => {
                     {executionResult.stderr && (
                       <h1>Error: {executionResult.stderr}</h1>
                     )}
-                    {executionResult.compileOutput && (
-                      <h1>Error: {executionResult.compileOutput}</h1>
+                    {executionResult.compile_output && (
+                      <h1>Error: {executionResult.compile_output}</h1>
                     )}
                     {executionResult.message && (
                       <h1>Error: {executionResult.message}</h1>

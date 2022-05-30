@@ -1,4 +1,4 @@
-import { ExecutionResult } from './../../../../models/ExercutionResult';
+import { ExecutionResult } from '../../../../models/ExecutionResult';
 import { executeCodeService } from './../../services/codintestIdeServices';
 import { createSlice, createAsyncThunk, Slice } from "@reduxjs/toolkit";
 import { IAnswerSubmission } from "../../models";
@@ -21,10 +21,10 @@ const initialState: IExecuteCodeState = {
 
 export const executeCode = createAsyncThunk(
     "executeCode/execute",
-    async(answerSubmittion: IAnswerSubmission, thunkAPI) => {
+    async(answerSubmission: IAnswerSubmission, thunkAPI) => {
         try {
-            const reponse = await executeCodeService(answerSubmittion)
-            return reponse
+            const response = await executeCodeService(answerSubmission)
+            return response
         } catch (error: any) {
             console.log(error)
             return thunkAPI.rejectWithValue(error)
